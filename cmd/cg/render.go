@@ -38,6 +38,14 @@ func renderCmd() *cli.Command {
 				Usage: "Output format: html, markdown, json, terminal",
 				Value: "terminal",
 			},
+			&cli.BoolFlag{
+				Name:  "no-redact",
+				Usage: "Disable redaction of secrets and PII",
+			},
+			&cli.StringSliceFlag{
+				Name:  "redact",
+				Usage: "Allowlist of rules to redact. Example: --redact=secrets,pii",
+			},
 		},
 		Action: func(ctx context.Context, cmd *cli.Command) error {
 			fmt.Println("render: not implemented")

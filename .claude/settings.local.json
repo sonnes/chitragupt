@@ -12,7 +12,10 @@
       "WebFetch(domain:zread.ai)",
       "WebFetch(domain:glama.ai)",
       "WebFetch(domain:jacquesverre.com)",
-      "WebFetch(domain:developers.openai.com)"
+      "WebFetch(domain:developers.openai.com)",
+      "Bash(go build:*)",
+      "Bash(go test:*)",
+      "Bash(git status:*)"
     ]
   }
 }
