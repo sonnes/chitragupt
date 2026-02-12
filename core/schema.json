@@ -1,0 +1,180 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ravi/chitragupt/transcript",
+  "title": "Standardized Transcript Format",
+  "description": "A normalized representation of a CLI agent session transcript.",
+  "type": "object",
+  "required": ["session_id", "agent", "created_at", "messages"],
+  "properties": {
+    "session_id": {
+      "type": "string",
+      "description": "Unique identifier for the session (UUID)."
+    },
+    "parent_session_id": {
+      "type": "string",
+      "description": "ID of the parent session, if this is a sub-agent session."
+    },
+    "agent": {
+      "type": "string",
+      "description": "Agent that produced this session.",
+      "enum": ["claude", "codex", "opencode", "cursor"]
+    },
+    "model": {
+      "type": "string",
+      "description": "Primary model used in this session (e.g. claude-opus-4-5-20251101)."
+    },
+    "dir": {
+      "type": "string",
+      "description": "Working directory for the session."
+    },
+    "git_branch": {
+      "type": "string",
+      "description": "Git branch active at session start."
+    },
+    "title": {
+      "type": "string",
+      "description": "Human-readable session title (typically the first user prompt, truncated)."
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when the session was created."
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp of the last activity in the session."
+    },
+    "usage": {
+      "$ref": "#/$defs/Usage",
+      "description": "Aggregate token usage across the entire session."
+    },
+    "messages": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/Message" },
+      "description": "Ordered list of conversation messages."
+    }
+  },
+  "$defs": {
+    "Usage": {
+      "type": "object",
+      "description": "Token usage counters.",
+      "properties": {
+        "input_tokens": { "type": "integer" },
+        "output_tokens": { "type": "integer" },
+        "cache_read_tokens": { "type": "integer" },
+        "cache_creation_tokens": { "type": "integer" }
+      },
+      "additionalProperties": false
+    },
+    "Message": {
+      "type": "object",
+      "required": ["role", "content"],
+      "properties": {
+        "uuid": {
+          "type": "string",
+          "description": "Unique message ID from the source log."
+        },
+        "parent_uuid": {
+          "type": "string",
+          "description": "UUID of the parent message in the conversation tree."
+        },
+        "role": {
+          "type": "string",
+          "enum": ["user", "assistant", "system"],
+          "description": "Who produced this message."
+        },
+        "model": {
+          "type": "string",
+          "description": "Model that produced this message (assistant only)."
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "content": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/ContentBlock" },
+          "description": "Ordered content blocks that make up this message."
+        },
+        "usage": {
+          "$ref": "#/$defs/Usage",
+          "description": "Token usage for this individual message."
+        }
+      },
+      "additionalProperties": false
+    },
+    "ContentBlock": {
+      "oneOf": [
+        { "$ref": "#/$defs/TextBlock" },
+        { "$ref": "#/$defs/ThinkingBlock" },
+        { "$ref": "#/$defs/ToolUseBlock" },
+        { "$ref": "#/$defs/ToolResultBlock" }
+      ]
+    },
+    "TextBlock": {
+      "type": "object",
+      "required": ["type", "text"],
+      "properties": {
+        "type": { "const": "text" },
+        "text": { "type": "string" },
+        "format": {
+          "type": "string",
+          "enum": ["markdown", "plain"],
+          "description": "How the text should be rendered. Assistant text is 'markdown'; user, thinking, and tool output are 'plain'."
+        }
+      },
+      "additionalProperties": false
+    },
+    "ThinkingBlock": {
+      "type": "object",
+      "required": ["type", "text"],
+      "properties": {
+        "type": { "const": "thinking" },
+        "text": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "ToolUseBlock": {
+      "type": "object",
+      "required": ["type", "tool_use_id", "name", "input"],
+      "properties": {
+        "type": { "const": "tool_use" },
+        "tool_use_id": {
+          "type": "string",
+          "description": "ID linking this tool call to its result."
+        },
+        "name": {
+          "type": "string",
+          "description": "Tool name (e.g. Bash, Read, Write, Edit, Glob, Grep)."
+        },
+        "input": {
+          "type": "object",
+          "description": "Tool-specific input parameters.",
+          "additionalProperties": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "ToolResultBlock": {
+      "type": "object",
+      "required": ["type", "tool_use_id", "content"],
+      "properties": {
+        "type": { "const": "tool_result" },
+        "tool_use_id": {
+          "type": "string",
+          "description": "ID of the tool_use block this result corresponds to."
+        },
+        "content": {
+          "type": "string",
+          "description": "Textual output of the tool invocation."
+        },
+        "is_error": {
+          "type": "boolean",
+          "description": "Whether the tool invocation resulted in an error."
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}
