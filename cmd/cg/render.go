@@ -3,7 +3,9 @@ package main
 import (
 	"context"
 	"fmt"
+	"os"
 
+	"github.com/sonnes/chitragupt/core"
 	"github.com/urfave/cli/v3"
 )
 
@@ -48,7 +50,41 @@ func renderCmd() *cli.Command {
 			},
 		},
 		Action: func(ctx context.Context, cmd *cli.Command) error {
-			fmt.Println("render: not implemented")
+			a := newApp()
+
+			r, err := a.reader(cmd.String("agent"))
+			if err != nil {
+				return err
+			}
+
+			transcripts, err := readTranscripts(r, cmd)
+			if err != nil {
+				return err
+			}
+
+			redactor, err := newRedactor(cmd)
+			if err != nil {
+				return err
+			}
+			if redactor != nil {
+				for _, t := range transcripts {
+					if err := core.Chain(t, redactor); err != nil {
+						return fmt.Errorf("redact: %w", err)
+					}
+				}
+			}
+
+			rnd, err := a.renderer(cmd.String("o"))
+			if err != nil {
+				return err
+			}
+
+			for _, t := range transcripts {
+				if err := rnd.Render(os.Stdout, t); err != nil {
+					return fmt.Errorf("render: %w", err)
+				}
+			}
+
 			return nil
 		},
 	}
