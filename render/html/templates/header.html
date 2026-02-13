@@ -1,0 +1,38 @@
+{{define "header.html"}}
+<header class="mb-10">
+    <h1 class="text-3xl font-bold text-slate-900 dark:text-white mb-2">{{if .Transcript.Title}}{{.Transcript.Title}}{{else}}Session {{.Transcript.SessionID}}{{end}}</h1>
+    <div class="flex flex-wrap items-center gap-2 text-sm mb-6">
+        <span class="px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-medium">{{.Transcript.Agent}}</span>
+        {{if .Transcript.Model}}<span class="px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 font-mono text-xs">{{.Transcript.Model}}</span>{{end}}
+        <span class="text-slate-400 dark:text-slate-500">{{formatTime .Transcript.CreatedAt}}</span>
+        {{if .OverallDuration}}<span class="px-2 py-0.5 rounded bg-emerald-50 dark:bg-emerald-950 text-emerald-600 dark:text-emerald-400 text-xs font-medium">{{.OverallDuration}}</span>{{end}}
+    </div>
+    {{if .Transcript.Dir}}
+    <div class="text-xs text-slate-400 font-mono mb-4">{{.Transcript.Dir}}{{if .Transcript.GitBranch}} ({{.Transcript.GitBranch}}){{end}}</div>
+    {{end}}
+    {{if .Transcript.Usage}}
+    <div class="flex flex-wrap gap-6 pt-4 border-t border-slate-200 dark:border-slate-700">
+        <div class="text-center">
+            <div class="text-lg font-bold text-slate-900 dark:text-white">{{formatNumber .Transcript.Usage.InputTokens}}</div>
+            <div class="text-xs text-slate-500 uppercase">Input Tokens</div>
+        </div>
+        <div class="text-center">
+            <div class="text-lg font-bold text-slate-900 dark:text-white">{{formatNumber .Transcript.Usage.OutputTokens}}</div>
+            <div class="text-xs text-slate-500 uppercase">Output Tokens</div>
+        </div>
+        {{if .Transcript.Usage.CacheReadTokens}}
+        <div class="text-center">
+            <div class="text-lg font-bold text-slate-900 dark:text-white">{{formatNumber .Transcript.Usage.CacheReadTokens}}</div>
+            <div class="text-xs text-slate-500 uppercase">Cache Read</div>
+        </div>
+        {{end}}
+        {{if .Transcript.Usage.CacheCreationTokens}}
+        <div class="text-center">
+            <div class="text-lg font-bold text-slate-900 dark:text-white">{{formatNumber .Transcript.Usage.CacheCreationTokens}}</div>
+            <div class="text-xs text-slate-500 uppercase">Cache Write</div>
+        </div>
+        {{end}}
+    </div>
+    {{end}}
+</header>
+{{end}}

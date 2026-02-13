@@ -15,7 +15,9 @@
       "WebFetch(domain:developers.openai.com)",
       "Bash(go build:*)",
       "Bash(go test:*)",
-      "Bash(git status:*)"
+      "Bash(git status:*)",
+      "Bash(go run:*)",
+      "Bash(open:*)"
     ]
   }
 }

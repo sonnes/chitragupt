@@ -1,0 +1,12 @@
+{{define "message.html"}}
+<div id="{{.ID}}" class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-5 {{.BorderClass}} scroll-mt-6">
+    <div class="flex items-center gap-3 mb-3">
+        <span class="text-xs font-semibold uppercase px-2 py-1 rounded {{.BadgeClass}}">{{.RoleLabel}}</span>
+        {{if .Timestamp}}<span class="text-xs text-slate-400">{{formatTime .Timestamp}}</span>{{end}}
+        {{if .Duration}}<span class="text-xs text-slate-400 bg-slate-100 dark:bg-slate-700 px-1.5 py-0.5 rounded">{{.Duration}}</span>{{end}}
+    </div>
+    <div class="flex flex-col gap-3">
+        {{range .Blocks}}{{.}}{{end}}
+    </div>
+</div>
+{{end}}
