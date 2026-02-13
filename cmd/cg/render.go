@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/sonnes/chitragupt/compact"
 	"github.com/sonnes/chitragupt/core"
 	"github.com/urfave/cli/v3"
 )
@@ -48,6 +49,10 @@ func renderCmd() *cli.Command {
 				Name:  "redact",
 				Usage: "Allowlist of rules to redact. Example: --redact=secrets,pii",
 			},
+			&cli.StringFlag{
+				Name:  "compact",
+				Usage: "Enable compact mode. Use --compact=no-thinking to also strip thinking blocks",
+			},
 		},
 		Action: func(ctx context.Context, cmd *cli.Command) error {
 			a := newApp()
@@ -70,6 +75,19 @@ func renderCmd() *cli.Command {
 				for _, t := range transcripts {
 					if err := core.Chain(t, redactor); err != nil {
 						return fmt.Errorf("redact: %w", err)
+					}
+				}
+			}
+
+			if v := cmd.String("compact"); v != "" {
+				cfg := compact.Config{}
+				if v == "no-thinking" {
+					cfg.StripThinking = true
+				}
+				compactor := compact.New(cfg)
+				for _, t := range transcripts {
+					if err := core.Chain(t, compactor); err != nil {
+						return fmt.Errorf("compact: %w", err)
 					}
 				}
 			}
