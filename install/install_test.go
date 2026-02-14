@@ -81,6 +81,13 @@ func TestRun(t *testing.T) {
 		require.NoError(t, err)
 		assert.True(t, info.Mode()&0o100 != 0, "script should be executable")
 
+		// Script calls cg render with the correct agent and format
+		script, err := os.ReadFile(scriptPath)
+		require.NoError(t, err)
+		assert.Contains(t, string(script), "cg render --agent claude --file")
+		assert.Contains(t, string(script), "-o jsonl")
+		assert.Contains(t, string(script), ".jsonl")
+
 		// settings.json has the hook
 		data, err := os.ReadFile(filepath.Join(dir, ".claude", "settings.json"))
 		require.NoError(t, err)
@@ -181,7 +188,7 @@ func TestInstallClaudeHook(t *testing.T) {
 		dir := t.TempDir()
 		require.NoError(t, os.MkdirAll(filepath.Join(dir, ".claude"), 0o755))
 
-		require.NoError(t, installClaudeHook(dir))
+		require.NoError(t, installClaudeHook(dir, "claude", "jsonl"))
 
 		data, err := os.ReadFile(filepath.Join(dir, ".claude", "settings.json"))
 		require.NoError(t, err)
@@ -203,7 +210,7 @@ func TestInstallClaudeHook(t *testing.T) {
 			0o644,
 		))
 
-		require.NoError(t, installClaudeHook(dir))
+		require.NoError(t, installClaudeHook(dir, "claude", "html"))
 
 		data, err := os.ReadFile(filepath.Join(claudeDir, "settings.json"))
 		require.NoError(t, err)
@@ -218,8 +225,8 @@ func TestInstallClaudeHook(t *testing.T) {
 		dir := t.TempDir()
 		require.NoError(t, os.MkdirAll(filepath.Join(dir, ".claude"), 0o755))
 
-		require.NoError(t, installClaudeHook(dir))
-		require.NoError(t, installClaudeHook(dir))
+		require.NoError(t, installClaudeHook(dir, "claude", "jsonl"))
+		require.NoError(t, installClaudeHook(dir, "claude", "jsonl"))
 
 		data, err := os.ReadFile(filepath.Join(dir, ".claude", "settings.json"))
 		require.NoError(t, err)
@@ -228,6 +235,42 @@ func TestInstallClaudeHook(t *testing.T) {
 		count := strings.Count(string(data), "save-transcript.sh")
 		assert.Equal(t, 1, count)
 	})
+
+	t.Run("bakes format into script", func(t *testing.T) {
+		dir := t.TempDir()
+		require.NoError(t, os.MkdirAll(filepath.Join(dir, ".claude"), 0o755))
+
+		require.NoError(t, installClaudeHook(dir, "claude", "html"))
+
+		script, err := os.ReadFile(filepath.Join(dir, ".claude", "hooks", "save-transcript.sh"))
+		require.NoError(t, err)
+		assert.Contains(t, string(script), "cg render --agent claude --file")
+		assert.Contains(t, string(script), "-o html")
+		assert.Contains(t, string(script), ".html")
+	})
+}
+
+func TestBuildSaveTranscriptScript(t *testing.T) {
+	tests := []struct {
+		name   string
+		agent  string
+		format string
+		ext    string
+	}{
+		{"jsonl", "claude", "jsonl", ".jsonl"},
+		{"html", "claude", "html", ".html"},
+		{"markdown", "claude", "markdown", ".md"},
+		{"json", "claude", "json", ".json"},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			script := buildSaveTranscriptScript(tt.agent, tt.format)
+			assert.Contains(t, script, "cg render --agent "+tt.agent+" --file")
+			assert.Contains(t, script, "-o "+tt.format)
+			assert.Contains(t, script, "$SESSION_ID"+tt.ext)
+			assert.Contains(t, script, ".transcripts/"+tt.agent)
+		})
+	}
 }
 
 func TestInstallPostCommitHook(t *testing.T) {

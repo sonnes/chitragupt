@@ -44,7 +44,7 @@ func Run(cfg Config) error {
 		{"create orphan branch", func() error { return createOrphanBranch(cfg.Dir, cfg.Branch, cfg.Agent) }},
 		{"add git worktree", func() error { return addWorktree(cfg.Dir, cfg.Branch, worktreeDir) }},
 		{"update .gitignore", func() error { return ensureGitignore(cfg.Dir) }},
-		{"install Claude Code hook", func() error { return installClaudeHook(cfg.Dir) }},
+		{"install Claude Code hook", func() error { return installClaudeHook(cfg.Dir, cfg.Agent, cfg.Format) }},
 		{"install git post-commit hook", func() error { return installPostCommitHook(cfg.Dir) }},
 	}
 
@@ -165,9 +165,9 @@ type hookHandler struct {
 	Command string `json:"command"`
 }
 
-// installClaudeHook adds a SessionEnd hook to .claude/settings.json that copies
-// the session transcript to .transcripts/<agent>/.
-func installClaudeHook(repoDir string) error {
+// installClaudeHook adds a SessionEnd hook to .claude/settings.json that renders
+// the session transcript via `cg render` and writes it to .transcripts/<agent>/.
+func installClaudeHook(repoDir, agent, format string) error {
 	// Write the hook script
 	hookDir := filepath.Join(repoDir, ".claude", "hooks")
 	if err := os.MkdirAll(hookDir, 0o755); err != nil {
@@ -175,7 +175,8 @@ func installClaudeHook(repoDir string) error {
 	}
 
 	scriptPath := filepath.Join(hookDir, "save-transcript.sh")
-	if err := os.WriteFile(scriptPath, []byte(saveTranscriptScript), 0o755); err != nil {
+	script := buildSaveTranscriptScript(agent, format)
+	if err := os.WriteFile(scriptPath, []byte(script), 0o755); err != nil {
 		return err
 	}
 
@@ -298,8 +299,26 @@ func gitOutput(dir string, args ...string) (string, error) {
 	return strings.TrimSpace(string(out)), nil
 }
 
-const saveTranscriptScript = `#!/bin/bash
-# Installed by cg install — copies Claude Code session transcripts to .transcripts/
+// formatExtension maps a render format to its file extension.
+func formatExtension(format string) string {
+	switch format {
+	case "html":
+		return ".html"
+	case "markdown":
+		return ".md"
+	case "json":
+		return ".json"
+	default:
+		return "." + format // e.g. "jsonl" → ".jsonl"
+	}
+}
+
+// buildSaveTranscriptScript generates the hook script with the agent and format
+// baked in so the SessionEnd hook calls `cg render` with the right flags.
+func buildSaveTranscriptScript(agent, format string) string {
+	ext := formatExtension(format)
+	return fmt.Sprintf(`#!/bin/bash
+# Installed by cg install — renders Claude Code session transcripts to .transcripts/
 set -e
 
 INPUT=$(cat)
@@ -314,14 +333,15 @@ if [ ! -f "$TRANSCRIPT_PATH" ]; then
   exit 0
 fi
 
-DEST_DIR="$CLAUDE_PROJECT_DIR/.transcripts/claude"
+DEST_DIR="$CLAUDE_PROJECT_DIR/.transcripts/%s"
 if [ ! -d "$DEST_DIR" ]; then
   exit 0
 fi
 
-DEST="$DEST_DIR/$SESSION_ID.jsonl"
-cp "$TRANSCRIPT_PATH" "$DEST"
-`
+DEST="$DEST_DIR/$SESSION_ID%s"
+cg render --agent %s --file "$TRANSCRIPT_PATH" -o %s > "$DEST"
+`, agent, ext, agent, format)
+}
 
 const postCommitHookScript = `
 # cg-transcripts-start
