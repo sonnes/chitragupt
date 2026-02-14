@@ -284,3 +284,230 @@ func TestReadAll(t *testing.T) {
 	require.NoError(t, err)
 	assert.Len(t, transcripts, 2)
 }
+
+// --- Sub-agent tests ---
+
+// setupSubagentDir creates a temp directory with a main session file and a
+// subagents directory containing the child file, mimicking the on-disk layout:
+//
+//	<project>/<sessionID>.jsonl
+//	<project>/<sessionID>/subagents/agent-<agentID>.jsonl
+func setupSubagentDir(t *testing.T, mainFile, childFile, agentID string) (mainPath string) {
+	t.Helper()
+	dir := t.TempDir()
+
+	mainData, err := os.ReadFile(testdataPath(mainFile))
+	require.NoError(t, err)
+	mainPath = filepath.Join(dir, "sess-main-1.jsonl")
+	require.NoError(t, os.WriteFile(mainPath, mainData, 0o644))
+
+	subDir := filepath.Join(dir, "sess-main-1", "subagents")
+	require.NoError(t, os.MkdirAll(subDir, 0o755))
+
+	childData, err := os.ReadFile(testdataPath(childFile))
+	require.NoError(t, err)
+	require.NoError(t, os.WriteFile(filepath.Join(subDir, "agent-"+agentID+".jsonl"), childData, 0o644))
+
+	return mainPath
+}
+
+func TestDiscoverSubagentFiles(t *testing.T) {
+	t.Run("returns nil when no subagents dir", func(t *testing.T) {
+		files, err := discoverSubagentFiles(testdataPath("simple.jsonl"))
+		require.NoError(t, err)
+		assert.Nil(t, files)
+	})
+
+	t.Run("discovers agent files", func(t *testing.T) {
+		mainPath := setupSubagentDir(t, "subagent_main.jsonl", "subagent_child.jsonl", "ae267a1")
+		files, err := discoverSubagentFiles(mainPath)
+		require.NoError(t, err)
+		require.Len(t, files, 1)
+		assert.Contains(t, files, "ae267a1")
+	})
+
+	t.Run("skips acompact files", func(t *testing.T) {
+		mainPath := setupSubagentDir(t, "subagent_main.jsonl", "subagent_child.jsonl", "ae267a1")
+
+		// Add an acompact file that should be skipped.
+		subDir := filepath.Join(filepath.Dir(mainPath), "sess-main-1", "subagents")
+		require.NoError(t, os.WriteFile(filepath.Join(subDir, "agent-acompact-xyz.jsonl"), []byte("{}"), 0o644))
+
+		files, err := discoverSubagentFiles(mainPath)
+		require.NoError(t, err)
+		assert.Len(t, files, 1)
+		assert.NotContains(t, files, "acompact-xyz")
+	})
+}
+
+func TestScanSubagentEntries(t *testing.T) {
+	f, err := os.Open(testdataPath("subagent_child.jsonl"))
+	require.NoError(t, err)
+	defer f.Close()
+
+	entries, err := scanSubagentEntries(f)
+	require.NoError(t, err)
+	assert.Len(t, entries, 4)
+
+	// All entries should have isSidechain=true and agentId set.
+	for _, e := range entries {
+		assert.True(t, e.IsSidechain)
+		assert.Equal(t, "ae267a1", e.AgentID)
+	}
+}
+
+func TestBuildSubagentTranscript(t *testing.T) {
+	path := testdataPath("subagent_child.jsonl")
+	sub, err := buildSubagentTranscript(path, "sess-main-1")
+	require.NoError(t, err)
+	require.NotNil(t, sub)
+
+	assert.Equal(t, "ae267a1", sub.SessionID)
+	assert.Equal(t, "sess-main-1", sub.ParentSessionID)
+	assert.Equal(t, "claude", sub.Agent)
+	assert.Equal(t, "claude-sonnet-4-5-20250929", sub.Model)
+	assert.Equal(t, "Find all Go files", sub.Title)
+	assert.False(t, sub.CreatedAt.IsZero())
+	require.NotNil(t, sub.Usage)
+	assert.Equal(t, 400, sub.Usage.InputTokens)
+	assert.Equal(t, 200, sub.Usage.OutputTokens)
+}
+
+func TestExtractAgentIDFromResult(t *testing.T) {
+	tests := []struct {
+		name    string
+		content string
+		want    string
+	}{
+		{
+			name:    "standalone agentId",
+			content: "Here are the results...\n\nagentId: ae267a1",
+			want:    "ae267a1",
+		},
+		{
+			name:    "team agent_id",
+			content: "Research complete.\n\nagent_id: researcher@auth-team",
+			want:    "researcher@auth-team",
+		},
+		{
+			name:    "no agent ID",
+			content: "Some random output",
+			want:    "",
+		},
+		{
+			name:    "empty string",
+			content: "",
+			want:    "",
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equal(t, tt.want, extractAgentIDFromResult(tt.content))
+		})
+	}
+}
+
+func TestExtractTaskAgentInfo(t *testing.T) {
+	t.Run("extracts all fields", func(t *testing.T) {
+		input := map[string]any{
+			"subagent_type": "deep-researcher",
+			"name":          "researcher",
+			"team_name":     "auth-team",
+			"prompt":        "Analyze auth module",
+		}
+		ref := extractTaskAgentInfo(input)
+		assert.Equal(t, "deep-researcher", ref.AgentType)
+		assert.Equal(t, "researcher", ref.AgentName)
+		assert.Equal(t, "auth-team", ref.TeamName)
+	})
+
+	t.Run("handles missing fields", func(t *testing.T) {
+		input := map[string]any{
+			"subagent_type": "Explore",
+			"prompt":        "Find files",
+		}
+		ref := extractTaskAgentInfo(input)
+		assert.Equal(t, "Explore", ref.AgentType)
+		assert.Empty(t, ref.AgentName)
+		assert.Empty(t, ref.TeamName)
+	})
+
+	t.Run("handles nil input", func(t *testing.T) {
+		ref := extractTaskAgentInfo(nil)
+		assert.Empty(t, ref.AgentType)
+	})
+}
+
+func TestAttachSubagents(t *testing.T) {
+	t.Run("standalone subagent", func(t *testing.T) {
+		mainPath := setupSubagentDir(t, "subagent_main.jsonl", "subagent_child.jsonl", "ae267a1")
+		r := &Reader{}
+		tr, err := r.ReadFile(mainPath)
+		require.NoError(t, err)
+
+		// Sub-agents should be attached.
+		require.Len(t, tr.SubAgents, 1)
+		sub := tr.SubAgents[0]
+		assert.Equal(t, "ae267a1", sub.SessionID)
+		assert.Equal(t, "sess-main-1", sub.ParentSessionID)
+		assert.Equal(t, "Find all Go files", sub.Title)
+
+		// The Task tool_use block should have a SubAgentRef.
+		var found bool
+		for _, msg := range tr.Messages {
+			for _, b := range msg.Content {
+				if b.Type == core.BlockToolUse && b.Name == "Task" {
+					require.NotNil(t, b.SubAgentRef)
+					assert.Equal(t, "ae267a1", b.SubAgentRef.AgentID)
+					assert.Equal(t, "Explore", b.SubAgentRef.AgentType)
+					found = true
+				}
+			}
+		}
+		assert.True(t, found, "expected to find Task tool_use block with SubAgentRef")
+	})
+
+	t.Run("team subagent", func(t *testing.T) {
+		// Build directory structure manually for team session ID.
+		dir := t.TempDir()
+
+		mainData, err := os.ReadFile(testdataPath("subagent_team_main.jsonl"))
+		require.NoError(t, err)
+		teamMain := filepath.Join(dir, "sess-team-1.jsonl")
+		require.NoError(t, os.WriteFile(teamMain, mainData, 0o644))
+
+		subDir := filepath.Join(dir, "sess-team-1", "subagents")
+		require.NoError(t, os.MkdirAll(subDir, 0o755))
+		childData, err := os.ReadFile(testdataPath("subagent_child.jsonl"))
+		require.NoError(t, err)
+		require.NoError(t, os.WriteFile(filepath.Join(subDir, "agent-researcher@auth-team.jsonl"), childData, 0o644))
+
+		r := &Reader{}
+		tr, err := r.ReadFile(teamMain)
+		require.NoError(t, err)
+
+		require.Len(t, tr.SubAgents, 1)
+
+		// The Task tool_use block should have team-specific SubAgentRef fields.
+		var found bool
+		for _, msg := range tr.Messages {
+			for _, b := range msg.Content {
+				if b.Type == core.BlockToolUse && b.Name == "Task" {
+					require.NotNil(t, b.SubAgentRef)
+					assert.Equal(t, "researcher@auth-team", b.SubAgentRef.AgentID)
+					assert.Equal(t, "deep-researcher", b.SubAgentRef.AgentType)
+					assert.Equal(t, "researcher", b.SubAgentRef.AgentName)
+					assert.Equal(t, "auth-team", b.SubAgentRef.TeamName)
+					found = true
+				}
+			}
+		}
+		assert.True(t, found, "expected to find Task tool_use block with team SubAgentRef")
+	})
+
+	t.Run("no subagents directory is no-op", func(t *testing.T) {
+		tr := readTestdata(t, "simple.jsonl")
+		assert.Nil(t, tr.SubAgents)
+	})
+}

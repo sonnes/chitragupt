@@ -17,7 +17,8 @@
       "Bash(go test:*)",
       "Bash(git status:*)",
       "Bash(go run:*)",
-      "Bash(open:*)"
+      "Bash(open:*)",
+      "Bash(./cg render:*)"
     ]
   }
 }

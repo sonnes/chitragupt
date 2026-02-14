@@ -85,7 +85,7 @@ func TestRun(t *testing.T) {
 		script, err := os.ReadFile(scriptPath)
 		require.NoError(t, err)
 		assert.Contains(t, string(script), "cg render --agent claude --file")
-		assert.Contains(t, string(script), "-o jsonl")
+		assert.Contains(t, string(script), "--format jsonl")
 		assert.Contains(t, string(script), ".jsonl")
 
 		// settings.json has the hook
@@ -245,7 +245,7 @@ func TestInstallClaudeHook(t *testing.T) {
 		script, err := os.ReadFile(filepath.Join(dir, ".claude", "hooks", "save-transcript.sh"))
 		require.NoError(t, err)
 		assert.Contains(t, string(script), "cg render --agent claude --file")
-		assert.Contains(t, string(script), "-o html")
+		assert.Contains(t, string(script), "--format html")
 		assert.Contains(t, string(script), ".html")
 	})
 }
@@ -266,7 +266,7 @@ func TestBuildSaveTranscriptScript(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			script := buildSaveTranscriptScript(tt.agent, tt.format)
 			assert.Contains(t, script, "cg render --agent "+tt.agent+" --file")
-			assert.Contains(t, script, "-o "+tt.format)
+			assert.Contains(t, script, "--format "+tt.format)
 			assert.Contains(t, script, "$SESSION_ID"+tt.ext)
 			assert.Contains(t, script, ".transcripts/"+tt.agent)
 		})

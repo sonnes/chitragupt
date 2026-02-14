@@ -48,6 +48,11 @@ func (r *Redactor) Transform(t *core.Transcript) error {
 			r.redactBlock(&t.Messages[i].Content[j])
 		}
 	}
+	for _, sub := range t.SubAgents {
+		if err := r.Transform(sub); err != nil {
+			return err
+		}
+	}
 	return nil
 }
 

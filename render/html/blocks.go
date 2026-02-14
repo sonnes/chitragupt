@@ -76,6 +76,27 @@ func renderToolUseBlock(md goldmark.Markdown, b core.ContentBlock, result *core.
 			`</div>`
 	}
 
+	var linkCardHTML string
+	if b.SubAgentRef != nil {
+		label := b.SubAgentRef.AgentID
+		if b.SubAgentRef.AgentName != "" {
+			label = b.SubAgentRef.AgentName
+		}
+		typeLabel := ""
+		if b.SubAgentRef.AgentType != "" {
+			typeLabel = ` <span class="text-slate-400 dark:text-slate-500">` +
+				`(` + template.HTMLEscapeString(b.SubAgentRef.AgentType) + `)</span>`
+		}
+		href := "agent-" + template.HTMLEscapeString(b.SubAgentRef.AgentID) + ".html"
+		linkCardHTML = `<div class="border-t border-slate-200 dark:border-slate-700 px-4 py-2 flex items-center gap-2 bg-indigo-50 dark:bg-indigo-950">` +
+			`<span class="text-xs">&#128279;</span>` +
+			`<a href="` + href + `" class="text-xs font-medium text-indigo-600 dark:text-indigo-400 hover:underline">` +
+			template.HTMLEscapeString(label) + typeLabel +
+			`</a>` +
+			`<span class="ml-auto text-xs text-indigo-400 dark:text-indigo-500">View &rarr;</span>` +
+			`</div>`
+	}
+
 	toolName := template.HTMLEscapeString(b.Name)
 	icon := string(toolIcon(b.Name))
 	h := `<div class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden">` +
@@ -85,6 +106,7 @@ func renderToolUseBlock(md goldmark.Markdown, b core.ContentBlock, result *core.
 		`</div>` +
 		inputHTML +
 		resultHTML +
+		linkCardHTML +
 		`</div>`
 	return template.HTML(h), nil
 }

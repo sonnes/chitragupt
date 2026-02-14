@@ -195,6 +195,17 @@ func writeMessage(w io.Writer, msg core.Message, duration string, consumed map[s
 				toolLine += "  " + styleToolDetail.Render(truncate(summary, contentWidth-nameWidth))
 			}
 			lines = append(lines, toolLine)
+			if b.SubAgentRef != nil {
+				label := b.SubAgentRef.AgentID
+				if b.SubAgentRef.AgentName != "" {
+					label = b.SubAgentRef.AgentName
+				}
+				subLine := "  → " + label
+				if b.SubAgentRef.AgentType != "" {
+					subLine += " (" + b.SubAgentRef.AgentType + ")"
+				}
+				lines = append(lines, styleToolDetail.Render(subLine))
+			}
 		case core.BlockToolResult:
 			if consumed[b.ToolUseID] {
 				continue

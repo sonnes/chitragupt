@@ -53,6 +53,11 @@
       "type": "array",
       "items": { "$ref": "#/$defs/Message" },
       "description": "Ordered list of conversation messages."
+    },
+    "sub_agents": {
+      "type": "array",
+      "items": { "$ref": "#" },
+      "description": "Sub-agent transcripts spawned during this session."
     }
   },
   "$defs": {
@@ -152,6 +157,33 @@
           "type": "object",
           "description": "Tool-specific input parameters.",
           "additionalProperties": true
+        },
+        "sub_agent_ref": {
+          "$ref": "#/$defs/SubAgentRef",
+          "description": "Link to the sub-agent transcript spawned by this Task tool call."
+        }
+      },
+      "additionalProperties": false
+    },
+    "SubAgentRef": {
+      "type": "object",
+      "required": ["agent_id"],
+      "properties": {
+        "agent_id": {
+          "type": "string",
+          "description": "ID matching a sub-agent transcript's session_id."
+        },
+        "agent_name": {
+          "type": "string",
+          "description": "Human-readable agent name from Task input."
+        },
+        "agent_type": {
+          "type": "string",
+          "description": "Sub-agent type (e.g. Explore, general-purpose)."
+        },
+        "team_name": {
+          "type": "string",
+          "description": "Team name if this is a team agent."
         }
       },
       "additionalProperties": false

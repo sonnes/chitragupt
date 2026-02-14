@@ -339,7 +339,7 @@ if [ ! -d "$DEST_DIR" ]; then
 fi
 
 DEST="$DEST_DIR/$SESSION_ID%s"
-cg render --agent %s --file "$TRANSCRIPT_PATH" -o %s > "$DEST"
+cg render --agent %s --file "$TRANSCRIPT_PATH" --format %s > "$DEST"
 `, agent, ext, agent, format)
 }
 

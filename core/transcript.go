@@ -18,8 +18,9 @@ type Transcript struct {
 	CreatedAt       time.Time  `json:"created_at"`
 	UpdatedAt       *time.Time `json:"updated_at,omitempty"`
 	Usage           *Usage     `json:"usage,omitempty"`      // aggregate session usage
-	DiffStats       *DiffStats `json:"diff_stats,omitempty"` // aggregate edit statistics
-	Messages        []Message  `json:"messages"`
+	DiffStats       *DiffStats    `json:"diff_stats,omitempty"` // aggregate edit statistics
+	Messages        []Message     `json:"messages"`
+	SubAgents       []*Transcript `json:"sub_agents,omitempty"`
 }
 
 // Usage holds token counters. Used both at session level (aggregate) and per
@@ -66,17 +67,26 @@ const (
 	RoleSystem    Role = "system"
 )
 
+// SubAgentRef links a Task tool_use block to its sub-agent transcript.
+type SubAgentRef struct {
+	AgentID   string `json:"agent_id"`
+	AgentName string `json:"agent_name,omitempty"`
+	AgentType string `json:"agent_type,omitempty"`
+	TeamName  string `json:"team_name,omitempty"`
+}
+
 // ContentBlock is one piece of a message. The Type field determines which
 // other fields are populated.
 type ContentBlock struct {
-	Type      BlockType  `json:"type"`
-	Format    TextFormat `json:"format,omitempty"`      // "markdown" or "plain"; set for "text" blocks
-	Text      string     `json:"text,omitempty"`        // set for "text" and "thinking"
-	ToolUseID string     `json:"tool_use_id,omitempty"` // set for "tool_use" and "tool_result"
-	Name      string     `json:"name,omitempty"`        // tool name, set for "tool_use"
-	Input     any        `json:"input,omitempty"`       // tool input params, set for "tool_use"
-	Content   string     `json:"content,omitempty"`     // tool output, set for "tool_result"
-	IsError   bool       `json:"is_error,omitempty"`    // set for "tool_result"
+	Type        BlockType    `json:"type"`
+	Format      TextFormat   `json:"format,omitempty"`        // "markdown" or "plain"; set for "text" blocks
+	Text        string       `json:"text,omitempty"`          // set for "text" and "thinking"
+	ToolUseID   string       `json:"tool_use_id,omitempty"`   // set for "tool_use" and "tool_result"
+	Name        string       `json:"name,omitempty"`          // tool name, set for "tool_use"
+	Input       any          `json:"input,omitempty"`         // tool input params, set for "tool_use"
+	Content     string       `json:"content,omitempty"`       // tool output, set for "tool_result"
+	IsError     bool         `json:"is_error,omitempty"`      // set for "tool_result"
+	SubAgentRef *SubAgentRef `json:"sub_agent_ref,omitempty"` // set for "tool_use" Task blocks with sub-agents
 }
 
 // TextFormat indicates how a text block should be rendered.

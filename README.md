@@ -17,7 +17,9 @@ go install github.com/sonnes/chitragupt/cmd/cg@latest
 Or build from source:
 
 ```sh
-make build
+create an Integration with git.
+
+Create  build
 ```
 
 ## Usage
@@ -43,10 +45,10 @@ cg render --agent claude --project <project-name>
 ### Output formats
 
 ```sh
-cg render --agent claude --file session.jsonl -o terminal   # default
-cg render --agent claude --file session.jsonl -o html
-cg render --agent claude --file session.jsonl -o markdown
-cg render --agent claude --file session.jsonl -o json
+cg render --agent claude --file session.jsonl --format terminal   # default
+cg render --agent claude --file session.jsonl --format html
+cg render --agent claude --file session.jsonl --format markdown
+cg render --agent claude --file session.jsonl --format json
 ```
 
 ### Redaction

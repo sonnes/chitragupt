@@ -29,6 +29,11 @@ func (c *Compactor) Transform(t *core.Transcript) error {
 	for i := range t.Messages {
 		c.compactMessage(&t.Messages[i])
 	}
+	for _, sub := range t.SubAgents {
+		if err := c.Transform(sub); err != nil {
+			return err
+		}
+	}
 	return nil
 }
 

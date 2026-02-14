@@ -9,6 +9,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"sort"
 	"strings"
 	"time"
 
@@ -36,6 +37,7 @@ type rawEntry struct {
 	CWD         string     `json:"cwd"`
 	GitBranch   string     `json:"gitBranch"`
 	IsSidechain bool       `json:"isSidechain"`
+	AgentID     string     `json:"agentId"`
 	Message     rawMessage `json:"message"`
 }
 
@@ -66,7 +68,7 @@ type rawContentBlock struct {
 	IsError   bool   `json:"is_error"`
 }
 
-// ReadFile parses a single Claude Code JSONL session file.
+// ReadFile parses a single Claude Code JSONL session file and any sub-agent files.
 func (r *Reader) ReadFile(path string) (*core.Transcript, error) {
 	f, err := os.Open(path)
 	if err != nil {
@@ -79,7 +81,16 @@ func (r *Reader) ReadFile(path string) (*core.Transcript, error) {
 		return nil, fmt.Errorf("scan session file: %w", err)
 	}
 
-	return buildTranscript(entries)
+	t, err := buildTranscript(entries)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := attachSubagents(path, t); err != nil {
+		return nil, fmt.Errorf("attach subagents: %w", err)
+	}
+
+	return t, nil
 }
 
 // ReadSession locates and parses a session by its UUID across all projects.
@@ -476,4 +487,223 @@ func findPrimaryModel(entries []rawEntry) string {
 func parseTime(s string) time.Time {
 	t, _ := time.Parse(time.RFC3339Nano, s)
 	return t
+}
+
+// --- Sub-agent support ---
+
+// discoverSubagentFiles scans the subagents directory for agent JSONL files.
+// Returns agentID → filepath map. Skips acompact files. Returns nil, nil when
+// the directory doesn't exist.
+func discoverSubagentFiles(mainPath string) (map[string]string, error) {
+	// mainPath: <project>/<sessionID>.jsonl
+	// subagents dir: <project>/<sessionID>/subagents/
+	base := strings.TrimSuffix(mainPath, filepath.Ext(mainPath))
+	subDir := filepath.Join(base, "subagents")
+
+	entries, err := os.ReadDir(subDir)
+	if err != nil {
+		if os.IsNotExist(err) {
+			return nil, nil
+		}
+		return nil, fmt.Errorf("read subagents directory: %w", err)
+	}
+
+	result := make(map[string]string)
+	for _, e := range entries {
+		name := e.Name()
+		if e.IsDir() || !strings.HasSuffix(name, ".jsonl") {
+			continue
+		}
+		if !strings.HasPrefix(name, "agent-") {
+			continue
+		}
+		// Skip internal context compression files.
+		if strings.HasPrefix(name, "agent-acompact-") {
+			continue
+		}
+		agentID := strings.TrimPrefix(name, "agent-")
+		agentID = strings.TrimSuffix(agentID, ".jsonl")
+		result[agentID] = filepath.Join(subDir, name)
+	}
+
+	if len(result) == 0 {
+		return nil, nil
+	}
+	return result, nil
+}
+
+// scanSubagentEntries reads JSONL lines from a sub-agent file.
+// Unlike scanEntries, it does NOT filter isSidechain (all sub-agent entries have it set).
+// Filters to user and assistant types only.
+func scanSubagentEntries(r io.Reader) ([]rawEntry, error) {
+	scanner := bufio.NewScanner(r)
+	scanner.Buffer(make([]byte, maxLineSize), maxLineSize)
+
+	var entries []rawEntry
+	for scanner.Scan() {
+		var entry rawEntry
+		if err := json.Unmarshal(scanner.Bytes(), &entry); err != nil {
+			continue
+		}
+		if entry.Type != "user" && entry.Type != "assistant" {
+			continue
+		}
+		entries = append(entries, entry)
+	}
+	return entries, scanner.Err()
+}
+
+// buildSubagentTranscript reads a sub-agent JSONL file and returns a Transcript.
+func buildSubagentTranscript(path, parentSessionID string) (*core.Transcript, error) {
+	f, err := os.Open(path)
+	if err != nil {
+		return nil, fmt.Errorf("open subagent file: %w", err)
+	}
+	defer f.Close()
+
+	entries, err := scanSubagentEntries(f)
+	if err != nil {
+		return nil, fmt.Errorf("scan subagent file: %w", err)
+	}
+	if len(entries) == 0 {
+		return nil, nil
+	}
+
+	messages := groupAndMapMessages(entries)
+	if len(messages) == 0 {
+		return nil, nil
+	}
+
+	first := entries[0]
+	last := entries[len(entries)-1]
+
+	// Extract agentId from the first entry.
+	agentID := first.AgentID
+
+	createdAt := parseTime(first.Timestamp)
+	var updatedAt *time.Time
+	if last.Timestamp != first.Timestamp {
+		t := parseTime(last.Timestamp)
+		updatedAt = &t
+	}
+
+	return &core.Transcript{
+		SessionID:       agentID,
+		ParentSessionID: parentSessionID,
+		Agent:           "claude",
+		Model:           findPrimaryModel(entries),
+		Title:           deriveTitle(messages),
+		CreatedAt:       createdAt,
+		UpdatedAt:       updatedAt,
+		Usage:           aggregateUsage(messages),
+		Messages:        messages,
+	}, nil
+}
+
+// extractAgentIDFromResult parses the agent ID from a Task tool_result string.
+// Handles both "agentId: ae267a1" and "agent_id: researcher@auth-team" formats.
+func extractAgentIDFromResult(content string) string {
+	for _, line := range strings.Split(content, "\n") {
+		line = strings.TrimSpace(line)
+		if after, ok := strings.CutPrefix(line, "agentId: "); ok {
+			return strings.TrimSpace(after)
+		}
+		if after, ok := strings.CutPrefix(line, "agent_id: "); ok {
+			return strings.TrimSpace(after)
+		}
+	}
+	return ""
+}
+
+// extractTaskAgentInfo extracts subagent_type, name, and team_name from a Task
+// tool_use input map.
+func extractTaskAgentInfo(input any) core.SubAgentRef {
+	m, ok := input.(map[string]any)
+	if !ok {
+		return core.SubAgentRef{}
+	}
+	ref := core.SubAgentRef{}
+	if v, ok := m["subagent_type"].(string); ok {
+		ref.AgentType = v
+	}
+	if v, ok := m["name"].(string); ok {
+		ref.AgentName = v
+	}
+	if v, ok := m["team_name"].(string); ok {
+		ref.TeamName = v
+	}
+	return ref
+}
+
+// attachSubagents discovers, parses, and links sub-agent transcripts to the
+// main transcript. No-op when the subagents directory doesn't exist.
+func attachSubagents(mainPath string, t *core.Transcript) error {
+	files, err := discoverSubagentFiles(mainPath)
+	if err != nil {
+		return err
+	}
+	if files == nil {
+		return nil
+	}
+
+	// Collect and sort agent IDs for deterministic ordering.
+	agentIDs := make([]string, 0, len(files))
+	for id := range files {
+		agentIDs = append(agentIDs, id)
+	}
+	sort.Strings(agentIDs)
+
+	// Parse each sub-agent file into a Transcript.
+	subIndex := make(map[string]*core.Transcript)
+	for _, agentID := range agentIDs {
+		sub, err := buildSubagentTranscript(files[agentID], t.SessionID)
+		if err != nil {
+			return fmt.Errorf("parse subagent %s: %w", agentID, err)
+		}
+		if sub == nil {
+			continue
+		}
+		t.SubAgents = append(t.SubAgents, sub)
+		subIndex[agentID] = sub
+	}
+
+	if len(subIndex) == 0 {
+		return nil
+	}
+
+	// Build tool_result index from main transcript: tool_use_id → result content.
+	resultContent := make(map[string]string)
+	for _, msg := range t.Messages {
+		for _, b := range msg.Content {
+			if b.Type == core.BlockToolResult && b.ToolUseID != "" {
+				resultContent[b.ToolUseID] = b.Content
+			}
+		}
+	}
+
+	// Walk all Task tool_use blocks and set SubAgentRef.
+	for i := range t.Messages {
+		for j := range t.Messages[i].Content {
+			b := &t.Messages[i].Content[j]
+			if b.Type != core.BlockToolUse || b.Name != "Task" {
+				continue
+			}
+			content, ok := resultContent[b.ToolUseID]
+			if !ok {
+				continue
+			}
+			agentID := extractAgentIDFromResult(content)
+			if agentID == "" {
+				continue
+			}
+			if _, found := subIndex[agentID]; !found {
+				continue
+			}
+			ref := extractTaskAgentInfo(b.Input)
+			ref.AgentID = agentID
+			b.SubAgentRef = &ref
+		}
+	}
+
+	return nil
 }
