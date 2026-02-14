@@ -245,12 +245,13 @@ func messageSummary(msg core.Message) (string, []string) {
 		case core.BlockText:
 			if summary == "" {
 				text := strings.TrimSpace(b.Text)
-				if text != "" {
-					if len(text) > 50 {
-						text = text[:47] + "..."
-					}
-					summary = text
+				if text == "" || strings.HasPrefix(text, "<ide_") || strings.HasPrefix(text, "<system-reminder>") {
+					continue
 				}
+				if len(text) > 50 {
+					text = text[:47] + "..."
+				}
+				summary = text
 			}
 		case core.BlockToolUse:
 			tools = append(tools, b.Name)

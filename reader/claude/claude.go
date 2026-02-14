@@ -445,6 +445,16 @@ func isToolResultOnly(entry rawEntry) bool {
 	return true
 }
 
+// isReadToolResult checks whether toolUseID belongs to a Read tool call in msg.
+func isReadToolResult(msg *core.Message, toolUseID string) bool {
+	for _, b := range msg.Content {
+		if b.Type == core.BlockToolUse && b.ToolUseID == toolUseID {
+			return b.Name == "Read"
+		}
+	}
+	return false
+}
+
 // deriveTitle extracts a title from the first user text block, skipping
 // IDE metadata tags. Truncated to 80 characters on a word boundary.
 func deriveTitle(messages []core.Message) string {

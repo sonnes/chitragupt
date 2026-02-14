@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"html/template"
+	"strings"
 
 	"github.com/sonnes/chitragupt/core"
 )
@@ -101,10 +102,15 @@ func (r *Renderer) renderToolUseBlock(b core.ContentBlock, result *core.ContentB
 
 	toolName := template.HTMLEscapeString(b.Name)
 	icon := string(toolIcon(b.Name))
+	summaryDetail := ""
+	if s := toolInputSummary(b.Name, b.Input); s != "" {
+		summaryDetail = ` <span class="text-xs font-mono text-slate-500 dark:text-slate-400 truncate">` + template.HTMLEscapeString(s) + `</span>`
+	}
 	h := `<details class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden">` +
-		`<summary class="px-4 py-2 flex items-center gap-2 text-slate-900 dark:text-white cursor-pointer select-none">` +
+		`<summary class="px-4 py-2 flex items-center gap-2 text-slate-900 dark:text-white cursor-pointer select-none min-w-0">` +
 		icon +
-		`<span class="text-xs font-semibold font-mono">` + toolName + `</span>` +
+		`<span class="text-xs font-semibold font-mono shrink-0">` + toolName + `</span>` +
+		summaryDetail +
 		`</summary>` +
 		inputHTML +
 		resultHTML +
@@ -122,6 +128,36 @@ func renderToolResultBlock(b core.ContentBlock) (template.HTML, error) {
 	}
 	h := `<pre class="` + classes + `">` + escaped + `</pre>`
 	return template.HTML(h), nil
+}
+
+// toolInputSummary extracts a short label from tool input for the header line.
+func toolInputSummary(toolName string, input any) string {
+	m, ok := input.(map[string]any)
+	if !ok {
+		return ""
+	}
+	var key string
+	switch strings.ToLower(toolName) {
+	case "read", "write", "edit":
+		key = "file_path"
+	case "bash":
+		key = "command"
+	case "glob":
+		key = "pattern"
+	case "grep":
+		key = "pattern"
+	case "task":
+		key = "description"
+	case "notebookedit":
+		key = "notebook_path"
+	default:
+		return ""
+	}
+	v, ok := m[key].(string)
+	if !ok || v == "" {
+		return ""
+	}
+	return v
 }
 
 func formatToolInput(input any) string {

@@ -95,11 +95,11 @@ func TestGroupAndMapMessages(t *testing.T) {
 			wantRoles:  []core.Role{core.RoleUser, core.RoleAssistant},
 		},
 		{
-			name:       "interleaved tool results within assistant group",
+			name:       "tool results folded into assistant, Read results dropped",
 			file:       "tool_loop.jsonl",
-			wantMsgs:   4,
-			wantBlocks: []int{1, 1, 1, 2},
-			wantRoles:  []core.Role{core.RoleUser, core.RoleUser, core.RoleUser, core.RoleAssistant},
+			wantMsgs:   2,
+			wantBlocks: []int{1, 3},
+			wantRoles:  []core.Role{core.RoleUser, core.RoleAssistant},
 		},
 		{
 			name:       "new human turn flushes pending assistant",
@@ -131,9 +131,9 @@ func TestGroupAndMapMessages(t *testing.T) {
 }
 
 func TestContentBlockMapping(t *testing.T) {
-	// all_block_types.jsonl produces: user(text), user(tool_result), assistant(thinking,text,tool_use)
+	// all_block_types.jsonl produces: user(text), assistant(thinking,text,tool_use,tool_result)
 	tr := readTestdata(t, "all_block_types.jsonl")
-	require.Len(t, tr.Messages, 3)
+	require.Len(t, tr.Messages, 2)
 
 	tests := []struct {
 		name     string
@@ -143,10 +143,10 @@ func TestContentBlockMapping(t *testing.T) {
 		wantText string
 	}{
 		{"user text", 0, 0, core.BlockText, "hello"},
-		{"tool result", 1, 0, core.BlockToolResult, ""},
-		{"thinking", 2, 0, core.BlockThinking, "reasoning"},
-		{"assistant text", 2, 1, core.BlockText, "response"},
-		{"tool use", 2, 2, core.BlockToolUse, ""},
+		{"thinking", 1, 0, core.BlockThinking, "reasoning"},
+		{"assistant text", 1, 1, core.BlockText, "response"},
+		{"tool use", 1, 2, core.BlockToolUse, ""},
+		{"tool result", 1, 3, core.BlockToolResult, ""},
 	}
 
 	for _, tt := range tests {
@@ -161,17 +161,17 @@ func TestContentBlockMapping(t *testing.T) {
 
 	t.Run("user text is plain, assistant text is markdown", func(t *testing.T) {
 		assert.Equal(t, core.FormatPlain, tr.Messages[0].Content[0].Format)
-		assert.Equal(t, core.FormatMarkdown, tr.Messages[2].Content[1].Format)
+		assert.Equal(t, core.FormatMarkdown, tr.Messages[1].Content[1].Format)
 	})
 
 	t.Run("tool use fields", func(t *testing.T) {
-		b := tr.Messages[2].Content[2]
+		b := tr.Messages[1].Content[2]
 		assert.Equal(t, "toolu_1", b.ToolUseID)
 		assert.Equal(t, "Bash", b.Name)
 	})
 
 	t.Run("tool result fields", func(t *testing.T) {
-		b := tr.Messages[1].Content[0]
+		b := tr.Messages[1].Content[3]
 		assert.Equal(t, "toolu_1", b.ToolUseID)
 		assert.Equal(t, "cmd output", b.Content)
 		assert.False(t, b.IsError)
@@ -237,9 +237,10 @@ func TestDeriveTitle(t *testing.T) {
 
 func TestToolResultError(t *testing.T) {
 	tr := readTestdata(t, "tool_error.jsonl")
-	require.True(t, len(tr.Messages) >= 2)
+	require.Len(t, tr.Messages, 2)
 
-	b := tr.Messages[1].Content[0]
+	// Error tool_result is folded into the assistant message after the tool_use.
+	b := tr.Messages[1].Content[1]
 	assert.Equal(t, core.BlockToolResult, b.Type)
 	assert.True(t, b.IsError)
 	assert.Equal(t, "permission denied", b.Content)
