@@ -278,11 +278,26 @@ func groupAndMapMessages(entries []rawEntry) []core.Message {
 			}
 		} else {
 			// User entry.
-			if !isToolResultOnly(entry) {
+			if isToolResultOnly(entry) {
+				// Fold tool results into the in-progress assistant message,
+				// skipping Read results (large file content noise).
+				if currentAssistant != nil {
+					for _, raw := range entry.Message.Content {
+						b, ok := mapContentBlock(raw, core.RoleUser)
+						if !ok || b.Type != core.BlockToolResult {
+							continue
+						}
+						if isReadToolResult(currentAssistant, b.ToolUseID) {
+							continue
+						}
+						currentAssistant.Content = append(currentAssistant.Content, b)
+					}
+				}
+			} else {
 				// Real human turn — flush pending assistant.
 				emit()
+				messages = append(messages, buildUserMessage(entry))
 			}
-			messages = append(messages, buildUserMessage(entry))
 		}
 	}
 	emit()
@@ -405,7 +420,7 @@ func extractToolResultContent(v any) string {
 func mapUsage(raw *rawUsage) core.Usage {
 	return core.Usage{
 		InputTokens:         raw.InputTokens,
-		OutputTokens:         raw.OutputTokens,
+		OutputTokens:        raw.OutputTokens,
 		CacheReadTokens:     raw.CacheReadInputTokens,
 		CacheCreationTokens: raw.CacheCreationInputTokens,
 	}

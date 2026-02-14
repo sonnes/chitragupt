@@ -6,27 +6,14 @@ import (
 	"github.com/sonnes/chitragupt/core"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"github.com/yuin/goldmark"
-	"github.com/yuin/goldmark/extension"
-
-	highlighting "github.com/yuin/goldmark-highlighting/v2"
-	chromahtml "github.com/alecthomas/chroma/v2/formatters/html"
 )
 
-func testMD() goldmark.Markdown {
-	return goldmark.New(
-		goldmark.WithExtensions(
-			extension.GFM,
-			highlighting.NewHighlighting(
-				highlighting.WithStyle("dracula"),
-				highlighting.WithFormatOptions(chromahtml.WithClasses(false)),
-			),
-		),
-	)
+func testRenderer() *Renderer {
+	return New()
 }
 
 func TestRenderTextBlockMarkdown(t *testing.T) {
-	md := testMD()
+	r := testRenderer()
 	tests := []struct {
 		name     string
 		block    core.ContentBlock
@@ -50,7 +37,7 @@ func TestRenderTextBlockMarkdown(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			out, err := renderTextBlock(md, tt.block)
+			out, err := r.renderTextBlock(tt.block)
 			require.NoError(t, err)
 			for _, s := range tt.contains {
 				assert.Contains(t, string(out), s)
@@ -60,7 +47,7 @@ func TestRenderTextBlockMarkdown(t *testing.T) {
 }
 
 func TestRenderTextBlockPlain(t *testing.T) {
-	md := testMD()
+	r := testRenderer()
 	tests := []struct {
 		name     string
 		text     string
@@ -82,7 +69,7 @@ func TestRenderTextBlockPlain(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			b := core.ContentBlock{Type: core.BlockText, Format: core.FormatPlain, Text: tt.text}
-			out, err := renderTextBlock(md, b)
+			out, err := r.renderTextBlock(b)
 			require.NoError(t, err)
 			assert.Contains(t, string(out), tt.contains)
 			if tt.absent != "" {
@@ -114,7 +101,7 @@ func TestRenderThinkingBlockEscaping(t *testing.T) {
 }
 
 func TestRenderToolUseBlockPaired(t *testing.T) {
-	md := testMD()
+	r := testRenderer()
 	use := core.ContentBlock{
 		Type:      core.BlockToolUse,
 		ToolUseID: "t1",
@@ -128,7 +115,7 @@ func TestRenderToolUseBlockPaired(t *testing.T) {
 		IsError:   false,
 	}
 
-	out, err := renderToolUseBlock(md, use, result)
+	out, err := r.renderToolUseBlock(use, result)
 	require.NoError(t, err)
 	s := string(out)
 	assert.Contains(t, s, "Bash", "should show tool name")
@@ -138,7 +125,7 @@ func TestRenderToolUseBlockPaired(t *testing.T) {
 }
 
 func TestRenderToolUseBlockUnpaired(t *testing.T) {
-	md := testMD()
+	r := testRenderer()
 	use := core.ContentBlock{
 		Type:      core.BlockToolUse,
 		ToolUseID: "t2",
@@ -146,7 +133,7 @@ func TestRenderToolUseBlockUnpaired(t *testing.T) {
 		Input:     map[string]any{"file_path": "/tmp/test.go"},
 	}
 
-	out, err := renderToolUseBlock(md, use, nil)
+	out, err := r.renderToolUseBlock(use, nil)
 	require.NoError(t, err)
 	s := string(out)
 	assert.Contains(t, s, "Read")
@@ -154,7 +141,7 @@ func TestRenderToolUseBlockUnpaired(t *testing.T) {
 }
 
 func TestRenderToolUseBlockNilInput(t *testing.T) {
-	md := testMD()
+	r := testRenderer()
 	use := core.ContentBlock{
 		Type:      core.BlockToolUse,
 		ToolUseID: "t3",
@@ -162,7 +149,7 @@ func TestRenderToolUseBlockNilInput(t *testing.T) {
 		Input:     nil,
 	}
 
-	out, err := renderToolUseBlock(md, use, nil)
+	out, err := r.renderToolUseBlock(use, nil)
 	require.NoError(t, err)
 	s := string(out)
 	assert.Contains(t, s, "TodoRead")
@@ -200,7 +187,7 @@ func TestRenderToolResultBlockNonError(t *testing.T) {
 }
 
 func TestRenderToolUseBlockErrorResult(t *testing.T) {
-	md := testMD()
+	r := testRenderer()
 	use := core.ContentBlock{
 		Type:      core.BlockToolUse,
 		ToolUseID: "t6",
@@ -214,12 +201,57 @@ func TestRenderToolUseBlockErrorResult(t *testing.T) {
 		IsError:   true,
 	}
 
-	out, err := renderToolUseBlock(md, use, result)
+	out, err := r.renderToolUseBlock(use, result)
 	require.NoError(t, err)
 	s := string(out)
 	assert.Contains(t, s, "bg-red-50", "error result should have red background")
 	assert.Contains(t, s, "text-red-700", "error result should have red text")
 	assert.Contains(t, s, "exit status 1")
+}
+
+func TestRenderToolUseBlockSubAgentHref(t *testing.T) {
+	r := testRenderer()
+	r.SubAgentHref = func(agentID string) string {
+		return "/session/" + agentID
+	}
+
+	use := core.ContentBlock{
+		Type:      core.BlockToolUse,
+		ToolUseID: "t7",
+		Name:      "Task",
+		Input:     map[string]any{"prompt": "do stuff"},
+		SubAgentRef: &core.SubAgentRef{
+			AgentID:   "abc123",
+			AgentName: "researcher",
+			AgentType: "Explore",
+		},
+	}
+
+	out, err := r.renderToolUseBlock(use, nil)
+	require.NoError(t, err)
+	s := string(out)
+	assert.Contains(t, s, `href="/session/abc123"`, "should use custom SubAgentHref")
+	assert.NotContains(t, s, "agent-abc123.html", "should not use default file link")
+	assert.Contains(t, s, "researcher", "should show agent name")
+	assert.Contains(t, s, "(Explore)", "should show agent type")
+}
+
+func TestRenderToolUseBlockSubAgentDefaultHref(t *testing.T) {
+	r := testRenderer()
+
+	use := core.ContentBlock{
+		Type:      core.BlockToolUse,
+		ToolUseID: "t8",
+		Name:      "Task",
+		SubAgentRef: &core.SubAgentRef{
+			AgentID: "def456",
+		},
+	}
+
+	out, err := r.renderToolUseBlock(use, nil)
+	require.NoError(t, err)
+	s := string(out)
+	assert.Contains(t, s, `href="agent-def456.html"`, "should use default file link when SubAgentHref is nil")
 }
 
 func TestFormatToolInput(t *testing.T) {

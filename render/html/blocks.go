@@ -7,19 +7,18 @@ import (
 	"html/template"
 
 	"github.com/sonnes/chitragupt/core"
-	"github.com/yuin/goldmark"
 )
 
 // renderBlock dispatches to the appropriate block renderer based on type.
 // For tool_use blocks, result is the paired tool_result (may be nil).
-func renderBlock(md goldmark.Markdown, b core.ContentBlock, result *core.ContentBlock) (template.HTML, error) {
+func (r *Renderer) renderBlock(b core.ContentBlock, result *core.ContentBlock) (template.HTML, error) {
 	switch b.Type {
 	case core.BlockText:
-		return renderTextBlock(md, b)
+		return r.renderTextBlock(b)
 	case core.BlockThinking:
 		return renderThinkingBlock(b)
 	case core.BlockToolUse:
-		return renderToolUseBlock(md, b, result)
+		return r.renderToolUseBlock(b, result)
 	case core.BlockToolResult:
 		return renderToolResultBlock(b)
 	default:
@@ -27,10 +26,10 @@ func renderBlock(md goldmark.Markdown, b core.ContentBlock, result *core.Content
 	}
 }
 
-func renderTextBlock(md goldmark.Markdown, b core.ContentBlock) (template.HTML, error) {
+func (r *Renderer) renderTextBlock(b core.ContentBlock) (template.HTML, error) {
 	if b.Format == core.FormatMarkdown {
 		var buf bytes.Buffer
-		if err := md.Convert([]byte(b.Text), &buf); err != nil {
+		if err := r.md.Convert([]byte(b.Text), &buf); err != nil {
 			return "", fmt.Errorf("goldmark convert: %w", err)
 		}
 		return template.HTML(`<div class="prose dark:prose-invert max-w-none">` + buf.String() + `</div>`), nil
@@ -48,14 +47,14 @@ func renderThinkingBlock(b core.ContentBlock) (template.HTML, error) {
 	return template.HTML(h), nil
 }
 
-func renderToolUseBlock(md goldmark.Markdown, b core.ContentBlock, result *core.ContentBlock) (template.HTML, error) {
+func (r *Renderer) renderToolUseBlock(b core.ContentBlock, result *core.ContentBlock) (template.HTML, error) {
 	inputJSON := formatToolInput(b.Input)
 
 	var inputHTML string
 	if inputJSON != "" {
 		var buf bytes.Buffer
 		fenced := "```json\n" + inputJSON + "\n```"
-		if err := md.Convert([]byte(fenced), &buf); err != nil {
+		if err := r.md.Convert([]byte(fenced), &buf); err != nil {
 			inputHTML = `<pre class="px-4 py-3 text-xs font-mono overflow-x-auto">` + template.HTMLEscapeString(inputJSON) + `</pre>`
 		} else {
 			inputHTML = `<div class="px-4 py-3 text-xs overflow-x-auto">` + buf.String() + `</div>`
@@ -88,6 +87,9 @@ func renderToolUseBlock(md goldmark.Markdown, b core.ContentBlock, result *core.
 				`(` + template.HTMLEscapeString(b.SubAgentRef.AgentType) + `)</span>`
 		}
 		href := "agent-" + template.HTMLEscapeString(b.SubAgentRef.AgentID) + ".html"
+		if r.SubAgentHref != nil {
+			href = r.SubAgentHref(b.SubAgentRef.AgentID)
+		}
 		linkCardHTML = `<div class="border-t border-slate-200 dark:border-slate-700 px-4 py-2 flex items-center gap-2 bg-indigo-50 dark:bg-indigo-950">` +
 			`<span class="text-xs">&#128279;</span>` +
 			`<a href="` + href + `" class="text-xs font-medium text-indigo-600 dark:text-indigo-400 hover:underline">` +
@@ -99,15 +101,15 @@ func renderToolUseBlock(md goldmark.Markdown, b core.ContentBlock, result *core.
 
 	toolName := template.HTMLEscapeString(b.Name)
 	icon := string(toolIcon(b.Name))
-	h := `<div class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden">` +
-		`<div class="px-4 py-2 border-b border-slate-200 dark:border-slate-700 flex items-center gap-2 text-slate-900 dark:text-white">` +
+	h := `<details class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden">` +
+		`<summary class="px-4 py-2 flex items-center gap-2 text-slate-900 dark:text-white cursor-pointer select-none">` +
 		icon +
 		`<span class="text-xs font-semibold font-mono">` + toolName + `</span>` +
-		`</div>` +
+		`</summary>` +
 		inputHTML +
 		resultHTML +
 		linkCardHTML +
-		`</div>`
+		`</details>`
 	return template.HTML(h), nil
 }
 

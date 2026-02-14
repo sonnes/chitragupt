@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"html/template"
 	"io"
+	"sort"
 	"strings"
 	"time"
 
@@ -23,6 +24,11 @@ import (
 type Renderer struct {
 	md   goldmark.Markdown
 	tmpl *template.Template
+
+	// SubAgentHref, when non-nil, overrides the default agent-{id}.html link
+	// pattern for sub-agent references. Used by the serve command to generate
+	// server-routed URLs instead of static file links.
+	SubAgentHref func(agentID string) string
 }
 
 // New creates an HTML Renderer with goldmark configured for GFM and syntax highlighting.
@@ -73,6 +79,22 @@ type messageData struct {
 	Blocks      []template.HTML
 }
 
+// indexData is the template data passed to index.html.
+type indexData struct {
+	Transcripts []*core.Transcript
+}
+
+// RenderIndex writes an HTML index page listing the given transcripts to w.
+// Transcripts are sorted newest-first by CreatedAt.
+func (r *Renderer) RenderIndex(w io.Writer, transcripts []*core.Transcript) error {
+	sorted := make([]*core.Transcript, len(transcripts))
+	copy(sorted, transcripts)
+	sort.Slice(sorted, func(i, j int) bool {
+		return sorted[i].CreatedAt.After(sorted[j].CreatedAt)
+	})
+	return r.tmpl.ExecuteTemplate(w, "index.html", indexData{Transcripts: sorted})
+}
+
 // Render writes the transcript as a complete HTML page to w.
 func (r *Renderer) Render(w io.Writer, t *core.Transcript) error {
 	// Build tool_result index: tool_use_id → tool_result block.
@@ -116,7 +138,7 @@ func (r *Renderer) Render(w io.Writer, t *core.Transcript) error {
 					result = &tr
 					consumed[b.ToolUseID] = true
 				}
-				rendered, err := renderBlock(r.md, b, result)
+				rendered, err := r.renderBlock(b, result)
 				if err != nil {
 					return fmt.Errorf("render tool_use block: %w", err)
 				}
@@ -127,7 +149,7 @@ func (r *Renderer) Render(w io.Writer, t *core.Transcript) error {
 				if consumed[b.ToolUseID] {
 					continue
 				}
-				rendered, err := renderBlock(r.md, b, nil)
+				rendered, err := r.renderBlock(b, nil)
 				if err != nil {
 					return fmt.Errorf("render tool_result block: %w", err)
 				}
@@ -135,7 +157,7 @@ func (r *Renderer) Render(w io.Writer, t *core.Transcript) error {
 				hasContent = true
 
 			default:
-				rendered, err := renderBlock(r.md, b, nil)
+				rendered, err := r.renderBlock(b, nil)
 				if err != nil {
 					return fmt.Errorf("render %s block: %w", b.Type, err)
 				}
