@@ -12,6 +12,11 @@ var (
 	colorBright = lipgloss.AdaptiveColor{Light: "#0f172a", Dark: "#f1f5f9"}
 	colorDim    = lipgloss.AdaptiveColor{Light: "#94a3b8", Dark: "#64748b"}
 	colorTool   = lipgloss.AdaptiveColor{Light: "#7c3aed", Dark: "#a78bfa"} // purple
+
+	// Diff stat colors.
+	colorAdded   = lipgloss.AdaptiveColor{Light: "#16a34a", Dark: "#4ade80"} // green
+	colorChanged = lipgloss.AdaptiveColor{Light: "#ca8a04", Dark: "#facc15"} // amber
+	colorRemoved = lipgloss.AdaptiveColor{Light: "#dc2626", Dark: "#f87171"} // red
 )
 
 var (
@@ -19,9 +24,12 @@ var (
 	styleAssistantBadge = lipgloss.NewStyle().Foreground(colorAssistant).Bold(true)
 	styleSystemBadge    = lipgloss.NewStyle().Foreground(colorSystem).Bold(true)
 
-	styleTitle    = lipgloss.NewStyle().Foreground(colorBright).Bold(true)
-	styleMeta     = lipgloss.NewStyle().Foreground(colorDim)
-	styleDuration = lipgloss.NewStyle().Foreground(colorAssistant)
+	styleTitle = lipgloss.NewStyle().Foreground(colorBright).Bold(true)
+	styleMeta  = lipgloss.NewStyle().Foreground(colorDim)
+
+	styleAdded   = lipgloss.NewStyle().Foreground(colorAdded).Bold(true)
+	styleChanged = lipgloss.NewStyle().Foreground(colorChanged).Bold(true)
+	styleRemoved = lipgloss.NewStyle().Foreground(colorRemoved).Bold(true)
 
 	styleStat      = lipgloss.NewStyle().Foreground(colorBright).Bold(true)
 	styleStatLabel = lipgloss.NewStyle().Foreground(colorDim)

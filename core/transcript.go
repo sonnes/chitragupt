@@ -10,13 +10,15 @@ type Transcript struct {
 	SessionID       string     `json:"session_id"`
 	ParentSessionID string     `json:"parent_session_id,omitempty"`
 	Agent           string     `json:"agent"`                // "claude", "codex", "opencode", "cursor"
+	Author          string     `json:"author,omitempty"`     // git user.name from working directory
 	Model           string     `json:"model,omitempty"`      // primary model used
 	Dir             string     `json:"dir,omitempty"`        // working directory
 	GitBranch       string     `json:"git_branch,omitempty"` // branch at session start
 	Title           string     `json:"title,omitempty"`
 	CreatedAt       time.Time  `json:"created_at"`
 	UpdatedAt       *time.Time `json:"updated_at,omitempty"`
-	Usage           *Usage     `json:"usage,omitempty"` // aggregate session usage
+	Usage           *Usage     `json:"usage,omitempty"`      // aggregate session usage
+	DiffStats       *DiffStats `json:"diff_stats,omitempty"` // aggregate edit statistics
 	Messages        []Message  `json:"messages"`
 }
 
@@ -27,6 +29,13 @@ type Usage struct {
 	OutputTokens        int `json:"output_tokens,omitempty"`
 	CacheReadTokens     int `json:"cache_read_tokens,omitempty"`
 	CacheCreationTokens int `json:"cache_creation_tokens,omitempty"`
+}
+
+// DiffStats summarizes file-level edit statistics across the session.
+type DiffStats struct {
+	Added   int `json:"added,omitempty"`   // lines added (Write content + Edit new_string)
+	Removed int `json:"removed,omitempty"` // lines removed (Edit old_string)
+	Changed int `json:"changed,omitempty"` // unique files touched
 }
 
 // Add accumulates the counts from other into u.

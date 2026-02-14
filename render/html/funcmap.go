@@ -5,14 +5,18 @@ import (
 	"html/template"
 	"strings"
 	"time"
+
+	"github.com/sonnes/chitragupt/core"
 )
 
 func funcMap() template.FuncMap {
 	return template.FuncMap{
 		"formatTime":     formatTime,
+		"relativeTime":   relativeTime,
 		"formatNumber":   formatNumber,
 		"formatDuration": formatDuration,
 		"toolIcon":       toolIcon,
+		"metaIcon":       metaIcon,
 	}
 }
 
@@ -86,4 +90,34 @@ func formatNumber(n int) string {
 		return fmt.Sprintf("%d", n)
 	}
 	return formatNumber(n/1000) + "," + fmt.Sprintf("%03d", n%1000)
+}
+
+func relativeTime(t any) string {
+	switch v := t.(type) {
+	case time.Time:
+		return core.RelativeTime(v)
+	case *time.Time:
+		if v == nil {
+			return ""
+		}
+		return core.RelativeTime(*v)
+	default:
+		return ""
+	}
+}
+
+// metaIcon returns an inline SVG icon for header metadata items (12x12, currentColor).
+func metaIcon(name string) template.HTML {
+	svg, ok := metaIcons[name]
+	if !ok {
+		return ""
+	}
+	return template.HTML(svg)
+}
+
+var metaIcons = map[string]string{
+	"user":   `<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>`,
+	"clock":  `<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>`,
+	"model":  `<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>`,
+	"folder": `<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>`,
 }

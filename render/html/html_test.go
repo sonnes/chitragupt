@@ -81,9 +81,9 @@ func TestRenderFullPage(t *testing.T) {
 
 	t.Run("header metadata", func(t *testing.T) {
 		assert.Contains(t, html, "Fix the authentication bug")
-		assert.Contains(t, html, "claude")
+		assert.Contains(t, html, "@claude")
 		assert.Contains(t, html, "claude-opus-4-6")
-		assert.Contains(t, html, "Jan 22, 2026")
+		assert.Contains(t, html, "ago")
 	})
 
 	t.Run("usage stats", func(t *testing.T) {

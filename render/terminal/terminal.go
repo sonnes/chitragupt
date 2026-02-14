@@ -73,42 +73,51 @@ func (r *Renderer) termWidth() int {
 
 // writeHeader renders the session metadata block.
 func writeHeader(w io.Writer, t *core.Transcript) {
+	// Row 1: Title + diff stats
 	title := t.Title
 	if title == "" && t.SessionID != "" {
 		title = "Session " + t.SessionID
 	}
-	if title != "" {
-		fmt.Fprintln(w, styleTitle.Render(title))
+	row1 := styleTitle.Render(title)
+	if t.DiffStats != nil {
+		var stats []string
+		if t.DiffStats.Added > 0 {
+			stats = append(stats, styleAdded.Render(fmt.Sprintf("+%s", formatNumber(t.DiffStats.Added))))
+		}
+		if t.DiffStats.Changed > 0 {
+			stats = append(stats, styleChanged.Render(fmt.Sprintf("~%s", formatNumber(t.DiffStats.Changed))))
+		}
+		if t.DiffStats.Removed > 0 {
+			stats = append(stats, styleRemoved.Render(fmt.Sprintf("-%s", formatNumber(t.DiffStats.Removed))))
+		}
+		if len(stats) > 0 {
+			row1 += "  " + strings.Join(stats, " ")
+		}
 	}
+	fmt.Fprintln(w, row1)
 
-	// Metadata line: agent  model  date  duration
+	// Row 2: @author  relative_time  model  dir(branch)
 	var parts []string
-	if t.Agent != "" {
-		parts = append(parts, t.Agent)
+	if t.Author != "" {
+		parts = append(parts, "@"+t.Author)
+	} else if t.Agent != "" {
+		parts = append(parts, "@"+t.Agent)
+	}
+	if !t.CreatedAt.IsZero() {
+		parts = append(parts, core.RelativeTime(t.CreatedAt))
 	}
 	if t.Model != "" {
 		parts = append(parts, t.Model)
 	}
-	if !t.CreatedAt.IsZero() {
-		parts = append(parts, formatTime(t.CreatedAt))
-	}
-	if t.UpdatedAt != nil && !t.CreatedAt.IsZero() {
-		dur := formatDuration(t.UpdatedAt.Sub(t.CreatedAt))
-		metaText := strings.Join(parts, "  ")
-		fmt.Fprintln(w, styleMeta.Render(metaText)+"  "+styleDuration.Render(dur))
-		parts = nil
-	}
-	if len(parts) > 0 {
-		fmt.Fprintln(w, styleMeta.Render(strings.Join(parts, "  ")))
-	}
-
-	// Working directory
 	if t.Dir != "" {
 		dir := t.Dir
 		if t.GitBranch != "" {
-			dir += " (" + t.GitBranch + ")"
+			dir += "(" + t.GitBranch + ")"
 		}
-		fmt.Fprintln(w, styleMeta.Render(dir))
+		parts = append(parts, dir)
+	}
+	if len(parts) > 0 {
+		fmt.Fprintln(w, styleMeta.Render(strings.Join(parts, "  ")))
 	}
 
 	// Usage stats

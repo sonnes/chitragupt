@@ -79,6 +79,11 @@ func renderCmd() *cli.Command {
 				}
 			}
 
+			// Compute diff stats BEFORE compact, which mutates tool input strings.
+			for _, t := range transcripts {
+				t.DiffStats = core.ComputeDiffStats(t)
+			}
+
 			if v := cmd.String("compact"); v != "" {
 				cfg := compact.Config{}
 				if v == "no-thinking" {

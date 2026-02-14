@@ -38,10 +38,10 @@ func TestRenderHeader(t *testing.T) {
 	out := ansi.Strip(buf.String())
 
 	assert.Contains(t, out, "Session abc-123")
-	assert.Contains(t, out, "claude")
+	assert.Contains(t, out, "@claude")
 	assert.Contains(t, out, "claude-opus-4-5-20251101")
-	assert.Contains(t, out, "72h 44m")
-	assert.Contains(t, out, "/Users/test (main)")
+	assert.Contains(t, out, "just now")
+	assert.Contains(t, out, "/Users/test(main)")
 	assert.Contains(t, out, "229")
 	assert.Contains(t, out, "1,273")
 	assert.Contains(t, out, "1,228,873")

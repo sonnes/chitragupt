@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"strings"
 	"time"
@@ -201,6 +202,7 @@ func buildTranscript(entries []rawEntry) (*core.Transcript, error) {
 	return &core.Transcript{
 		SessionID: first.SessionID,
 		Agent:     "claude",
+		Author:    gitAuthor(first.CWD),
 		Model:     findPrimaryModel(entries),
 		Dir:       first.CWD,
 		GitBranch: first.GitBranch,
@@ -210,6 +212,20 @@ func buildTranscript(entries []rawEntry) (*core.Transcript, error) {
 		Usage:     aggregateUsage(messages),
 		Messages:  messages,
 	}, nil
+}
+
+// gitAuthor returns the git user.name configured in dir, or "" on any error.
+func gitAuthor(dir string) string {
+	if dir == "" {
+		return ""
+	}
+	cmd := exec.Command("git", "config", "user.name")
+	cmd.Dir = dir
+	out, err := cmd.Output()
+	if err != nil {
+		return ""
+	}
+	return strings.TrimSpace(string(out))
 }
 
 // groupAndMapMessages merges streaming assistant chunks into single messages

@@ -1,38 +1,82 @@
 {{define "header.html"}}
 <header class="mb-10">
-    <h1 class="text-3xl font-bold text-slate-900 dark:text-white mb-2">{{if .Transcript.Title}}{{.Transcript.Title}}{{else}}Session {{.Transcript.SessionID}}{{end}}</h1>
-    <div class="flex flex-wrap items-center gap-2 text-sm mb-6">
-        <span class="px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-medium">{{.Transcript.Agent}}</span>
-        {{if .Transcript.Model}}<span class="px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 font-mono text-xs">{{.Transcript.Model}}</span>{{end}}
-        <span class="text-slate-400 dark:text-slate-500">{{formatTime .Transcript.CreatedAt}}</span>
-        {{if .OverallDuration}}<span class="px-2 py-0.5 rounded bg-emerald-50 dark:bg-emerald-950 text-emerald-600 dark:text-emerald-400 text-xs font-medium">{{.OverallDuration}}</span>{{end}}
+  <!-- Row 1: Title + Diff Stats -->
+  <div class="flex items-baseline gap-4 mb-3">
+    <h1 class="text-3xl font-bold text-slate-900 dark:text-white">
+      {{if .Transcript.Title}}{{.Transcript.Title}}{{else}}Session {{.Transcript.SessionID}}{{end}}
+    </h1>
+    {{if .Transcript.DiffStats}}
+    <div class="flex items-center gap-3 text-sm font-mono font-semibold whitespace-nowrap">
+      {{if .Transcript.DiffStats.Added}}<span class="text-emerald-600 dark:text-emerald-400">+{{formatNumber .Transcript.DiffStats.Added}}</span>{{end}}
+      {{if .Transcript.DiffStats.Changed}}<span class="text-amber-600 dark:text-amber-400">~{{formatNumber .Transcript.DiffStats.Changed}}</span>{{end}}
+      {{if .Transcript.DiffStats.Removed}}<span class="text-red-600 dark:text-red-400">-{{formatNumber .Transcript.DiffStats.Removed}}</span>{{end}}
     </div>
+    {{end}}
+  </div>
+
+  <!-- Row 2: Metadata items with icons -->
+  <div class="flex flex-wrap items-center gap-4 text-sm text-slate-500 dark:text-slate-400 mb-6">
+    {{if or .Transcript.Author .Transcript.Agent}}
+    <span class="flex items-center gap-1.5">
+      {{metaIcon "user"}}
+      <span class="font-medium">@{{if .Transcript.Author}}{{.Transcript.Author}}{{else}}{{.Transcript.Agent}}{{end}}</span>
+    </span>
+    {{end}}
+
+    {{if not .Transcript.CreatedAt.IsZero}}
+    <span class="flex items-center gap-1.5">
+      {{metaIcon "clock"}}
+      {{relativeTime .Transcript.CreatedAt}}
+    </span>
+    {{end}}
+
+    {{if .Transcript.Model}}
+    <span class="flex items-center gap-1.5">
+      {{metaIcon "model"}}
+      {{.Transcript.Model}}
+    </span>
+    {{end}}
+
     {{if .Transcript.Dir}}
-    <div class="text-xs text-slate-400 font-mono mb-4">{{.Transcript.Dir}}{{if .Transcript.GitBranch}} ({{.Transcript.GitBranch}}){{end}}</div>
+    <span class="flex items-center gap-1.5 font-mono text-xs">
+      {{metaIcon "folder"}}
+      {{.Transcript.Dir}}{{if .Transcript.GitBranch}}({{.Transcript.GitBranch}}){{end}}
+    </span>
     {{end}}
-    {{if .Transcript.Usage}}
-    <div class="flex flex-wrap gap-6 pt-4 border-t border-slate-200 dark:border-slate-700">
-        <div class="text-center">
-            <div class="text-lg font-bold text-slate-900 dark:text-white">{{formatNumber .Transcript.Usage.InputTokens}}</div>
-            <div class="text-xs text-slate-500 uppercase">Input Tokens</div>
-        </div>
-        <div class="text-center">
-            <div class="text-lg font-bold text-slate-900 dark:text-white">{{formatNumber .Transcript.Usage.OutputTokens}}</div>
-            <div class="text-xs text-slate-500 uppercase">Output Tokens</div>
-        </div>
-        {{if .Transcript.Usage.CacheReadTokens}}
-        <div class="text-center">
-            <div class="text-lg font-bold text-slate-900 dark:text-white">{{formatNumber .Transcript.Usage.CacheReadTokens}}</div>
-            <div class="text-xs text-slate-500 uppercase">Cache Read</div>
-        </div>
-        {{end}}
-        {{if .Transcript.Usage.CacheCreationTokens}}
-        <div class="text-center">
-            <div class="text-lg font-bold text-slate-900 dark:text-white">{{formatNumber .Transcript.Usage.CacheCreationTokens}}</div>
-            <div class="text-xs text-slate-500 uppercase">Cache Write</div>
-        </div>
-        {{end}}
+  </div>
+
+  {{if .Transcript.Usage}}
+  <div
+    class="flex flex-wrap gap-6 pt-4 border-t border-slate-200 dark:border-slate-700"
+  >
+    <div class="text-center">
+      <div class="text-lg font-bold text-slate-900 dark:text-white">
+        {{formatNumber .Transcript.Usage.InputTokens}}
+      </div>
+      <div class="text-xs text-slate-500 uppercase">Input Tokens</div>
+    </div>
+    <div class="text-center">
+      <div class="text-lg font-bold text-slate-900 dark:text-white">
+        {{formatNumber .Transcript.Usage.OutputTokens}}
+      </div>
+      <div class="text-xs text-slate-500 uppercase">Output Tokens</div>
+    </div>
+    {{if .Transcript.Usage.CacheReadTokens}}
+    <div class="text-center">
+      <div class="text-lg font-bold text-slate-900 dark:text-white">
+        {{formatNumber .Transcript.Usage.CacheReadTokens}}
+      </div>
+      <div class="text-xs text-slate-500 uppercase">Cache Read</div>
+    </div>
+    {{end}} {{if .Transcript.Usage.CacheCreationTokens}}
+    <div class="text-center">
+      <div class="text-lg font-bold text-slate-900 dark:text-white">
+        {{formatNumber .Transcript.Usage.CacheCreationTokens}}
+      </div>
+      <div class="text-xs text-slate-500 uppercase">Cache Write</div>
     </div>
     {{end}}
+  </div>
+  {{end}}
 </header>
 {{end}}
