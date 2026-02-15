@@ -35,7 +35,11 @@ func (r *Renderer) renderTextBlock(b core.ContentBlock) (template.HTML, error) {
 		}
 		return template.HTML(`<div class="prose dark:prose-invert max-w-none">` + buf.String() + `</div>`), nil
 	}
-	escaped := template.HTMLEscapeString(b.Text)
+	text := core.CleanUserText(b.Text)
+	if text == "" {
+		return "", nil
+	}
+	escaped := template.HTMLEscapeString(text)
 	return template.HTML(`<p class="whitespace-pre-wrap text-sm">` + escaped + `</p>`), nil
 }
 

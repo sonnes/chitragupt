@@ -61,9 +61,9 @@ func TestRenderTextBlockPlain(t *testing.T) {
 		},
 		{
 			name:     "html escaped",
-			text:     "<script>alert('xss')</script>",
-			contains: "&lt;script&gt;",
-			absent:   "<script>",
+			text:     `a < b && c > d`,
+			contains: "&lt; b &amp;&amp; c &gt;",
+			absent:   "< b && c >",
 		},
 	}
 	for _, tt := range tests {

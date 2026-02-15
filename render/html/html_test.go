@@ -105,19 +105,16 @@ func TestRenderMessages(t *testing.T) {
 
 	html := buf.String()
 
-	t.Run("user message", func(t *testing.T) {
-		assert.Contains(t, html, "User")
-		assert.Contains(t, html, "border-l-blue-500")
+	t.Run("user message in blue bubble", func(t *testing.T) {
+		assert.Contains(t, html, "bg-blue-50")
 		assert.Contains(t, html, "Fix the authentication bug")
 	})
 
-	t.Run("assistant message", func(t *testing.T) {
-		assert.Contains(t, html, "Assistant")
-		assert.Contains(t, html, "border-l-emerald-500")
+	t.Run("steps collapsed", func(t *testing.T) {
+		assert.Contains(t, html, "Steps Completed")
 	})
 
-	t.Run("thinking block", func(t *testing.T) {
-		assert.Contains(t, html, "<details")
+	t.Run("thinking block in steps", func(t *testing.T) {
 		assert.Contains(t, html, "Let me analyze the auth code...")
 	})
 
@@ -144,12 +141,11 @@ func TestRenderToolPairing(t *testing.T) {
 		assert.Contains(t, html, "42: func Login")
 	})
 
-	t.Run("consumed tool_result message is skipped", func(t *testing.T) {
-		// The third message only contained a consumed tool_result,
-		// so it should not produce a separate message card.
-		// Count message cards by role badges.
-		count := countOccurrences(html, "font-semibold uppercase")
-		assert.Equal(t, 2, count, "should have 2 message cards (user + assistant), not 3")
+	t.Run("consumed tool_result does not create extra turn", func(t *testing.T) {
+		// The third message only contained a consumed tool_result.
+		// It should be folded into the first turn's steps, not create a separate turn.
+		count := countOccurrences(html, `id="turn-`)
+		assert.Equal(t, 1, count, "should have 1 turn, not 2")
 	})
 }
 

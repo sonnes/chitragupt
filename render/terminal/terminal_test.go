@@ -90,10 +90,8 @@ func TestRenderBasicTranscript(t *testing.T) {
 
 	assert.Contains(t, out, "USER")
 	assert.Contains(t, out, "Fix the auth bug")
-	assert.Contains(t, out, "ASSISTANT")
-	assert.Contains(t, out, "Bash")
-	assert.Contains(t, out, "grep -rn auth src/")
-	assert.Contains(t, out, "Found the issue in the auth module.")
+	assert.Contains(t, out, "1 steps")
+	assert.Contains(t, out, "[bash: grep -rn auth src/]")
 }
 
 func TestRenderSkipsToolResultMessages(t *testing.T) {
@@ -248,7 +246,6 @@ func TestRenderThinkingBlocks(t *testing.T) {
 
 	out := ansi.Strip(buf.String())
 	assert.NotContains(t, out, "Let me think about this")
-	assert.Contains(t, out, "Thinking...")
 	assert.Contains(t, out, "Here's the answer.")
 }
 
@@ -280,7 +277,7 @@ func TestRenderMessageTimestamps(t *testing.T) {
 
 	out := ansi.Strip(buf.String())
 	assert.Contains(t, out, "Feb 3, 2026")
-	assert.Contains(t, out, "5s")
+	assert.Contains(t, out, "Hi there")
 }
 
 func TestFormatNumber(t *testing.T) {

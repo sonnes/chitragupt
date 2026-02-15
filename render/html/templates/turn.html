@@ -1,0 +1,40 @@
+{{define "turn.html"}}
+<div id="{{.ID}}" class="flex flex-col gap-4 scroll-mt-6">
+    {{/* User message */}}
+    {{if .User}}
+    <div class="ml-auto max-w-[85%]">
+        <div class="bg-blue-50 dark:bg-blue-950 border border-blue-200 dark:border-blue-800 rounded-2xl rounded-br-sm px-5 py-3">
+            <div class="flex flex-col gap-2">
+                {{range .User}}{{.}}{{end}}
+            </div>
+        </div>
+        {{if .Timestamp}}<div class="text-right text-xs text-slate-400 mt-1">{{formatTime .Timestamp}}</div>{{end}}
+    </div>
+    {{end}}
+
+    {{/* Collapsed steps */}}
+    {{if .Steps}}
+    <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden">
+        <details>
+            <summary class="px-5 py-3 flex items-center gap-3 cursor-pointer select-none hover:bg-slate-50 dark:hover:bg-slate-750">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-slate-400 shrink-0"><polyline points="9 18 15 12 9 6"/></svg>
+                <span class="text-sm font-medium text-slate-700 dark:text-slate-300">{{.StepCount}} Steps Completed</span>
+                {{if .Duration}}<span class="text-xs text-slate-400 bg-slate-100 dark:bg-slate-700 px-1.5 py-0.5 rounded">{{.Duration}}</span>{{end}}
+            </summary>
+            <div class="px-5 pb-4 flex flex-col gap-3 border-t border-slate-100 dark:border-slate-700 pt-3">
+                {{range .Steps}}{{.}}{{end}}
+            </div>
+        </details>
+    </div>
+    {{end}}
+
+    {{/* Visible response */}}
+    {{if .Response}}
+    <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-5 border-l-4 border-l-emerald-500">
+        <div class="flex flex-col gap-3">
+            {{range .Response}}{{.}}{{end}}
+        </div>
+    </div>
+    {{end}}
+</div>
+{{end}}

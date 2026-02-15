@@ -1,4 +1,4 @@
-// Package terminal renders transcripts as ANSI-colored message cards.
+// Package terminal renders transcripts as ANSI-colored turn cards.
 package terminal
 
 import (
@@ -15,7 +15,7 @@ import (
 
 const defaultWidth = 100
 
-// Renderer pretty-prints a transcript as message cards to the terminal.
+// Renderer pretty-prints a transcript as turn cards to the terminal.
 type Renderer struct {
 	// Width overrides terminal width detection. Zero means auto-detect.
 	Width int
@@ -26,35 +26,36 @@ func New() *Renderer {
 	return &Renderer{}
 }
 
-// Render writes the transcript as ANSI-colored message cards to w.
+// Render writes the transcript as ANSI-colored turn cards to w.
 func (r *Renderer) Render(w io.Writer, t *core.Transcript) error {
 	width := r.termWidth()
+	contentWidth := width - 4
+	if contentWidth < 40 {
+		contentWidth = 40
+	}
 
 	writeHeader(w, t)
 
-	// Build tool_result index: tool_use_id → tool_result block.
-	consumed := make(map[string]bool)
-	for _, msg := range t.Messages {
-		for _, b := range msg.Content {
-			if b.Type == core.BlockToolResult && b.ToolUseID != "" {
-				// Pre-mark results that will be consumed by their tool_use.
-				consumed[b.ToolUseID] = false
-			}
-		}
-	}
-
+	turns := core.GroupTurns(t.Messages)
 	var prevTimestamp *time.Time
 
-	for _, msg := range t.Messages {
-		var duration string
-		if msg.Timestamp != nil && prevTimestamp != nil {
-			duration = formatDuration(msg.Timestamp.Sub(*prevTimestamp))
-		}
-		if msg.Timestamp != nil {
-			prevTimestamp = msg.Timestamp
+	for _, turn := range turns {
+		var ts *time.Time
+		if turn.UserMessage != nil {
+			ts = turn.UserMessage.Timestamp
+		} else if len(turn.AssistantMessages) > 0 {
+			ts = turn.AssistantMessages[0].Timestamp
 		}
 
-		writeMessage(w, msg, duration, consumed, width)
+		var duration string
+		if ts != nil && prevTimestamp != nil {
+			duration = formatDuration(ts.Sub(*prevTimestamp))
+		}
+		if ts != nil {
+			prevTimestamp = ts
+		}
+
+		writeTurn(w, turn, duration, contentWidth, width)
 	}
 
 	fmt.Fprintln(w)
@@ -163,96 +164,74 @@ func writeSeparator(w io.Writer, width int) {
 	fmt.Fprintln(w, styleSeparator.Render(strings.Repeat("─", n)))
 }
 
-// writeMessage renders a single message card: role badge, metadata, content blocks.
-func writeMessage(w io.Writer, msg core.Message, duration string, consumed map[string]bool, width int) bool {
-	contentWidth := width - 4
-	if contentWidth < 40 {
-		contentWidth = 40
-	}
+// writeTurn renders a full turn: user prompt, steps summary, and response.
+func writeTurn(w io.Writer, turn core.Turn, duration string, contentWidth, width int) {
+	// User message.
+	if turn.UserMessage != nil {
+		writeSeparator(w, width)
 
-	var lines []string
-	for _, b := range msg.Content {
-		switch b.Type {
-		case core.BlockText:
-			text := strings.TrimSpace(b.Text)
-			if text != "" {
-				lines = append(lines, truncate(text, contentWidth))
-			}
-		case core.BlockThinking:
-			lines = append(lines, styleThinking.Render("▸ Thinking..."))
-		case core.BlockToolUse:
-			if b.ToolUseID != "" {
-				consumed[b.ToolUseID] = true
-			}
-			name := b.Name
-			if name == "" {
-				name = "tool"
-			}
-			summary := extractToolSummary(strings.ToLower(name), b.Input)
-			toolLine := styleToolName.Render("⚙ " + name)
-			if summary != "" {
-				nameWidth := lipgloss.Width("⚙ " + name + "  ")
-				toolLine += "  " + styleToolDetail.Render(truncate(summary, contentWidth-nameWidth))
-			}
-			lines = append(lines, toolLine)
-			if b.SubAgentRef != nil {
-				label := b.SubAgentRef.AgentID
-				if b.SubAgentRef.AgentName != "" {
-					label = b.SubAgentRef.AgentName
+		header := styleUserBadge.Render("USER")
+		var metaParts []string
+		if turn.UserMessage.Timestamp != nil {
+			metaParts = append(metaParts, formatTime(*turn.UserMessage.Timestamp))
+		}
+		if duration != "" {
+			metaParts = append(metaParts, duration)
+		}
+		if len(metaParts) > 0 {
+			header += "    " + styleMeta.Render(strings.Join(metaParts, "    "))
+		}
+		fmt.Fprintln(w)
+		fmt.Fprintln(w, " "+header)
+
+		for _, b := range turn.UserMessage.Content {
+			if b.Type == core.BlockText {
+				text := core.CleanUserText(b.Text)
+				if text != "" {
+					fmt.Fprintln(w, "  "+truncate(text, contentWidth))
 				}
-				subLine := "  → " + label
-				if b.SubAgentRef.AgentType != "" {
-					subLine += " (" + b.SubAgentRef.AgentType + ")"
-				}
-				lines = append(lines, styleToolDetail.Render(subLine))
 			}
-		case core.BlockToolResult:
-			if consumed[b.ToolUseID] {
-				continue
-			}
-			lines = append(lines, styleToolDetail.Render(truncate(b.Content, contentWidth)))
 		}
 	}
 
-	if len(lines) == 0 {
-		return false
+	steps, response := turn.SplitContent()
+	stepCount := turn.StepCount()
+
+	// Steps summary line.
+	if stepCount > 0 {
+		var toolNames []string
+		for _, b := range steps {
+			if b.Type == core.BlockToolUse {
+				toolNames = append(toolNames, summarizeToolUse(b))
+			}
+		}
+
+		writeSeparator(w, width)
+		fmt.Fprintln(w)
+
+		label := fmt.Sprintf("  %d steps", stepCount)
+		fmt.Fprintln(w, styleAssistantBadge.Render(label))
+
+		for _, tl := range toolNames {
+			fmt.Fprintln(w, "  "+styleToolDetail.Render(tl))
+		}
 	}
 
-	writeSeparator(w, width)
-
-	badge := roleBadge(msg.Role)
-	var metaParts []string
-	if msg.Timestamp != nil {
-		metaParts = append(metaParts, formatTime(*msg.Timestamp))
-	}
-	if duration != "" {
-		metaParts = append(metaParts, duration)
-	}
-	header := badge
-	if len(metaParts) > 0 {
-		header += "    " + styleMeta.Render(strings.Join(metaParts, "    "))
-	}
-	fmt.Fprintln(w)
-	fmt.Fprintln(w, " "+header)
-
-	for _, line := range lines {
-		fmt.Fprintln(w, "  "+line)
-	}
-
-	return true
-}
-
-func roleBadge(role core.Role) string {
-	label := strings.ToUpper(string(role))
-	switch role {
-	case core.RoleUser:
-		return styleUserBadge.Render(label)
-	case core.RoleAssistant:
-		return styleAssistantBadge.Render(label)
-	case core.RoleSystem:
-		return styleSystemBadge.Render(label)
-	default:
-		return styleMeta.Render(label)
+	// Response.
+	if len(response) > 0 {
+		if stepCount == 0 {
+			writeSeparator(w, width)
+			fmt.Fprintln(w)
+			fmt.Fprintln(w, " "+styleAssistantBadge.Render("ASSISTANT"))
+		}
+		for _, b := range response {
+			if b.Type == core.BlockText {
+				text := strings.TrimSpace(b.Text)
+				if text != "" {
+					fmt.Fprintln(w, "  "+truncate(text, contentWidth))
+				}
+			}
+		}
 	}
 }
 

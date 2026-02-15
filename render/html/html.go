@@ -7,7 +7,6 @@ import (
 	"html/template"
 	"io"
 	"sort"
-	"strings"
 	"time"
 
 	"github.com/sonnes/chitragupt/core"
@@ -60,23 +59,20 @@ func New() *Renderer {
 // pageData is the top-level template data passed to page.html.
 type pageData struct {
 	Transcript      *core.Transcript
-	Messages        []messageData
+	Turns           []turnData
 	OverallDuration string // total session duration (e.g. "2m 30s")
 }
 
-// messageData is the per-message template data passed to message.html.
-type messageData struct {
-	ID          string // anchor ID for timeline links (e.g. "msg-0")
-	Message     core.Message
-	RoleLabel   string
-	BorderClass string
-	BadgeClass  string
-	DotClass    string // timeline dot color class
-	Timestamp   *time.Time
-	Duration    string   // time since previous message (e.g. "4s")
-	Summary     string   // short text description for timeline sidebar
-	Tools       []string // tool names used in this message (for timeline icons)
-	Blocks      []template.HTML
+// turnData groups a user prompt with its assistant response cycle.
+type turnData struct {
+	ID        string          // anchor ID (e.g. "turn-0")
+	User      []template.HTML // rendered user message blocks (nil if turn starts with assistant)
+	UserText  string          // raw user text for timeline summary
+	Timestamp *time.Time      // user message timestamp (or first assistant timestamp)
+	Duration  string          // time since previous turn
+	Steps     []template.HTML // rendered intermediate blocks (collapsed)
+	StepCount int             // number of tool invocations
+	Response  []template.HTML // rendered final text blocks (visible)
 }
 
 // indexData is the template data passed to index.html.
@@ -109,65 +105,61 @@ func (r *Renderer) Render(w io.Writer, t *core.Transcript) error {
 
 	consumed := make(map[string]bool)
 
+	turns := core.GroupTurns(t.Messages)
 	var prevTimestamp *time.Time
-	var messages []messageData
-	for i, msg := range t.Messages {
-		md := messageData{
-			ID:          fmt.Sprintf("msg-%d", i),
-			Message:     msg,
-			RoleLabel:   roleLabel(msg.Role),
-			BorderClass: borderClass(msg.Role),
-			BadgeClass:  badgeClass(msg.Role),
-			DotClass:    dotClass(msg.Role),
-			Timestamp:   msg.Timestamp,
-		}
-		if msg.Timestamp != nil && prevTimestamp != nil {
-			md.Duration = formatDuration(msg.Timestamp.Sub(*prevTimestamp))
-		}
-		if msg.Timestamp != nil {
-			prevTimestamp = msg.Timestamp
-		}
-		md.Summary, md.Tools = messageSummary(msg)
+	var turnDatas []turnData
 
-		hasContent := false
-		for _, b := range msg.Content {
-			switch b.Type {
-			case core.BlockToolUse:
-				var result *core.ContentBlock
-				if tr, ok := resultIndex[b.ToolUseID]; ok {
-					result = &tr
-					consumed[b.ToolUseID] = true
-				}
-				rendered, err := r.renderBlock(b, result)
-				if err != nil {
-					return fmt.Errorf("render tool_use block: %w", err)
-				}
-				md.Blocks = append(md.Blocks, rendered)
-				hasContent = true
+	for i, turn := range turns {
+		td := turnData{ID: fmt.Sprintf("turn-%d", i)}
 
-			case core.BlockToolResult:
-				if consumed[b.ToolUseID] {
-					continue
-				}
+		// Render user message blocks.
+		if turn.UserMessage != nil {
+			td.Timestamp = turn.UserMessage.Timestamp
+			td.UserText = userTextSummary(*turn.UserMessage)
+			for _, b := range turn.UserMessage.Content {
 				rendered, err := r.renderBlock(b, nil)
 				if err != nil {
-					return fmt.Errorf("render tool_result block: %w", err)
+					return fmt.Errorf("render user block: %w", err)
 				}
-				md.Blocks = append(md.Blocks, rendered)
-				hasContent = true
+				td.User = append(td.User, rendered)
+			}
+		} else if len(turn.AssistantMessages) > 0 {
+			td.Timestamp = turn.AssistantMessages[0].Timestamp
+		}
 
-			default:
-				rendered, err := r.renderBlock(b, nil)
-				if err != nil {
-					return fmt.Errorf("render %s block: %w", b.Type, err)
-				}
-				md.Blocks = append(md.Blocks, rendered)
-				hasContent = true
+		if td.Timestamp != nil && prevTimestamp != nil {
+			td.Duration = formatDuration(td.Timestamp.Sub(*prevTimestamp))
+		}
+		if td.Timestamp != nil {
+			prevTimestamp = td.Timestamp
+		}
+
+		// Split assistant content into steps and response.
+		steps, response := turn.SplitContent()
+		td.StepCount = turn.StepCount()
+
+		for _, b := range steps {
+			rendered, err := r.renderContentBlock(b, resultIndex, consumed)
+			if err != nil {
+				return err
+			}
+			if rendered != "" {
+				td.Steps = append(td.Steps, rendered)
 			}
 		}
 
-		if hasContent {
-			messages = append(messages, md)
+		for _, b := range response {
+			rendered, err := r.renderContentBlock(b, resultIndex, consumed)
+			if err != nil {
+				return err
+			}
+			if rendered != "" {
+				td.Response = append(td.Response, rendered)
+			}
+		}
+
+		if len(td.User) > 0 || len(td.Steps) > 0 || len(td.Response) > 0 {
+			turnDatas = append(turnDatas, td)
 		}
 	}
 
@@ -178,87 +170,47 @@ func (r *Renderer) Render(w io.Writer, t *core.Transcript) error {
 
 	data := pageData{
 		Transcript:      t,
-		Messages:        messages,
+		Turns:           turnDatas,
 		OverallDuration: overallDuration,
 	}
 	return r.tmpl.ExecuteTemplate(w, "page.html", data)
 }
 
-func roleLabel(role core.Role) string {
-	switch role {
-	case core.RoleUser:
-		return "User"
-	case core.RoleAssistant:
-		return "Assistant"
-	case core.RoleSystem:
-		return "System"
-	default:
-		return string(role)
-	}
-}
-
-func borderClass(role core.Role) string {
-	switch role {
-	case core.RoleUser:
-		return "border-l-4 border-l-blue-500"
-	case core.RoleAssistant:
-		return "border-l-4 border-l-emerald-500"
-	case core.RoleSystem:
-		return "border-l-4 border-l-slate-400"
-	default:
-		return ""
-	}
-}
-
-func badgeClass(role core.Role) string {
-	switch role {
-	case core.RoleUser:
-		return "text-blue-700 dark:text-blue-400 bg-blue-50 dark:bg-blue-950"
-	case core.RoleAssistant:
-		return "text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950"
-	case core.RoleSystem:
-		return "text-slate-600 dark:text-slate-400 bg-slate-100 dark:bg-slate-800"
-	default:
-		return ""
-	}
-}
-
-func dotClass(role core.Role) string {
-	switch role {
-	case core.RoleUser:
-		return "bg-blue-500"
-	case core.RoleAssistant:
-		return "bg-emerald-500"
-	case core.RoleSystem:
-		return "bg-slate-400"
-	default:
-		return "bg-slate-300"
-	}
-}
-
-// messageSummary returns a short text summary and list of tool names for the timeline.
-func messageSummary(msg core.Message) (string, []string) {
-	var summary string
-	var tools []string
-	for _, b := range msg.Content {
-		switch b.Type {
-		case core.BlockText:
-			if summary == "" {
-				text := strings.TrimSpace(b.Text)
-				if text == "" || strings.HasPrefix(text, "<ide_") || strings.HasPrefix(text, "<system-reminder>") {
-					continue
-				}
-				if len(text) > 50 {
-					text = text[:47] + "..."
-				}
-				summary = text
-			}
-		case core.BlockToolUse:
-			tools = append(tools, b.Name)
+// renderContentBlock renders a single content block, handling tool_use/result pairing.
+func (r *Renderer) renderContentBlock(b core.ContentBlock, resultIndex map[string]core.ContentBlock, consumed map[string]bool) (template.HTML, error) {
+	switch b.Type {
+	case core.BlockToolUse:
+		var result *core.ContentBlock
+		if tr, ok := resultIndex[b.ToolUseID]; ok {
+			result = &tr
+			consumed[b.ToolUseID] = true
 		}
+		return r.renderBlock(b, result)
+	case core.BlockToolResult:
+		if consumed[b.ToolUseID] {
+			return "", nil
+		}
+		return r.renderBlock(b, nil)
+	default:
+		return r.renderBlock(b, nil)
 	}
-	if summary == "" && len(tools) > 0 {
-		summary = strings.Join(tools, ", ")
-	}
-	return summary, tools
 }
+
+// userTextSummary extracts a short text summary from a user message for the timeline.
+func userTextSummary(msg core.Message) string {
+	for _, b := range msg.Content {
+		if b.Type != core.BlockText {
+			continue
+		}
+		text := core.CleanUserText(b.Text)
+		if text == "" {
+			continue
+		}
+		if len(text) > 80 {
+			text = text[:77] + "..."
+		}
+		return text
+	}
+	return ""
+}
+
