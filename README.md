@@ -17,9 +17,7 @@ go install github.com/sonnes/chitragupt/cmd/cg@latest
 Or build from source:
 
 ```sh
-create an Integration with git.
-
-Create  build
+make build
 ```
 
 ## Usage
@@ -42,6 +40,18 @@ Render all sessions in a project:
 cg render --agent claude --project <project-name>
 ```
 
+Render all sessions across all projects:
+
+```sh
+cg render --agent claude --all
+```
+
+Write output to a directory (generates `index.html` + per-agent files):
+
+```sh
+cg render --agent claude --project <project-name> --format html --out .transcripts
+```
+
 ### Output formats
 
 ```sh
@@ -53,7 +63,7 @@ cg render --agent claude --file session.jsonl --format json
 
 ### Redaction
 
-Secrets and PII are redacted by default. To disable:
+Secrets (API keys, tokens, connection strings) and PII (emails, phone numbers, IP addresses, filesystem paths) are redacted by default. Home directory paths are replaced with `~/…` to strip usernames while keeping transcripts readable. To disable:
 
 ```sh
 cg render --agent claude --file session.jsonl --no-redact
@@ -78,6 +88,32 @@ Also strip thinking blocks:
 
 ```sh
 cg render --agent claude --file session.jsonl --compact=no-thinking
+```
+
+### Serve
+
+Browse sessions in a local web UI:
+
+```sh
+cg serve --agent claude --project <project-name>
+cg serve --agent claude --all
+cg serve --agent claude --port 3000
+```
+
+### Git integration
+
+Set up automatic transcript capture on every commit:
+
+```sh
+cg install --agent claude --format html
+```
+
+This creates an orphan branch and git worktree in the`.transcripts/` directory and installs hooks to automatically render and commit transcripts when you commit code.
+
+Publish to GitHub/GitLab/etc. pages by passing the `--branch <branch-name>` flag.
+
+```sh
+cg install --agent claude --format html --branch gh-pages
 ```
 
 ## Architecture

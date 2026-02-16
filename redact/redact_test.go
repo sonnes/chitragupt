@@ -1,10 +1,13 @@
 package redact
 
 import (
+	"os"
 	"testing"
 	"time"
 
 	"github.com/sonnes/chitragupt/core"
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestAWSKeyDetection(t *testing.T) {
@@ -198,6 +201,92 @@ func TestPhoneDetection(t *testing.T) {
 			t.Errorf("input %q: expected 1 match, got %d", input, len(matches))
 		}
 	}
+}
+
+func TestFsPathDetection(t *testing.T) {
+	home, err := os.UserHomeDir()
+	require.NoError(t, err, "need home dir for this test")
+
+	rules := PIIRules()
+	var r Rule
+	for _, rule := range rules {
+		if rule.Name() == "fs_path" {
+			r = rule
+			break
+		}
+	}
+	require.NotNil(t, r, "fs_path rule not found")
+
+	tests := []struct {
+		name  string
+		input string
+		want  []string
+		rep   []string
+	}{
+		{
+			name:  "path with subdir",
+			input: "reading " + home + "/code/project/main.go",
+			want:  []string{home + "/code/project/main.go"},
+			rep:   []string{"~/code/project/main.go"},
+		},
+		{
+			name:  "home dir alone",
+			input: "cwd: " + home,
+			want:  []string{home},
+			rep:   []string{"~"},
+		},
+		{
+			name:  "path with parenthetical suffix",
+			input: home + "/work/project(main)",
+			want:  []string{home + "/work/project(main)"},
+			rep:   []string{"~/work/project(main)"},
+		},
+		{
+			name:  "no match on relative path",
+			input: "relative/path/file.go",
+			want:  nil,
+		},
+		{
+			name:  "multiple paths",
+			input: home + "/a " + home + "/b",
+			want:  []string{home + "/a", home + "/b"},
+			rep:   []string{"~/a", "~/b"},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			matches := r.Detect(tt.input)
+			if tt.want == nil {
+				assert.Empty(t, matches)
+				return
+			}
+			require.Len(t, matches, len(tt.want))
+			for i, m := range matches {
+				assert.Equal(t, tt.want[i], m.Value)
+				assert.Equal(t, tt.rep[i], r.Replacement(m))
+			}
+		})
+	}
+}
+
+func TestTransformRedactsMetadata(t *testing.T) {
+	home, err := os.UserHomeDir()
+	require.NoError(t, err)
+
+	transcript := &core.Transcript{
+		SessionID: "test",
+		Agent:     "claude",
+		Dir:       home + "/work/project",
+		Title:     "Editing " + home + "/work/project/main.go",
+		CreatedAt: time.Now(),
+		Messages:  []core.Message{},
+	}
+
+	r := New(Config{PII: true})
+	require.NoError(t, r.Transform(transcript))
+
+	assert.Equal(t, "~/work/project", transcript.Dir)
+	assert.Equal(t, "Editing ~/work/project/main.go", transcript.Title)
 }
 
 func TestWalkAnyStrings(t *testing.T) {

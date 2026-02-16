@@ -94,14 +94,23 @@ type Redactor struct {
 func New(cfg Config) *Redactor { ... }
 
 func (r *Redactor) Transform(t *core.Transcript) error {
+    t.Dir = r.redactString(t.Dir)
+    t.Title = r.redactString(t.Title)
     for i := range t.Messages {
         for j := range t.Messages[i].Content {
             r.redactBlock(&t.Messages[i].Content[j])
         }
     }
+    for _, sub := range t.SubAgents {
+        if err := r.Transform(sub); err != nil {
+            return err
+        }
+    }
     return nil
 }
 ```
+
+Transcript metadata fields (`Dir`, `Title`) are redacted first since they may contain filesystem paths with usernames. Sub-agent transcripts are processed recursively.
 
 ### Block-level redaction
 
@@ -134,12 +143,12 @@ Tool inputs require recursive walking because `.Input` is `any` (typically `map[
 
 ### PII (on by default)
 
-| Rule         | Pattern                              |
-| ------------ | ------------------------------------ |
-| Email        | RFC 5322 simplified                  |
-| IPv4 address | `\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}` |
-| IPv6 address | Standard IPv6 patterns               |
-| Phone number | Common formats with country codes    |
+| Rule            | Pattern                                           |
+| --------------- | ------------------------------------------------- |
+| Email           | RFC 5322 simplified                               |
+| IPv4 address    | `\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}`              |
+| Phone number    | Common formats with country codes                 |
+| Filesystem path | Absolute home directory paths (replaced with `~/…`) |
 
 PII detection is on by default. False positives in code-heavy transcripts (e.g., version numbers matching IP patterns, test data matching email patterns) can be handled via the allowlist.
 
@@ -154,9 +163,10 @@ sk-abc123...xyz                → [REDACTED:api_key]
 AKIAIOSFODNN7EXAMPLE           → [REDACTED:aws_key]
 user@example.com               → [REDACTED:email]
 -----BEGIN RSA PRIVATE KEY---- → [REDACTED:private_key]
+/Users/alice/code/project      → ~/code/project
 ```
 
-The rule's `Name()` populates the label. This preserves the transcript's narrative — you can still understand what the agent was doing without exposing the actual value.
+Most rules use the `[REDACTED:name]` pattern, where the rule's `Name()` populates the label. The filesystem path rule is an exception — it replaces the home directory prefix with `~` while preserving the relative path, keeping transcripts readable without exposing the local username.
 
 ---
 
