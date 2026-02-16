@@ -1,0 +1,25 @@
+{
+  "entries": [
+    {
+      "session_id": "2df198c7-c2fc-4724-91c1-cacb397d1f07",
+      "agent": "claude",
+      "author": "Ravi Atluri",
+      "model": "claude-opus-4-6",
+      "created_at": "2026-02-16T04:42:48.211Z",
+      "updated_at": "2026-02-16T04:45:28.859Z",
+      "usage": {
+        "input_tokens": 16,
+        "output_tokens": 538,
+        "cache_read_tokens": 440612,
+        "cache_creation_tokens": 43164
+      },
+      "diff_stats": {
+        "added": 17,
+        "removed": 11,
+        "changed": 1
+      },
+      "message_count": 12,
+      "href": "2df198c7-c2fc-4724-91c1-cacb397d1f07/index.html"
+    }
+  ]
+}
