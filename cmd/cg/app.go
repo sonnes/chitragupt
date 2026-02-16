@@ -2,6 +2,8 @@ package main
 
 import (
 	"fmt"
+	"path/filepath"
+	"strings"
 
 	"github.com/sonnes/chitragupt/core"
 	"github.com/sonnes/chitragupt/reader"
@@ -90,6 +92,12 @@ func readTranscripts(r reader.Reader, cmd *cli.Command) ([]*core.Transcript, err
 		}
 		return []*core.Transcript{t}, nil
 	case project != "":
+		project, err := filepath.Abs(project)
+		if err != nil {
+			return nil, err
+		}
+
+		project = strings.ReplaceAll(project, "/", "-")
 		return r.ReadProject(project)
 	default:
 		return r.ReadAll()

@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"html/template"
 	"io"
-	"sort"
 	"time"
 
 	"github.com/sonnes/chitragupt/core"
@@ -77,18 +76,12 @@ type turnData struct {
 
 // indexData is the template data passed to index.html.
 type indexData struct {
-	Transcripts []*core.Transcript
+	Entries []core.ManifestEntry
 }
 
-// RenderIndex writes an HTML index page listing the given transcripts to w.
-// Transcripts are sorted newest-first by CreatedAt.
-func (r *Renderer) RenderIndex(w io.Writer, transcripts []*core.Transcript) error {
-	sorted := make([]*core.Transcript, len(transcripts))
-	copy(sorted, transcripts)
-	sort.Slice(sorted, func(i, j int) bool {
-		return sorted[i].CreatedAt.After(sorted[j].CreatedAt)
-	})
-	return r.tmpl.ExecuteTemplate(w, "index.html", indexData{Transcripts: sorted})
+// RenderIndex writes an HTML index page listing the given manifest entries to w.
+func (r *Renderer) RenderIndex(w io.Writer, entries []core.ManifestEntry) error {
+	return r.tmpl.ExecuteTemplate(w, "index.html", indexData{Entries: entries})
 }
 
 // Render writes the transcript as a complete HTML page to w.

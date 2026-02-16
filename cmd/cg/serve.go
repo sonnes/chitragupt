@@ -114,9 +114,14 @@ func serveCmd() *cli.Command {
 
 			mux := http.NewServeMux()
 
+			entries := make([]core.ManifestEntry, len(transcripts))
+			for i, t := range transcripts {
+				entries[i] = core.NewManifestEntry(t, "/session/"+t.SessionID)
+			}
+
 			mux.HandleFunc("GET /", func(w http.ResponseWriter, req *http.Request) {
 				w.Header().Set("Content-Type", "text/html; charset=utf-8")
-				if err := renderer.RenderIndex(w, transcripts); err != nil {
+				if err := renderer.RenderIndex(w, entries); err != nil {
 					slog.Error("render index", "error", err)
 					http.Error(w, "internal server error", http.StatusInternalServerError)
 				}

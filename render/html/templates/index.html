@@ -16,12 +16,12 @@
 <body class="bg-slate-50 dark:bg-slate-900 text-slate-700 dark:text-slate-300 font-sans" style="line-height: 1.65; padding: 48px 24px;">
     <div class="max-w-3xl mx-auto">
         <h1 class="text-3xl font-bold text-slate-900 dark:text-white mb-8">Sessions</h1>
-        {{if not .Transcripts}}
+        {{if not .Entries}}
         <p class="text-slate-500 dark:text-slate-400">No sessions found.</p>
         {{else}}
         <div class="flex flex-col gap-3">
-            {{range .Transcripts}}
-            <a href="/session/{{.SessionID}}" class="block no-underline group">
+            {{range .Entries}}
+            <a href="{{.Href}}" class="block no-underline group">
                 <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-5 hover:border-slate-400 dark:hover:border-slate-500 transition-colors">
                     <!-- Row 1: Title + Diff Stats -->
                     <div class="flex items-baseline gap-3 mb-2">
@@ -62,7 +62,7 @@
                         </span>
                         {{end}}
                         <span class="text-slate-400 dark:text-slate-500">
-                            {{len .Messages}} messages
+                            {{.MessageCount}} messages
                         </span>
                     </div>
                 </div>

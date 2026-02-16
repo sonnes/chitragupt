@@ -1,6 +1,5 @@
 # Binaries
 chitragupt
-cg
 html_render
 *.exe
 *.dll
@@ -9,7 +8,7 @@ html_render
 
 # Build output
 dist/
-bin/
+.bin/
 
 # Test
 *.test
@@ -26,3 +25,4 @@ coverage.txt
 # OS
 .DS_Store
 Thumbs.db
+.transcripts/

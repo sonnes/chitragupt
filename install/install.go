@@ -15,10 +15,10 @@ import (
 
 // Config holds the settings for the install command.
 type Config struct {
-	Agent  string // agent name, e.g. "claude"
-	Format string // transcript format, e.g. "jsonl"
-	Branch string // orphan branch name, e.g. "transcripts"
-	Dir    string // git repository root (auto-detected if empty)
+	Agent   string   // agent name, e.g. "claude"
+	Formats []string // output formats, e.g. ["html", "jsonl"]
+	Branch  string   // orphan branch name, e.g. "transcripts"
+	Dir     string   // git repository root (auto-detected if empty)
 }
 
 // Run executes the full install sequence.
@@ -41,10 +41,10 @@ func Run(cfg Config) error {
 		name string
 		fn   func() error
 	}{
-		{"create orphan branch", func() error { return createOrphanBranch(cfg.Dir, cfg.Branch, cfg.Agent) }},
+		{"create orphan branch", func() error { return createOrphanBranch(cfg.Dir, cfg.Branch) }},
 		{"add git worktree", func() error { return addWorktree(cfg.Dir, cfg.Branch, worktreeDir) }},
 		{"update .gitignore", func() error { return ensureGitignore(cfg.Dir) }},
-		{"install Claude Code hook", func() error { return installClaudeHook(cfg.Dir, cfg.Agent, cfg.Format) }},
+		{"install Claude Code hook", func() error { return installClaudeHook(cfg.Dir, cfg.Agent, cfg.Formats) }},
 		{"install git post-commit hook", func() error { return installPostCommitHook(cfg.Dir) }},
 	}
 
@@ -66,9 +66,8 @@ func gitRoot() (string, error) {
 	return strings.TrimSpace(string(out)), nil
 }
 
-// createOrphanBranch creates an empty orphan branch with an initial directory
-// for the agent (e.g. claude/).
-func createOrphanBranch(repoDir, branch, agent string) error {
+// createOrphanBranch creates an empty orphan branch with a .gitkeep placeholder.
+func createOrphanBranch(repoDir, branch string) error {
 	// Check if branch already exists
 	if err := git(repoDir, "rev-parse", "--verify", branch); err == nil {
 		return nil // branch exists, skip
@@ -94,12 +93,8 @@ func createOrphanBranch(repoDir, branch, agent string) error {
 	// no tracked files (e.g. the repo only has --allow-empty commits).
 	_ = git(tmpDir, "rm", "-rf", "--ignore-unmatch", ".")
 
-	// Create the agent directory with a .gitkeep
-	agentDir := filepath.Join(tmpDir, agent)
-	if err := os.MkdirAll(agentDir, 0o755); err != nil {
-		return err
-	}
-	if err := os.WriteFile(filepath.Join(agentDir, ".gitkeep"), nil, 0o644); err != nil {
+	// Create a .gitkeep so the branch isn't empty
+	if err := os.WriteFile(filepath.Join(tmpDir, ".gitkeep"), nil, 0o644); err != nil {
 		return err
 	}
 
@@ -167,7 +162,7 @@ type hookHandler struct {
 
 // installClaudeHook adds a SessionEnd hook to .claude/settings.json that renders
 // the session transcript via `cg render` and writes it to .transcripts/<agent>/.
-func installClaudeHook(repoDir, agent, format string) error {
+func installClaudeHook(repoDir, agent string, formats []string) error {
 	// Write the hook script
 	hookDir := filepath.Join(repoDir, ".claude", "hooks")
 	if err := os.MkdirAll(hookDir, 0o755); err != nil {
@@ -175,7 +170,7 @@ func installClaudeHook(repoDir, agent, format string) error {
 	}
 
 	scriptPath := filepath.Join(hookDir, "save-transcript.sh")
-	script := buildSaveTranscriptScript(agent, format)
+	script := buildSaveTranscriptScript(agent, formats)
 	if err := os.WriteFile(scriptPath, []byte(script), 0o755); err != nil {
 		return err
 	}
@@ -313,10 +308,25 @@ func formatExtension(format string) string {
 	}
 }
 
-// buildSaveTranscriptScript generates the hook script with the agent and format
-// baked in so the SessionEnd hook calls `cg render` with the right flags.
-func buildSaveTranscriptScript(agent, format string) string {
-	ext := formatExtension(format)
+// buildSaveTranscriptScript generates the hook script with the agent and formats
+// baked in so the SessionEnd hook calls `cg render` with the right flags,
+// then updates the manifest.
+func buildSaveTranscriptScript(agent string, formats []string) string {
+	// Build --format flags for cg render.
+	var formatFlags string
+	for _, f := range formats {
+		formatFlags += " --format " + f
+	}
+
+	// Determine the href extension: prefer html if present, else first format.
+	hrefExt := formatExtension(formats[0])
+	for _, f := range formats {
+		if f == "html" {
+			hrefExt = ".html"
+			break
+		}
+	}
+
 	return fmt.Sprintf(`#!/bin/bash
 # Installed by cg install — renders Claude Code session transcripts to .transcripts/
 set -e
@@ -333,14 +343,17 @@ if [ ! -f "$TRANSCRIPT_PATH" ]; then
   exit 0
 fi
 
-DEST_DIR="$CLAUDE_PROJECT_DIR/.transcripts/%s"
+DEST_DIR="$CLAUDE_PROJECT_DIR/.transcripts"
 if [ ! -d "$DEST_DIR" ]; then
   exit 0
 fi
 
-DEST="$DEST_DIR/$SESSION_ID%s"
-cg render --agent %s --file "$TRANSCRIPT_PATH" --format %s > "$DEST"
-`, agent, ext, agent, format)
+cg render --agent %s --file "$TRANSCRIPT_PATH"%s --out "$DEST_DIR/$SESSION_ID"
+
+cg manifest upsert --agent %s --file "$TRANSCRIPT_PATH" \
+  --manifest "$CLAUDE_PROJECT_DIR/.transcripts/manifest.json" \
+  --href "$SESSION_ID/index%s"
+`, agent, formatFlags, agent, hrefExt)
 }
 
 const postCommitHookScript = `
@@ -350,6 +363,9 @@ const postCommitHookScript = `
 REPO_ROOT="$(git rev-parse --show-toplevel)"
 WORKTREE="$REPO_ROOT/.transcripts"
 if [ -d "$WORKTREE/.git" ] || [ -f "$WORKTREE/.git" ]; then
+  # Regenerate index from manifest.
+  cg index --dir "$WORKTREE" 2>/dev/null || true
+
   MAIN_SHA="$(git rev-parse --short HEAD)"
   # Unset GIT_DIR/GIT_INDEX_FILE so git -C operates on the worktree's own repo,
   # not the parent repo that triggered this hook.

@@ -1,6 +1,6 @@
 .PHONY: build install test lint clean examples
 
-BIN := cg
+BIN := .bin/cg
 PKG := ./cmd/cg
 
 build:

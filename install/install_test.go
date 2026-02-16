@@ -34,10 +34,10 @@ func TestRun(t *testing.T) {
 	dir := initRepo(t)
 
 	cfg := Config{
-		Agent:  "claude",
-		Format: "jsonl",
-		Branch: "transcripts",
-		Dir:    dir,
+		Agent:   "claude",
+		Formats: []string{"html"},
+		Branch:  "transcripts",
+		Dir:     dir,
 	}
 
 	require.NoError(t, Run(cfg))
@@ -61,11 +61,9 @@ func TestRun(t *testing.T) {
 		assert.False(t, info.IsDir()) // file, not directory
 	})
 
-	t.Run("agent directory exists in worktree", func(t *testing.T) {
-		agentDir := filepath.Join(dir, ".transcripts", "claude")
-		info, err := os.Stat(agentDir)
-		require.NoError(t, err)
-		assert.True(t, info.IsDir())
+	t.Run("gitkeep exists in worktree", func(t *testing.T) {
+		_, err := os.Stat(filepath.Join(dir, ".transcripts", ".gitkeep"))
+		assert.NoError(t, err)
 	})
 
 	t.Run("gitignore updated", func(t *testing.T) {
@@ -85,8 +83,9 @@ func TestRun(t *testing.T) {
 		script, err := os.ReadFile(scriptPath)
 		require.NoError(t, err)
 		assert.Contains(t, string(script), "cg render --agent claude --file")
-		assert.Contains(t, string(script), "--format jsonl")
-		assert.Contains(t, string(script), ".jsonl")
+		assert.Contains(t, string(script), "--format html")
+		assert.Contains(t, string(script), "--out")
+		assert.Contains(t, string(script), "cg manifest upsert")
 
 		// settings.json has the hook
 		data, err := os.ReadFile(filepath.Join(dir, ".claude", "settings.json"))
@@ -101,6 +100,7 @@ func TestRun(t *testing.T) {
 		require.NoError(t, err)
 		assert.Contains(t, string(data), "cg-transcripts-start")
 		assert.Contains(t, string(data), "cg-transcripts-end")
+		assert.Contains(t, string(data), "cg index")
 
 		info, err := os.Stat(hookPath)
 		require.NoError(t, err)
@@ -112,10 +112,10 @@ func TestRunIdempotent(t *testing.T) {
 	dir := initRepo(t)
 
 	cfg := Config{
-		Agent:  "claude",
-		Format: "jsonl",
-		Branch: "transcripts",
-		Dir:    dir,
+		Agent:   "claude",
+		Formats: []string{"html"},
+		Branch:  "transcripts",
+		Dir:     dir,
 	}
 
 	require.NoError(t, Run(cfg))
@@ -188,7 +188,7 @@ func TestInstallClaudeHook(t *testing.T) {
 		dir := t.TempDir()
 		require.NoError(t, os.MkdirAll(filepath.Join(dir, ".claude"), 0o755))
 
-		require.NoError(t, installClaudeHook(dir, "claude", "jsonl"))
+		require.NoError(t, installClaudeHook(dir, "claude", []string{"jsonl"}))
 
 		data, err := os.ReadFile(filepath.Join(dir, ".claude", "settings.json"))
 		require.NoError(t, err)
@@ -210,7 +210,7 @@ func TestInstallClaudeHook(t *testing.T) {
 			0o644,
 		))
 
-		require.NoError(t, installClaudeHook(dir, "claude", "html"))
+		require.NoError(t, installClaudeHook(dir, "claude", []string{"html"}))
 
 		data, err := os.ReadFile(filepath.Join(claudeDir, "settings.json"))
 		require.NoError(t, err)
@@ -225,8 +225,8 @@ func TestInstallClaudeHook(t *testing.T) {
 		dir := t.TempDir()
 		require.NoError(t, os.MkdirAll(filepath.Join(dir, ".claude"), 0o755))
 
-		require.NoError(t, installClaudeHook(dir, "claude", "jsonl"))
-		require.NoError(t, installClaudeHook(dir, "claude", "jsonl"))
+		require.NoError(t, installClaudeHook(dir, "claude", []string{"jsonl"}))
+		require.NoError(t, installClaudeHook(dir, "claude", []string{"jsonl"}))
 
 		data, err := os.ReadFile(filepath.Join(dir, ".claude", "settings.json"))
 		require.NoError(t, err)
@@ -236,41 +236,49 @@ func TestInstallClaudeHook(t *testing.T) {
 		assert.Equal(t, 1, count)
 	})
 
-	t.Run("bakes format into script", func(t *testing.T) {
+	t.Run("bakes formats into script", func(t *testing.T) {
 		dir := t.TempDir()
 		require.NoError(t, os.MkdirAll(filepath.Join(dir, ".claude"), 0o755))
 
-		require.NoError(t, installClaudeHook(dir, "claude", "html"))
+		require.NoError(t, installClaudeHook(dir, "claude", []string{"html", "jsonl"}))
 
 		script, err := os.ReadFile(filepath.Join(dir, ".claude", "hooks", "save-transcript.sh"))
 		require.NoError(t, err)
 		assert.Contains(t, string(script), "cg render --agent claude --file")
 		assert.Contains(t, string(script), "--format html")
-		assert.Contains(t, string(script), ".html")
+		assert.Contains(t, string(script), "--format jsonl")
+		assert.Contains(t, string(script), "cg manifest upsert")
+		assert.Contains(t, string(script), "index.html")
 	})
 }
 
 func TestBuildSaveTranscriptScript(t *testing.T) {
-	tests := []struct {
-		name   string
-		agent  string
-		format string
-		ext    string
-	}{
-		{"jsonl", "claude", "jsonl", ".jsonl"},
-		{"html", "claude", "html", ".html"},
-		{"markdown", "claude", "markdown", ".md"},
-		{"json", "claude", "json", ".json"},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			script := buildSaveTranscriptScript(tt.agent, tt.format)
-			assert.Contains(t, script, "cg render --agent "+tt.agent+" --file")
-			assert.Contains(t, script, "--format "+tt.format)
-			assert.Contains(t, script, "$SESSION_ID"+tt.ext)
-			assert.Contains(t, script, ".transcripts/"+tt.agent)
-		})
-	}
+	t.Run("single format", func(t *testing.T) {
+		script := buildSaveTranscriptScript("claude", []string{"jsonl"})
+		assert.Contains(t, script, "cg render --agent claude --file")
+		assert.Contains(t, script, "--format jsonl")
+		assert.Contains(t, script, "--out")
+		assert.Contains(t, script, `DEST_DIR="$CLAUDE_PROJECT_DIR/.transcripts"`)
+		assert.Contains(t, script, "cg manifest upsert")
+		assert.Contains(t, script, "index.jsonl")
+	})
+
+	t.Run("multiple formats", func(t *testing.T) {
+		script := buildSaveTranscriptScript("claude", []string{"html", "jsonl"})
+		assert.Contains(t, script, "--format html")
+		assert.Contains(t, script, "--format jsonl")
+		assert.Contains(t, script, "--out")
+	})
+
+	t.Run("html preferred for href", func(t *testing.T) {
+		script := buildSaveTranscriptScript("claude", []string{"jsonl", "html"})
+		assert.Contains(t, script, "index.html", "href should prefer html even if not first")
+	})
+
+	t.Run("non-html href uses first format", func(t *testing.T) {
+		script := buildSaveTranscriptScript("claude", []string{"jsonl"})
+		assert.Contains(t, script, "index.jsonl")
+	})
 }
 
 func TestInstallPostCommitHook(t *testing.T) {
@@ -282,6 +290,7 @@ func TestInstallPostCommitHook(t *testing.T) {
 		require.NoError(t, err)
 		assert.True(t, strings.HasPrefix(string(data), "#!/bin/bash\n"))
 		assert.Contains(t, string(data), "cg-transcripts-start")
+		assert.Contains(t, string(data), "cg index")
 	})
 
 	t.Run("appends to existing hook", func(t *testing.T) {
@@ -314,16 +323,21 @@ func TestPostCommitHookAutoCommits(t *testing.T) {
 	dir := initRepo(t)
 
 	cfg := Config{
-		Agent:  "claude",
-		Format: "jsonl",
-		Branch: "transcripts",
-		Dir:    dir,
+		Agent:   "claude",
+		Formats: []string{"html"},
+		Branch:  "transcripts",
+		Dir:     dir,
 	}
 	require.NoError(t, Run(cfg))
 
 	// Simulate a transcript file being copied to the worktree
-	transcriptFile := filepath.Join(dir, ".transcripts", "claude", "test-session.jsonl")
-	require.NoError(t, os.WriteFile(transcriptFile, []byte(`{"type":"user"}`+"\n"), 0o644))
+	transcriptDir := filepath.Join(dir, ".transcripts", "test-session")
+	require.NoError(t, os.MkdirAll(transcriptDir, 0o755))
+	require.NoError(t, os.WriteFile(
+		filepath.Join(transcriptDir, "index.html"),
+		[]byte("<html>test</html>"),
+		0o644,
+	))
 
 	// Make a commit on the main branch — this triggers the post-commit hook
 	cmd := exec.Command("git", "commit", "--allow-empty", "-m", "trigger hook")

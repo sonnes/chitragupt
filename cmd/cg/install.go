@@ -20,14 +20,16 @@ After install, session transcripts are saved to .transcripts/<agent>/
 on a separate branch that does not pollute your main history.`,
 		Flags: []cli.Flag{
 			&cli.StringFlag{
-				Name:  "agent",
-				Usage: "Agent name (claude)",
-				Value: "claude",
+				Name:    "agent",
+				Usage:   "Agent name (claude)",
+				Value:   "claude",
+				Aliases: []string{"a"},
 			},
-			&cli.StringFlag{
-				Name:  "format",
-				Usage: "Transcript format (jsonl)",
-				Value: "jsonl",
+			&cli.StringSliceFlag{
+				Name:    "format",
+				Aliases: []string{"fmt"},
+				Usage:   "Output format(s): html, jsonl, json, markdown (repeatable)",
+				Value:   []string{"html"},
 			},
 			&cli.StringFlag{
 				Name:  "branch",
@@ -37,9 +39,9 @@ on a separate branch that does not pollute your main history.`,
 		},
 		Action: func(ctx context.Context, cmd *cli.Command) error {
 			cfg := install.Config{
-				Agent:  cmd.String("agent"),
-				Format: cmd.String("format"),
-				Branch: cmd.String("branch"),
+				Agent:   cmd.String("agent"),
+				Formats: cmd.StringSlice("format"),
+				Branch:  cmd.String("branch"),
 			}
 
 			if cfg.Agent != "claude" {
