@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>chitragupt</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style type="text/tailwindcss">
+        @theme {
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+    </style>
+    <style>
+         
+        .prose { font-size: 14px; line-height: 1.7; }
+        .prose p { margin-bottom: 12px; }
+        .prose p:last-child { margin-bottom: 0; }
+        .prose h1 { font-size: 24px; font-weight: 700; margin: 20px 0 12px; }
+        .prose h2 { font-size: 20px; font-weight: 600; margin: 16px 0 10px; }
+        .prose h3 { font-size: 16px; font-weight: 600; margin: 14px 0 8px; }
+        .prose strong { font-weight: 600; }
+        .prose em { font-style: italic; }
+        .prose code { font-family: ui-monospace, monospace; font-size: 12px; padding: 2px 6px; border-radius: 4px; background: #f1f5f9; }
+        .prose pre { margin: 12px 0; border-radius: 8px; overflow-x: auto; }
+        .prose pre code { padding: 0; background: transparent; }
+        .prose ul { list-style: disc; margin: 8px 0; padding-left: 24px; }
+        .prose ol { list-style: decimal; margin: 8px 0; padding-left: 24px; }
+        .prose li { margin-bottom: 4px; }
+        .prose blockquote { border-left: 3px solid #e2e8f0; padding-left: 12px; margin: 12px 0; color: #64748b; }
+        .prose a { color: #2563eb; text-decoration: underline; }
+        .prose table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 13px; }
+        .prose th { text-align: left; padding: 8px 12px; border-bottom: 2px solid #e2e8f0; font-weight: 600; }
+        .prose td { padding: 8px 12px; border-bottom: 1px solid #e2e8f0; }
+        .prose hr { border: none; border-top: 1px solid #e2e8f0; margin: 16px 0; }
+
+         
+        @media (prefers-color-scheme: dark) {
+            .prose code { background: #1e293b; }
+            .prose blockquote { border-color: #334155; color: #94a3b8; }
+            .prose th { border-color: #334155; }
+            .prose td { border-color: #334155; }
+            .prose hr { border-color: #334155; }
+            .prose a { color: #60a5fa; }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-700 dark:text-slate-300 font-sans" style="line-height: 1.65; padding: 48px 24px;">
+    <div class="max-w-6xl mx-auto flex gap-8">
+        
+        <div class="min-w-0 flex-1 max-w-3xl">
+            
+<header class="mb-10">
+  
+  <div class="flex items-baseline gap-4 mb-3">
+    <h1 class="text-3xl font-bold text-slate-900 dark:text-white">
+      Session a61ba3f
+    </h1>
+    
+  </div>
+
+  
+  <div class="flex flex-wrap items-center gap-4 text-sm text-slate-500 dark:text-slate-400 mb-6">
+    
+    <span class="flex items-center gap-1.5">
+      <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      <span class="font-medium">@claude</span>
+    </span>
+    
+
+    
+    <span class="flex items-center gap-1.5">
+      <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      2d ago
+    </span>
+    
+
+    
+    <span class="flex items-center gap-1.5">
+      <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+      claude-opus-4-6
+    </span>
+    
+
+    
+  </div>
+
+  
+  <div
+    class="flex flex-wrap gap-6 pt-4 border-t border-slate-200 dark:border-slate-700"
+  >
+    <div class="text-center">
+      <div class="text-lg font-bold text-slate-900 dark:text-white">
+        841
+      </div>
+      <div class="text-xs text-slate-500 uppercase">Input Tokens</div>
+    </div>
+    <div class="text-center">
+      <div class="text-lg font-bold text-slate-900 dark:text-white">
+        91
+      </div>
+      <div class="text-xs text-slate-500 uppercase">Output Tokens</div>
+    </div>
+    
+    <div class="text-center">
+      <div class="text-lg font-bold text-slate-900 dark:text-white">
+        579,388
+      </div>
+      <div class="text-xs text-slate-500 uppercase">Cache Read</div>
+    </div>
+     
+    <div class="text-center">
+      <div class="text-lg font-bold text-slate-900 dark:text-white">
+        80,791
+      </div>
+      <div class="text-xs text-slate-500 uppercase">Cache Write</div>
+    </div>
+    
+  </div>
+  
+</header>
+
+            <div class="flex flex-col gap-8">
+                
+<div id="turn-0" class="flex flex-col gap-4 scroll-mt-6">
+    
+    
+
+    
+    
+    <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden">
+        <details>
+            <summary class="px-5 py-3 flex items-center gap-3 cursor-pointer select-none hover:bg-slate-50 dark:hover:bg-slate-750">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-slate-400 shrink-0"><polyline points="9 18 15 12 9 6"/></svg>
+                <span class="text-sm font-medium text-slate-700 dark:text-slate-300">24 Steps Completed</span>
+                
+            </summary>
+            <div class="px-5 pb-4 flex flex-col gap-3 border-t border-slate-100 dark:border-slate-700 pt-3">
+                <div class="prose dark:prose-invert max-w-none"><p>I'll start by thoroughly exploring the existing codebase to understand the current implementations, patterns, and conventions before designing the Tree component.</p>
+</div><details class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden"><summary class="px-4 py-2 flex items-center gap-2 text-slate-900 dark:text-white cursor-pointer select-none min-w-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg><span class="text-xs font-semibold font-mono shrink-0">Bash</span> <span class="text-xs font-mono text-slate-500 dark:text-slate-400 truncate">ls ~/work/pi-mono/packages/tui/</span></summary><div class="px-4 py-3 text-xs overflow-x-auto"><pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;command&#34;</span>: <span style="color:#f1fa8c">&#34;ls ~/work/pi-mono/packages/tui/&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;description&#34;</span>: <span style="color:#f1fa8c">&#34;List TUI package root&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><div class="border-t border-slate-200 dark:border-slate-700"><pre class="px-4 py-3 text-xs font-mono overflow-x-auto max-h-96 overflow-y-auto">CHANGELOG.md
+README.md
+package.json
+src
+test
+tsconfig.build.json
+vitest.config.ts</pre></div></details><details class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden"><summary class="px-4 py-2 flex items-center gap-2 text-slate-900 dark:text-white cursor-pointer select-none min-w-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg><span class="text-xs font-semibold font-mono shrink-0">Bash</span> <span class="text-xs font-mono text-slate-500 dark:text-slate-400 truncate">ls ~/work/pi-mono/packages/tui/src/</span></summary><div class="px-4 py-3 text-xs overflow-x-auto"><pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;command&#34;</span>: <span style="color:#f1fa8c">&#34;ls ~/work/pi-mono/packages/tui/src/&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;description&#34;</span>: <span style="color:#f1fa8c">&#34;List TUI source directory&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><div class="border-t border-slate-200 dark:border-slate-700"><pre class="px-4 py-3 text-xs font-mono overflow-x-auto max-h-96 overflow-y-auto">autocomplete.ts
+components
+editor-component.ts
+fuzzy.ts
+index.ts
+keybindings.ts
+keys.ts
+kill-ring.ts
+stdin-buffer.ts
+terminal-image.ts
+terminal.ts
+tui.ts
+undo-stack.ts
+utils.ts</pre></div></details><details class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden"><summary class="px-4 py-2 flex items-center gap-2 text-slate-900 dark:text-white cursor-pointer select-none min-w-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><span class="text-xs font-semibold font-mono shrink-0">Glob</span> <span class="text-xs font-mono text-slate-500 dark:text-slate-400 truncate">**/*.ts</span></summary><div class="px-4 py-3 text-xs overflow-x-auto"><pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;path&#34;</span>: <span style="color:#f1fa8c">&#34;~/work/pi-mono/packages/tui/src&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;pattern&#34;</span>: <span style="color:#f1fa8c">&#34;**/*.ts&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><div class="border-t border-slate-200 dark:border-slate-700"><pre class="px-4 py-3 text-xs font-mono overflow-x-auto max-h-96 overflow-y-auto">~/work/pi-mono/packages/tui/src/autocomplete.ts
+~/work/pi-mono/packages/tui/src/components/box.ts
+~/work/pi-mono/packages/tui/src/components/cancellable-loader.ts
+~/work/pi-mono/packages/tui/src/components/editor.ts
+~/work/pi-mono/packages/tui/src/components/image.ts
+~/work/pi-mono/packages/tui/src/components/input.ts
+~/work/pi-mono/packages/tui/src/components/loader.ts
+~/work/pi-mono/packages/tui/src/components/markdown.ts
+~/work/pi-mono/packages/tui/src/components/select-list.ts
+~/work/pi-mono/packages/tui/src/components/settings-list.ts
+~/work/pi-mono/packages/tui/src/components/spacer.ts
+~/work/pi-mono/packages/tui/src/components/text.ts
+~/work/pi-mono/packages/tui/src/components/truncated-text.ts
+~/work/pi-mono/packages/tui/src/editor-component.ts
+~/work/pi-mono/packages/tui/src/fuzzy.ts
+~/work/pi-mono/packages/tui/src/index.ts
+~/work/pi-mono/packages/tui/src/keybindings.ts
+~/work/pi-mono/packages/tui/src/keys.ts
+~/work/pi-mono/packages/tui/src/kill-ring.ts
+~/work/pi-mono/packages/tui/src/stdin-buffer.ts
+~/work/pi-mono/packages/tui/src/terminal-image.ts
+~/work/pi-mono/packages/tui/src/terminal.ts
+~/work/pi-mono/packages/tui/src/tui.ts
+~/work/pi-mono/packages/tui/src/undo-stack.ts
+~/work/pi-mono/packages/tui/src/utils.ts</pre></div></details><details class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden"><summary class="px-4 py-2 flex items-center gap-2 text-slate-900 dark:text-white cursor-pointer select-none min-w-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg><span class="text-xs font-semibold font-mono shrink-0">Read</span> <span class="text-xs font-mono text-slate-500 dark:text-slate-400 truncate">~/work/pi-mono/packages/tui/src/index.ts</span></summary><div class="px-4 py-3 text-xs overflow-x-auto"><pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;file_path&#34;</span>: <span style="color:#f1fa8c">&#34;~/work/pi-mono/packages/tui/src/index.ts&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></details><details class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden"><summary class="px-4 py-2 flex items-center gap-2 text-slate-900 dark:text-white cursor-pointer select-none min-w-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg><span class="text-xs font-semibold font-mono shrink-0">Read</span> <span class="text-xs font-mono text-slate-500 dark:text-slate-400 truncate">~/work/pi-mono/packages/tui/src/tui.ts</span></summary><div class="px-4 py-3 text-xs overflow-x-auto"><pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;file_path&#34;</span>: <span style="color:#f1fa8c">&#34;~/work/pi-mono/packages/tui/src/tui.ts&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></details><details class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden"><summary class="px-4 py-2 flex items-center gap-2 text-slate-900 dark:text-white cursor-pointer select-none min-w-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg><span class="text-xs font-semibold font-mono shrink-0">Read</span> <span class="text-xs font-mono text-slate-500 dark:text-slate-400 truncate">~/work/pi-mono/packages/tui/src/utils.ts</span></summary><div class="px-4 py-3 text-xs overflow-x-auto"><pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;file_path&#34;</span>: <span style="color:#f1fa8c">&#34;~/work/pi-mono/packages/tui/src/utils.ts&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></details><details class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden"><summary class="px-4 py-2 flex items-center gap-2 text-slate-900 dark:text-white cursor-pointer select-none min-w-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg><span class="text-xs font-semibold font-mono shrink-0">Read</span> <span class="text-xs font-mono text-slate-500 dark:text-slate-400 truncate">~/work/pi-mono/packages/tui/src/components/select-list.ts</span></summary><div class="px-4 py-3 text-xs overflow-x-auto"><pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;file_path&#34;</span>: <span style="color:#f1fa8c">&#34;~/work/pi-mono/packages/tui/src/components/select-list.ts&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></details><div class="prose dark:prose-invert max-w-none"><p>Now let me examine the two existing tree implementations in the coding-agent package.</p>
+</div><details class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden"><summary class="px-4 py-2 flex items-center gap-2 text-slate-900 dark:text-white cursor-pointer select-none min-w-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><span class="text-xs font-semibold font-mono shrink-0">Glob</span> <span class="text-xs font-mono text-slate-500 dark:text-slate-400 truncate">**/tree-selector.ts</span></summary><div class="px-4 py-3 text-xs overflow-x-auto"><pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;path&#34;</span>: <span style="color:#f1fa8c">&#34;~/work/pi-mono/packages&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;pattern&#34;</span>: <span style="color:#f1fa8c">&#34;**/tree-selector.ts&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><div class="border-t border-slate-200 dark:border-slate-700"><pre class="px-4 py-3 text-xs font-mono overflow-x-auto max-h-96 overflow-y-auto">~/work/pi-mono/packages/coding-agent/src/modes/interactive/components/tree-selector.ts</pre></div></details><details class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden"><summary class="px-4 py-2 flex items-center gap-2 text-slate-900 dark:text-white cursor-pointer select-none min-w-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><span class="text-xs font-semibold font-mono shrink-0">Glob</span> <span class="text-xs font-mono text-slate-500 dark:text-slate-400 truncate">**/session-selector.ts</span></summary><div class="px-4 py-3 text-xs overflow-x-auto"><pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;path&#34;</span>: <span style="color:#f1fa8c">&#34;~/work/pi-mono/packages&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;pattern&#34;</span>: <span style="color:#f1fa8c">&#34;**/session-selector.ts&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><div class="border-t border-slate-200 dark:border-slate-700"><pre class="px-4 py-3 text-xs font-mono overflow-x-auto max-h-96 overflow-y-auto">~/work/pi-mono/packages/coding-agent/src/modes/interactive/components/session-selector.ts</pre></div></details><details class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden"><summary class="px-4 py-2 flex items-center gap-2 text-slate-900 dark:text-white cursor-pointer select-none min-w-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg><span class="text-xs font-semibold font-mono shrink-0">Read</span> <span class="text-xs font-mono text-slate-500 dark:text-slate-400 truncate">~/work/pi-mono/packages/coding-agent/src/modes/interactive/components/tree-selector.ts</span></summary><div class="px-4 py-3 text-xs overflow-x-auto"><pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;file_path&#34;</span>: <span style="color:#f1fa8c">&#34;~/work/pi-mono/packages/coding-agent/src/modes/interactive/components/tree-selector.ts&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></details><details class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden"><summary class="px-4 py-2 flex items-center gap-2 text-slate-900 dark:text-white cursor-pointer select-none min-w-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg><span class="text-xs font-semibold font-mono shrink-0">Read</span> <span class="text-xs font-mono text-slate-500 dark:text-slate-400 truncate">~/work/pi-mono/packages/coding-agent/src/modes/interactive/components/session-selector.ts</span></summary><div class="px-4 py-3 text-xs overflow-x-auto"><pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;file_path&#34;</span>: <span style="color:#f1fa8c">&#34;~/work/pi-mono/packages/coding-agent/src/modes/interactive/components/session-selector.ts&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></details><div class="prose dark:prose-invert max-w-none"><p>Now let me look at the other existing components for patterns to follow, and the test directory.</p>
+</div><details class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden"><summary class="px-4 py-2 flex items-center gap-2 text-slate-900 dark:text-white cursor-pointer select-none min-w-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg><span class="text-xs font-semibold font-mono shrink-0">Read</span> <span class="text-xs font-mono text-slate-500 dark:text-slate-400 truncate">~/work/pi-mono/packages/tui/src/components/text.ts</span></summary><div class="px-4 py-3 text-xs overflow-x-auto"><pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;file_path&#34;</span>: <span style="color:#f1fa8c">&#34;~/work/pi-mono/packages/tui/src/components/text.ts&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></details><details class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden"><summary class="px-4 py-2 flex items-center gap-2 text-slate-900 dark:text-white cursor-pointer select-none min-w-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg><span class="text-xs font-semibold font-mono shrink-0">Read</span> <span class="text-xs font-mono text-slate-500 dark:text-slate-400 truncate">~/work/pi-mono/packages/tui/src/components/spacer.ts</span></summary><div class="px-4 py-3 text-xs overflow-x-auto"><pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;file_path&#34;</span>: <span style="color:#f1fa8c">&#34;~/work/pi-mono/packages/tui/src/components/spacer.ts&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></details><details class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden"><summary class="px-4 py-2 flex items-center gap-2 text-slate-900 dark:text-white cursor-pointer select-none min-w-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg><span class="text-xs font-semibold font-mono shrink-0">Read</span> <span class="text-xs font-mono text-slate-500 dark:text-slate-400 truncate">~/work/pi-mono/packages/tui/src/components/box.ts</span></summary><div class="px-4 py-3 text-xs overflow-x-auto"><pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;file_path&#34;</span>: <span style="color:#f1fa8c">&#34;~/work/pi-mono/packages/tui/src/components/box.ts&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></details><details class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden"><summary class="px-4 py-2 flex items-center gap-2 text-slate-900 dark:text-white cursor-pointer select-none min-w-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg><span class="text-xs font-semibold font-mono shrink-0">Read</span> <span class="text-xs font-mono text-slate-500 dark:text-slate-400 truncate">~/work/pi-mono/packages/tui/src/components/settings-list.ts</span></summary><div class="px-4 py-3 text-xs overflow-x-auto"><pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;file_path&#34;</span>: <span style="color:#f1fa8c">&#34;~/work/pi-mono/packages/tui/src/components/settings-list.ts&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></details><div class="prose dark:prose-invert max-w-none"><p>Now let me look at the test directory and the SessionTreeNode type.</p>
+</div><details class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden"><summary class="px-4 py-2 flex items-center gap-2 text-slate-900 dark:text-white cursor-pointer select-none min-w-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg><span class="text-xs font-semibold font-mono shrink-0">Bash</span> <span class="text-xs font-mono text-slate-500 dark:text-slate-400 truncate">ls ~/work/pi-mono/packages/tui/test/</span></summary><div class="px-4 py-3 text-xs overflow-x-auto"><pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;command&#34;</span>: <span style="color:#f1fa8c">&#34;ls ~/work/pi-mono/packages/tui/test/&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;description&#34;</span>: <span style="color:#f1fa8c">&#34;List test directory&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><div class="border-t border-slate-200 dark:border-slate-700"><pre class="px-4 py-3 text-xs font-mono overflow-x-auto max-h-96 overflow-y-auto">autocomplete.test.ts
+bug-regression-isimageline-startswith-bug.test.ts
+chat-simple.ts
+editor.test.ts
+fuzzy.test.ts
+image-test.ts
+input.test.ts
+key-tester.ts
+keys.test.ts
+markdown.test.ts
+overlay-options.test.ts
+overlay-short-content.test.ts
+select-list.test.ts
+stdin-buffer.test.ts
+terminal-image.test.ts
+test-themes.ts
+truncated-text.test.ts
+tui-overlay-style-leak.test.ts
+tui-render.test.ts
+viewport-overwrite-repro.ts
+virtual-terminal.ts
+wrap-ansi.test.ts</pre></div></details><details class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden"><summary class="px-4 py-2 flex items-center gap-2 text-slate-900 dark:text-white cursor-pointer select-none min-w-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><span class="text-xs font-semibold font-mono shrink-0">Grep</span> <span class="text-xs font-mono text-slate-500 dark:text-slate-400 truncate">export interface SessionTreeNode</span></summary><div class="px-4 py-3 text-xs overflow-x-auto"><pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;output_mode&#34;</span>: <span style="color:#f1fa8c">&#34;files_with_matches&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;path&#34;</span>: <span style="color:#f1fa8c">&#34;~/work/pi-mono/packages/coding-agent/src&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;pattern&#34;</span>: <span style="color:#f1fa8c">&#34;export interface SessionTreeNode&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><div class="border-t border-slate-200 dark:border-slate-700"><pre class="px-4 py-3 text-xs font-mono overflow-x-auto max-h-96 overflow-y-auto">Found 1 file
+~/work/pi-mono/packages/coding-agent/src/core/session-manager.ts</pre></div></details><details class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden"><summary class="px-4 py-2 flex items-center gap-2 text-slate-900 dark:text-white cursor-pointer select-none min-w-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg><span class="text-xs font-semibold font-mono shrink-0">Read</span> <span class="text-xs font-mono text-slate-500 dark:text-slate-400 truncate">~/work/pi-mono/packages/tui/src/components/truncated-text.ts</span></summary><div class="px-4 py-3 text-xs overflow-x-auto"><pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;file_path&#34;</span>: <span style="color:#f1fa8c">&#34;~/work/pi-mono/packages/tui/src/components/truncated-text.ts&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></details><details class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden"><summary class="px-4 py-2 flex items-center gap-2 text-slate-900 dark:text-white cursor-pointer select-none min-w-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><span class="text-xs font-semibold font-mono shrink-0">Grep</span> <span class="text-xs font-mono text-slate-500 dark:text-slate-400 truncate">export interface SessionTreeNode</span></summary><div class="px-4 py-3 text-xs overflow-x-auto"><pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;-A&#34;</span>: <span style="color:#bd93f9">10</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;output_mode&#34;</span>: <span style="color:#f1fa8c">&#34;content&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;path&#34;</span>: <span style="color:#f1fa8c">&#34;~/work/pi-mono/packages/coding-agent/src/core/session-manager.ts&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;pattern&#34;</span>: <span style="color:#f1fa8c">&#34;export interface SessionTreeNode&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><div class="border-t border-slate-200 dark:border-slate-700"><pre class="px-4 py-3 text-xs font-mono overflow-x-auto max-h-96 overflow-y-auto">151:export interface SessionTreeNode {
+152-	entry: SessionEntry;
+153-	children: SessionTreeNode[];
+154-	/** Resolved label for this entry, if any */
+155-	label?: string;
+156-}
+157-
+158-export interface SessionContext {
+159-	messages: AgentMessage[];
+160-	thinkingLevel: string;
+161-	model: { provider: string; modelId: string } | null;</pre></div></details><details class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden"><summary class="px-4 py-2 flex items-center gap-2 text-slate-900 dark:text-white cursor-pointer select-none min-w-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg><span class="text-xs font-semibold font-mono shrink-0">Read</span> <span class="text-xs font-mono text-slate-500 dark:text-slate-400 truncate">~/work/pi-mono/packages/tui/test/select-list.test.ts</span></summary><div class="px-4 py-3 text-xs overflow-x-auto"><pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;file_path&#34;</span>: <span style="color:#f1fa8c">&#34;~/work/pi-mono/packages/tui/test/select-list.test.ts&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></details><details class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden"><summary class="px-4 py-2 flex items-center gap-2 text-slate-900 dark:text-white cursor-pointer select-none min-w-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg><span class="text-xs font-semibold font-mono shrink-0">Read</span> <span class="text-xs font-mono text-slate-500 dark:text-slate-400 truncate">~/work/pi-mono/packages/tui/test/virtual-terminal.ts</span></summary><div class="px-4 py-3 text-xs overflow-x-auto"><pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;file_path&#34;</span>: <span style="color:#f1fa8c">&#34;~/work/pi-mono/packages/tui/test/virtual-terminal.ts&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></details><div class="prose dark:prose-invert max-w-none"><p>Let me look at the keybindings to understand how navigation keys are handled.</p>
+</div><details class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden"><summary class="px-4 py-2 flex items-center gap-2 text-slate-900 dark:text-white cursor-pointer select-none min-w-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg><span class="text-xs font-semibold font-mono shrink-0">Read</span> <span class="text-xs font-mono text-slate-500 dark:text-slate-400 truncate">~/work/pi-mono/packages/tui/src/keybindings.ts</span></summary><div class="px-4 py-3 text-xs overflow-x-auto"><pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;file_path&#34;</span>: <span style="color:#f1fa8c">&#34;~/work/pi-mono/packages/tui/src/keybindings.ts&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></details><details class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden"><summary class="px-4 py-2 flex items-center gap-2 text-slate-900 dark:text-white cursor-pointer select-none min-w-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg><span class="text-xs font-semibold font-mono shrink-0">Read</span> <span class="text-xs font-mono text-slate-500 dark:text-slate-400 truncate">~/work/pi-mono/packages/tui/package.json</span></summary><div class="px-4 py-3 text-xs overflow-x-auto"><pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;file_path&#34;</span>: <span style="color:#f1fa8c">&#34;~/work/pi-mono/packages/tui/package.json&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></details><div class="prose dark:prose-invert max-w-none"><p>Now I have a thorough understanding of the codebase. Let me analyze the patterns and design the Tree component. Let me look at one more thing -- the DynamicBorder component referenced by tree-selector, and check how components are exported.</p>
+</div><details class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden"><summary class="px-4 py-2 flex items-center gap-2 text-slate-900 dark:text-white cursor-pointer select-none min-w-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><span class="text-xs font-semibold font-mono shrink-0">Grep</span> <span class="text-xs font-mono text-slate-500 dark:text-slate-400 truncate">class DynamicBorder</span></summary><div class="px-4 py-3 text-xs overflow-x-auto"><pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;-A&#34;</span>: <span style="color:#bd93f9">15</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;output_mode&#34;</span>: <span style="color:#f1fa8c">&#34;content&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;path&#34;</span>: <span style="color:#f1fa8c">&#34;~/work/pi-mono/packages/coding-agent/src&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;pattern&#34;</span>: <span style="color:#f1fa8c">&#34;class DynamicBorder&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><div class="border-t border-slate-200 dark:border-slate-700"><pre class="px-4 py-3 text-xs font-mono overflow-x-auto max-h-96 overflow-y-auto">~/work/pi-mono/packages/coding-agent/src/modes/interactive/components/dynamic-border.ts:11:export class DynamicBorder implements Component {
+~/work/pi-mono/packages/coding-agent/src/modes/interactive/components/dynamic-border.ts-12-	private color: (str: string) =&gt; string;
+~/work/pi-mono/packages/coding-agent/src/modes/interactive/components/dynamic-border.ts-13-
+~/work/pi-mono/packages/coding-agent/src/modes/interactive/components/dynamic-border.ts-14-	constructor(color: (str: string) =&gt; string = (str) =&gt; theme.fg(&#34;border&#34;, str)) {
+~/work/pi-mono/packages/coding-agent/src/modes/interactive/components/dynamic-border.ts-15-		this.color = color;
+~/work/pi-mono/packages/coding-agent/src/modes/interactive/components/dynamic-border.ts-16-	}
+~/work/pi-mono/packages/coding-agent/src/modes/interactive/components/dynamic-border.ts-17-
+~/work/pi-mono/packages/coding-agent/src/modes/interactive/components/dynamic-border.ts-18-	invalidate(): void {
+~/work/pi-mono/packages/coding-agent/src/modes/interactive/components/dynamic-border.ts-19-		// No cached state to invalidate currently
+~/work/pi-mono/packages/coding-agent/src/modes/interactive/components/dynamic-border.ts-20-	}
+~/work/pi-mono/packages/coding-agent/src/modes/interactive/components/dynamic-border.ts-21-
+~/work/pi-mono/packages/coding-agent/src/modes/interactive/components/dynamic-border.ts-22-	render(width: number): string[] {
+~/work/pi-mono/packages/coding-agent/src/modes/interactive/components/dynamic-border.ts-23-		return [this.color(&#34;─&#34;.repeat(Math.max(1, width)))];
+~/work/pi-mono/packages/coding-agent/src/modes/interactive/components/dynamic-border.ts-24-	}
+~/work/pi-mono/packages/coding-agent/src/modes/interactive/components/dynamic-border.ts-25-}</pre></div></details>
+            </div>
+        </details>
+    </div>
+    
+
+    
+    
+    <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-5 border-l-4 border-l-emerald-500">
+        <div class="flex flex-col gap-3">
+            <div class="prose dark:prose-invert max-w-none"><p>Now I have all the information I need. Let me produce the detailed implementation plan.</p>
+<hr>
+<h2>Implementation Plan: Generic Tree Component for TUI Package</h2>
+<h3>1. Analysis of Existing Implementations</h3>
+<p>After thoroughly reading both tree implementations and all relevant TUI infrastructure, here is what I found:</p>
+<p><strong><code>TreeList</code> in tree-selector.ts</strong> (the complex case):</p>
+<ul>
+<li>Works with <code>SessionTreeNode</code> (which has <code>entry: SessionEntry</code>, <code>children: SessionTreeNode[]</code>, <code>label?: string</code>)</li>
+<li>Flattens to <code>FlatNode</code> with: <code>node</code>, <code>indent</code>, <code>showConnector</code>, <code>isLast</code>, <code>gutters: GutterInfo[]</code>, <code>isVirtualRootChild</code></li>
+<li>Complex indentation rules: level 0 stays flat for single-child chains, +1 at branch points, first gen after branch gets +1 for visual grouping</li>
+<li>Gutter management: each gutter has a <code>position</code> (displayIndent level) and <code>show</code> (whether to render <code>|</code>)</li>
+<li>Prefix rendering: builds char-by-char across <code>totalChars = displayIndent * 3</code>, placing gutters and connectors at specific levels</li>
+<li>Has <code>recalculateVisualStructure()</code> that runs after filtering to recompute indentation for the visible subset</li>
+<li>Active path highlighting, filter modes, search, label editing -- all domain-specific</li>
+</ul>
+<p><strong><code>SessionList</code> in session-selector.ts</strong> (the simpler case):</p>
+<ul>
+<li>Works with <code>SessionInfo</code> via <code>SessionTreeNode</code> (local type: <code>session: SessionInfo</code>, <code>children: SessionTreeNode[]</code>)</li>
+<li>Flattens to <code>FlatSessionNode</code> with: <code>session</code>, <code>depth</code>, <code>isLast</code>, <code>ancestorContinues: boolean[]</code></li>
+<li>Simple prefix: <code>ancestorContinues.map(c =&gt; c ? &quot;| &quot; : &quot;   &quot;).join(&quot;&quot;) + (isLast ? &quot;└─ &quot; : &quot;├─ &quot;)</code></li>
+<li>No gutter complexity, no single-child chain flattening</li>
+</ul>
+<p><strong>Common patterns (candidates for extraction)</strong>:</p>
+<ol>
+<li>Tree node with children and generic data</li>
+<li>Flatten tree to a flat list with structural metadata (depth, isLast, connector info)</li>
+<li>Build prefix string from box-drawing characters</li>
+<li>Scrolling viewport centered on selection</li>
+<li>Keyboard navigation (up/down/page up/page down)</li>
+<li>Selected index management and clamping</li>
+<li><code>render(width): string[]</code> producing a list of lines with truncation</li>
+</ol>
+<h3>2. Design Decisions</h3>
+<p><strong>Q1: How generic should the tree node be?</strong></p>
+<p>Keep it minimal: <code>{ data: T; children: TreeNode&lt;T&gt;[] }</code>. The consumer supplies a function that knows how to render a given node at a given context. This is the smallest interface that supports both use cases. No <code>label</code>, <code>entry</code>, or <code>session</code> fields -- those live in <code>T</code>.</p>
+<p><strong>Q2: Should flattening logic be part of the component or a separate utility?</strong></p>
+<p><strong>Separate utility.</strong> The flattening is pure data transformation (tree -&gt; flat list), and it is useful outside the Tree component (e.g., for tests, or for consumers that want to pre-process the tree). The Tree component should accept the flattened list. But we also provide a default <code>flattenTree()</code> function for the common case. This two-layer design lets <code>tree-selector.ts</code> keep its complex custom flattening logic while <code>session-selector.ts</code> uses the default.</p>
+<p><strong>Q3: How to handle the complex gutter logic vs the simpler ancestorContinues?</strong></p>
+<p>Unify them. The <code>ancestorContinues: boolean[]</code> pattern from session-selector is actually a simplification of the gutter pattern from tree-selector. The generic flat node should carry <code>ancestorContinues: boolean[]</code> (one boolean per ancestor depth level indicating whether a vertical connector line should be drawn). This is sufficient for both cases:</p>
+<ul>
+<li>For session-selector: used directly as-is.</li>
+<li>For tree-selector: the custom flattener produces the same <code>ancestorContinues</code> array from its gutter logic.</li>
+</ul>
+<p>The <code>buildPrefix()</code> function in the Tree component works from <code>ancestorContinues</code> + <code>isLast</code> + <code>depth</code>, which covers both patterns.</p>
+<p>The tree-selector's complex gutter positioning (where gutters are at specific <code>displayIndent</code> positions, not necessarily aligned to depth) is a domain-specific visual concern. The tree-selector can either (a) produce custom <code>ancestorContinues</code> that encode its positioning logic, or (b) bypass the built-in prefix rendering entirely by providing a custom <code>renderPrefix</code> callback. Option (b) is cleaner.</p>
+<p><strong>Q4: Should selection/navigation be built-in or optional?</strong></p>
+<p>Built-in but configurable. Both existing consumers need it, it is the core interactive behavior of a tree, and building it in avoids duplication. Navigation is handled by <code>handleInput()</code>. The consumer can extend behavior by wrapping or by using <code>onSelectionChange</code> callbacks.</p>
+<p><strong>Q5: How to handle indentation rules?</strong></p>
+<p>The default <code>flattenTree()</code> uses the standard algorithm: every child is <code>depth + 1</code>. The tree-selector's single-child chain flattening and first-gen-after-branch +1 logic is domain-specific and lives in a custom flattener that the tree-selector provides instead of calling the default.</p>
+<h3>3. File Structure</h3>
+<pre><code>packages/tui/src/
+  components/
+    tree.ts              # Tree component + flattenTree utility + types
+  index.ts               # Add exports for Tree, TreeNode, FlatTreeNode, flattenTree
+
+packages/tui/test/
+  tree.test.ts           # Tests for tree component
+</code></pre>
+<p>A single file is appropriate given that the types, utility, and component are tightly coupled and collectively smaller than the existing tree-selector.ts.</p>
+<h3>4. Type Definitions</h3>
+<pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span><span style="color:#6272a4">// ---- Tree Node (input) ----
+</span></span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">/** Generic tree node. The consumer provides T as the data payload. */</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">export</span> <span style="color:#ff79c6">interface</span> TreeNode&lt;<span style="color:#ff79c6">T</span>&gt; {
+</span></span><span style="display:flex;"><span>  data: <span style="color:#8be9fd">T</span>;
+</span></span><span style="display:flex;"><span>  children: <span style="color:#8be9fd">TreeNode</span>&lt;<span style="color:#ff79c6">T</span>&gt;[];
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">// ---- Flat Node (output of flattening) ----
+</span></span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">/** A flattened tree node with structural metadata for rendering. */</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">export</span> <span style="color:#ff79c6">interface</span> FlatTreeNode&lt;<span style="color:#ff79c6">T</span>&gt; {
+</span></span><span style="display:flex;"><span>  <span style="color:#6272a4">/** The original data payload */</span>
+</span></span><span style="display:flex;"><span>  data: <span style="color:#8be9fd">T</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#6272a4">/** Depth in the tree (0 = root) */</span>
+</span></span><span style="display:flex;"><span>  depth: <span style="color:#8be9fd">number</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#6272a4">/** Whether this node is the last sibling at its level */</span>
+</span></span><span style="display:flex;"><span>  isLast: <span style="color:#8be9fd">boolean</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#6272a4">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">   * For each ancestor depth level (index 0 = depth 0, etc.),
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">   * whether there are more siblings below that ancestor.
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">   * Used to draw vertical continuation lines (│).
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">   * Length is always `depth` (one entry per ancestor level).
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">   */</span>
+</span></span><span style="display:flex;"><span>  ancestorContinues: <span style="color:#8be9fd">boolean</span>[];
+</span></span><span style="display:flex;"><span>  <span style="color:#6272a4">/** The original TreeNode reference, for identity checks */</span>
+</span></span><span style="display:flex;"><span>  node: <span style="color:#8be9fd">TreeNode</span>&lt;<span style="color:#ff79c6">T</span>&gt;;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">// ---- Theme ----
+</span></span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">export</span> <span style="color:#ff79c6">interface</span> TreeTheme {
+</span></span><span style="display:flex;"><span>  <span style="color:#6272a4">/** Style the cursor/selection indicator for the selected row */</span>
+</span></span><span style="display:flex;"><span>  selectedPrefix<span style="color:#ff79c6">:</span> (text: <span style="color:#8be9fd">string</span>) <span style="color:#ff79c6">=&gt;</span> <span style="color:#8be9fd">string</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#6272a4">/** Style the tree connectors (├─, └─, │) */</span>
+</span></span><span style="display:flex;"><span>  connector<span style="color:#ff79c6">:</span> (text: <span style="color:#8be9fd">string</span>) <span style="color:#ff79c6">=&gt;</span> <span style="color:#8be9fd">string</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#6272a4">/** Style for the scroll info line, e.g. &#34;(3/10)&#34; */</span>
+</span></span><span style="display:flex;"><span>  scrollInfo<span style="color:#ff79c6">:</span> (text: <span style="color:#8be9fd">string</span>) <span style="color:#ff79c6">=&gt;</span> <span style="color:#8be9fd">string</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#6272a4">/** Style for the entire selected row (applied to the full line) */</span>
+</span></span><span style="display:flex;"><span>  selectedRow<span style="color:#ff79c6">?:</span> (text: <span style="color:#8be9fd">string</span>) <span style="color:#ff79c6">=&gt;</span> <span style="color:#8be9fd">string</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#6272a4">/** Style for the empty state message */</span>
+</span></span><span style="display:flex;"><span>  emptyMessage<span style="color:#ff79c6">?:</span> (text: <span style="color:#8be9fd">string</span>) <span style="color:#ff79c6">=&gt;</span> <span style="color:#8be9fd">string</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">// ---- Tree Options ----
+</span></span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">export</span> <span style="color:#ff79c6">interface</span> TreeOptions&lt;<span style="color:#ff79c6">T</span>&gt; {
+</span></span><span style="display:flex;"><span>  <span style="color:#6272a4">/** Maximum number of visible rows in the viewport (excluding scroll info) */</span>
+</span></span><span style="display:flex;"><span>  maxVisible: <span style="color:#8be9fd">number</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#6272a4">/** Theme for styling */</span>
+</span></span><span style="display:flex;"><span>  theme: <span style="color:#8be9fd">TreeTheme</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#6272a4">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">   * Render the content portion of a single node (everything after the prefix).
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">   * Receives the node data, whether it is selected, and the available width
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">   * (total width minus prefix width minus cursor width).
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">   * Must return a single-line string.
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">   */</span>
+</span></span><span style="display:flex;"><span>  renderNode<span style="color:#ff79c6">:</span> (data: <span style="color:#8be9fd">T</span>, selected: <span style="color:#8be9fd">boolean</span>, availableWidth: <span style="color:#8be9fd">number</span>) <span style="color:#ff79c6">=&gt;</span> <span style="color:#8be9fd">string</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#6272a4">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">   * Optional: custom prefix renderer. If provided, replaces the default
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">   * box-drawing prefix. Receives the flat node and returns the prefix string.
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">   * The caller is responsible for respecting the theme.connector styling.
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">   */</span>
+</span></span><span style="display:flex;"><span>  renderPrefix<span style="color:#ff79c6">?:</span> (node: <span style="color:#8be9fd">FlatTreeNode</span>&lt;<span style="color:#ff79c6">T</span>&gt;) <span style="color:#ff79c6">=&gt;</span> <span style="color:#8be9fd">string</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#6272a4">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">   * Width of the selection cursor in visible columns (default: 2, for &#34;› &#34; or &#34;  &#34;).
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4">   */</span>
+</span></span><span style="display:flex;"><span>  cursorWidth?: <span style="color:#8be9fd">number</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#6272a4">/** Text to show when the list is empty (default: &#34;No items&#34;) */</span>
+</span></span><span style="display:flex;"><span>  emptyMessage?: <span style="color:#8be9fd">string</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#6272a4">/** Whether to wrap selection at boundaries (default: true) */</span>
+</span></span><span style="display:flex;"><span>  wrapNavigation?: <span style="color:#8be9fd">boolean</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre><h3>5. Utility: <code>flattenTree&lt;T&gt;</code></h3>
+<pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span><span style="color:#6272a4">/**
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"> * Flatten a tree into a navigable list with structural metadata.
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"> * Standard algorithm: every child is depth + 1.
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"> * For custom indentation rules, build FlatTreeNode[] yourself.
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">export</span> <span style="color:#8be9fd;font-style:italic">function</span> flattenTree&lt;<span style="color:#ff79c6">T</span>&gt;(roots: <span style="color:#8be9fd">TreeNode</span>&lt;<span style="color:#ff79c6">T</span>&gt;[])<span style="color:#ff79c6">:</span> FlatTreeNode&lt;<span style="color:#ff79c6">T</span>&gt;[] {
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">const</span> result: <span style="color:#8be9fd">FlatTreeNode</span>&lt;<span style="color:#ff79c6">T</span>&gt;[] <span style="color:#ff79c6">=</span> [];
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">const</span> walk <span style="color:#ff79c6">=</span> (
+</span></span><span style="display:flex;"><span>    node: <span style="color:#8be9fd">TreeNode</span>&lt;<span style="color:#ff79c6">T</span>&gt;,
+</span></span><span style="display:flex;"><span>    depth: <span style="color:#8be9fd">number</span>,
+</span></span><span style="display:flex;"><span>    ancestorContinues: <span style="color:#8be9fd">boolean</span>[],
+</span></span><span style="display:flex;"><span>    isLast: <span style="color:#8be9fd">boolean</span>,
+</span></span><span style="display:flex;"><span>  )<span style="color:#ff79c6">:</span> <span style="color:#ff79c6">void</span> <span style="color:#ff79c6">=&gt;</span> {
+</span></span><span style="display:flex;"><span>    result.push({ data: <span style="color:#8be9fd">node.data</span>, depth, isLast, ancestorContinues, node });
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">for</span> (<span style="color:#8be9fd;font-style:italic">let</span> i <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0</span>; i <span style="color:#ff79c6">&lt;</span> node.children.length; i<span style="color:#ff79c6">++</span>) {
+</span></span><span style="display:flex;"><span>      <span style="color:#ff79c6">const</span> childIsLast <span style="color:#ff79c6">=</span> i <span style="color:#ff79c6">===</span> node.children.length <span style="color:#ff79c6">-</span> <span style="color:#bd93f9">1</span>;
+</span></span><span style="display:flex;"><span>      <span style="color:#ff79c6">const</span> continues <span style="color:#ff79c6">=</span> depth <span style="color:#ff79c6">&gt;</span> <span style="color:#bd93f9">0</span> <span style="color:#ff79c6">?</span> <span style="color:#ff79c6">!</span>isLast : <span style="color:#8be9fd">false</span>;
+</span></span><span style="display:flex;"><span>      walk(
+</span></span><span style="display:flex;"><span>        node.children[i],
+</span></span><span style="display:flex;"><span>        depth <span style="color:#ff79c6">+</span> <span style="color:#bd93f9">1</span>,
+</span></span><span style="display:flex;"><span>        [...ancestorContinues, continues],
+</span></span><span style="display:flex;"><span>        childIsLast,
+</span></span><span style="display:flex;"><span>      );
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  };
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">for</span> (<span style="color:#8be9fd;font-style:italic">let</span> i <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0</span>; i <span style="color:#ff79c6">&lt;</span> roots.length; i<span style="color:#ff79c6">++</span>) {
+</span></span><span style="display:flex;"><span>    walk(roots[i], <span style="color:#bd93f9">0</span>, [], i <span style="color:#ff79c6">===</span> roots.length <span style="color:#ff79c6">-</span> <span style="color:#bd93f9">1</span>);
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">return</span> result;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre><p>This mirrors the <code>flattenSessionTree</code> logic from session-selector.ts exactly.</p>
+<h3>6. Component: <code>Tree&lt;T&gt;</code></h3>
+<pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span><span style="color:#ff79c6">export</span> <span style="color:#ff79c6">class</span> Tree&lt;<span style="color:#ff79c6">T</span>&gt; <span style="color:#ff79c6">implements</span> Component {
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">private</span> nodes: <span style="color:#8be9fd">FlatTreeNode</span>&lt;<span style="color:#ff79c6">T</span>&gt;[] <span style="color:#ff79c6">=</span> [];
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">private</span> selectedIndex <span style="color:#ff79c6">=</span> <span style="color:#bd93f9">0</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">private</span> options: <span style="color:#8be9fd">Required</span>&lt;<span style="color:#ff79c6">Pick</span>&lt;<span style="color:#ff79c6">TreeOptions</span>&lt;<span style="color:#ff79c6">T</span>&gt;, <span style="color:#f1fa8c">&#39;maxVisible&#39;</span> | <span style="color:#f1fa8c">&#39;cursorWidth&#39;</span> | <span style="color:#f1fa8c">&#39;wrapNavigation&#39;</span>&gt;&gt; <span style="color:#ff79c6">&amp;</span> TreeOptions&lt;<span style="color:#ff79c6">T</span>&gt;;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6272a4">// Callbacks
+</span></span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">public</span> onSelect<span style="color:#ff79c6">?:</span> (node: <span style="color:#8be9fd">FlatTreeNode</span>&lt;<span style="color:#ff79c6">T</span>&gt;) <span style="color:#ff79c6">=&gt;</span> <span style="color:#ff79c6">void</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">public</span> onCancel<span style="color:#ff79c6">?:</span> () <span style="color:#ff79c6">=&gt;</span> <span style="color:#ff79c6">void</span>;
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">public</span> onSelectionChange<span style="color:#ff79c6">?:</span> (node: <span style="color:#8be9fd">FlatTreeNode</span>&lt;<span style="color:#ff79c6">T</span>&gt;) <span style="color:#ff79c6">=&gt;</span> <span style="color:#ff79c6">void</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">constructor</span>(nodes: <span style="color:#8be9fd">FlatTreeNode</span>&lt;<span style="color:#ff79c6">T</span>&gt;[], options: <span style="color:#8be9fd">TreeOptions</span>&lt;<span style="color:#ff79c6">T</span>&gt;) {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">this</span>.nodes <span style="color:#ff79c6">=</span> nodes;
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">this</span>.options <span style="color:#ff79c6">=</span> {
+</span></span><span style="display:flex;"><span>      cursorWidth: <span style="color:#8be9fd">2</span>,
+</span></span><span style="display:flex;"><span>      wrapNavigation: <span style="color:#8be9fd">true</span>,
+</span></span><span style="display:flex;"><span>      emptyMessage<span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#34;No items&#34;</span>,
+</span></span><span style="display:flex;"><span>      ...options,
+</span></span><span style="display:flex;"><span>    };
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6272a4">// --- Public API ---
+</span></span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6272a4">/** Replace the flat node list (e.g., after filtering/rebuilding) */</span>
+</span></span><span style="display:flex;"><span>  setNodes(nodes: <span style="color:#8be9fd">FlatTreeNode</span>&lt;<span style="color:#ff79c6">T</span>&gt;[])<span style="color:#ff79c6">:</span> <span style="color:#ff79c6">void</span> { ... }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6272a4">/** Get the currently selected node */</span>
+</span></span><span style="display:flex;"><span>  getSelectedNode()<span style="color:#ff79c6">:</span> FlatTreeNode&lt;<span style="color:#ff79c6">T</span>&gt; <span style="color:#ff79c6">|</span> <span style="color:#ff79c6">undefined</span> { ... }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6272a4">/** Get the current selected index */</span>
+</span></span><span style="display:flex;"><span>  getSelectedIndex()<span style="color:#ff79c6">:</span> <span style="color:#8be9fd">number</span> { ... }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6272a4">/** Set the selected index (clamped to valid range) */</span>
+</span></span><span style="display:flex;"><span>  setSelectedIndex(index: <span style="color:#8be9fd">number</span>)<span style="color:#ff79c6">:</span> <span style="color:#ff79c6">void</span> { ... }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6272a4">/** Find and select a node by predicate, returns true if found */</span>
+</span></span><span style="display:flex;"><span>  selectWhere(predicate<span style="color:#ff79c6">:</span> (node: <span style="color:#8be9fd">FlatTreeNode</span>&lt;<span style="color:#ff79c6">T</span>&gt;) <span style="color:#ff79c6">=&gt;</span> <span style="color:#ff79c6">boolean</span>)<span style="color:#ff79c6">:</span> <span style="color:#ff79c6">boolean</span> { ... }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6272a4">// --- Component interface ---
+</span></span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  invalidate()<span style="color:#ff79c6">:</span> <span style="color:#ff79c6">void</span> { <span style="color:#6272a4">/* no cached state currently */</span> }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  render(width: <span style="color:#8be9fd">number</span>)<span style="color:#ff79c6">:</span> <span style="color:#8be9fd">string</span>[] {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">if</span> (<span style="color:#ff79c6">this</span>.nodes.length <span style="color:#ff79c6">===</span> <span style="color:#bd93f9">0</span>) {
+</span></span><span style="display:flex;"><span>      <span style="color:#ff79c6">const</span> msg <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">this</span>.options.emptyMessage <span style="color:#ff79c6">??</span> <span style="color:#f1fa8c">&#34;No items&#34;</span>;
+</span></span><span style="display:flex;"><span>      <span style="color:#ff79c6">const</span> styled <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">this</span>.options.theme.emptyMessage<span style="color:#ff79c6">?</span>.(msg) <span style="color:#ff79c6">??</span> msg;
+</span></span><span style="display:flex;"><span>      <span style="color:#ff79c6">return</span> [truncateToWidth(<span style="color:#f1fa8c">`  </span><span style="color:#f1fa8c">${</span>styled<span style="color:#f1fa8c">}</span><span style="color:#f1fa8c">`</span>, width)];
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">const</span> lines: <span style="color:#8be9fd">string</span>[] <span style="color:#ff79c6">=</span> [];
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">const</span> { maxVisible, cursorWidth, theme, renderNode } <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">this</span>.options;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// Scrolling viewport centered on selection
+</span></span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">const</span> startIndex <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">Math</span>.max(
+</span></span><span style="display:flex;"><span>      <span style="color:#bd93f9">0</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#8be9fd;font-style:italic">Math</span>.min(
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">this</span>.selectedIndex <span style="color:#ff79c6">-</span> <span style="color:#8be9fd;font-style:italic">Math</span>.floor(maxVisible <span style="color:#ff79c6">/</span> <span style="color:#bd93f9">2</span>),
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">this</span>.nodes.length <span style="color:#ff79c6">-</span> maxVisible,
+</span></span><span style="display:flex;"><span>      ),
+</span></span><span style="display:flex;"><span>    );
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">const</span> endIndex <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">Math</span>.min(startIndex <span style="color:#ff79c6">+</span> maxVisible, <span style="color:#ff79c6">this</span>.nodes.length);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">for</span> (<span style="color:#8be9fd;font-style:italic">let</span> i <span style="color:#ff79c6">=</span> startIndex; i <span style="color:#ff79c6">&lt;</span> endIndex; i<span style="color:#ff79c6">++</span>) {
+</span></span><span style="display:flex;"><span>      <span style="color:#ff79c6">const</span> flatNode <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">this</span>.nodes[i];
+</span></span><span style="display:flex;"><span>      <span style="color:#ff79c6">const</span> isSelected <span style="color:#ff79c6">=</span> i <span style="color:#ff79c6">===</span> <span style="color:#ff79c6">this</span>.selectedIndex;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      <span style="color:#6272a4">// 1. Cursor
+</span></span></span><span style="display:flex;"><span>      <span style="color:#ff79c6">const</span> cursor <span style="color:#ff79c6">=</span> isSelected
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">?</span> theme.selectedPrefix(<span style="color:#f1fa8c">&#34;› &#34;</span> <span style="color:#6272a4">/* or custom */</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#34; &#34;</span>.repeat(cursorWidth);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      <span style="color:#6272a4">// 2. Prefix (connectors)
+</span></span></span><span style="display:flex;"><span>      <span style="color:#ff79c6">const</span> prefix <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">this</span>.options.renderPrefix
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">?</span> <span style="color:#ff79c6">this</span>.options.renderPrefix(flatNode)
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">:</span> <span style="color:#ff79c6">this</span>.buildDefaultPrefix(flatNode);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      <span style="color:#6272a4">// 3. Content
+</span></span></span><span style="display:flex;"><span>      <span style="color:#ff79c6">const</span> prefixVisWidth <span style="color:#ff79c6">=</span> visibleWidth(prefix);
+</span></span><span style="display:flex;"><span>      <span style="color:#ff79c6">const</span> availableWidth <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">Math</span>.max(<span style="color:#bd93f9">1</span>, width <span style="color:#ff79c6">-</span> cursorWidth <span style="color:#ff79c6">-</span> prefixVisWidth);
+</span></span><span style="display:flex;"><span>      <span style="color:#ff79c6">const</span> content <span style="color:#ff79c6">=</span> renderNode(flatNode.data, isSelected, availableWidth);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>      <span style="color:#6272a4">// 4. Assemble and truncate
+</span></span></span><span style="display:flex;"><span>      <span style="color:#8be9fd;font-style:italic">let</span> line <span style="color:#ff79c6">=</span> cursor <span style="color:#ff79c6">+</span> theme.connector(prefix) <span style="color:#ff79c6">+</span> content;
+</span></span><span style="display:flex;"><span>      <span style="color:#ff79c6">if</span> (isSelected <span style="color:#ff79c6">&amp;&amp;</span> theme.selectedRow) {
+</span></span><span style="display:flex;"><span>        line <span style="color:#ff79c6">=</span> theme.selectedRow(line);
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>      lines.push(truncateToWidth(line, width));
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// Scroll info
+</span></span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">if</span> (startIndex <span style="color:#ff79c6">&gt;</span> <span style="color:#bd93f9">0</span> <span style="color:#ff79c6">||</span> endIndex <span style="color:#ff79c6">&lt;</span> <span style="color:#ff79c6">this</span>.nodes.length) {
+</span></span><span style="display:flex;"><span>      <span style="color:#ff79c6">const</span> scrollText <span style="color:#ff79c6">=</span> <span style="color:#f1fa8c">`  (</span><span style="color:#f1fa8c">${</span><span style="color:#ff79c6">this</span>.selectedIndex <span style="color:#ff79c6">+</span> <span style="color:#bd93f9">1</span><span style="color:#f1fa8c">}</span><span style="color:#f1fa8c">/</span><span style="color:#f1fa8c">${</span><span style="color:#ff79c6">this</span>.nodes.length<span style="color:#f1fa8c">}</span><span style="color:#f1fa8c">)`</span>;
+</span></span><span style="display:flex;"><span>      lines.push(theme.scrollInfo(truncateToWidth(scrollText, width, <span style="color:#f1fa8c">&#34;&#34;</span>)));
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">return</span> lines;
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  handleInput(keyData: <span style="color:#8be9fd">string</span>)<span style="color:#ff79c6">:</span> <span style="color:#ff79c6">void</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">const</span> kb <span style="color:#ff79c6">=</span> getEditorKeybindings();
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">if</span> (kb.matches(keyData, <span style="color:#f1fa8c">&#34;selectUp&#34;</span>)) {
+</span></span><span style="display:flex;"><span>      <span style="color:#ff79c6">this</span>.moveSelection(<span style="color:#ff79c6">-</span><span style="color:#bd93f9">1</span>);
+</span></span><span style="display:flex;"><span>    } <span style="color:#ff79c6">else</span> <span style="color:#ff79c6">if</span> (kb.matches(keyData, <span style="color:#f1fa8c">&#34;selectDown&#34;</span>)) {
+</span></span><span style="display:flex;"><span>      <span style="color:#ff79c6">this</span>.moveSelection(<span style="color:#bd93f9">1</span>);
+</span></span><span style="display:flex;"><span>    } <span style="color:#ff79c6">else</span> <span style="color:#ff79c6">if</span> (kb.matches(keyData, <span style="color:#f1fa8c">&#34;selectPageUp&#34;</span>)) {
+</span></span><span style="display:flex;"><span>      <span style="color:#ff79c6">this</span>.selectedIndex <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">Math</span>.max(<span style="color:#bd93f9">0</span>, <span style="color:#ff79c6">this</span>.selectedIndex <span style="color:#ff79c6">-</span> <span style="color:#ff79c6">this</span>.options.maxVisible);
+</span></span><span style="display:flex;"><span>      <span style="color:#ff79c6">this</span>.notifySelectionChange();
+</span></span><span style="display:flex;"><span>    } <span style="color:#ff79c6">else</span> <span style="color:#ff79c6">if</span> (kb.matches(keyData, <span style="color:#f1fa8c">&#34;selectPageDown&#34;</span>)) {
+</span></span><span style="display:flex;"><span>      <span style="color:#ff79c6">this</span>.selectedIndex <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">Math</span>.min(
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">this</span>.nodes.length <span style="color:#ff79c6">-</span> <span style="color:#bd93f9">1</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">this</span>.selectedIndex <span style="color:#ff79c6">+</span> <span style="color:#ff79c6">this</span>.options.maxVisible,
+</span></span><span style="display:flex;"><span>      );
+</span></span><span style="display:flex;"><span>      <span style="color:#ff79c6">this</span>.notifySelectionChange();
+</span></span><span style="display:flex;"><span>    } <span style="color:#ff79c6">else</span> <span style="color:#ff79c6">if</span> (kb.matches(keyData, <span style="color:#f1fa8c">&#34;selectConfirm&#34;</span>)) {
+</span></span><span style="display:flex;"><span>      <span style="color:#ff79c6">const</span> selected <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">this</span>.nodes[<span style="color:#ff79c6">this</span>.selectedIndex];
+</span></span><span style="display:flex;"><span>      <span style="color:#ff79c6">if</span> (selected) <span style="color:#ff79c6">this</span>.onSelect<span style="color:#ff79c6">?</span>.(selected);
+</span></span><span style="display:flex;"><span>    } <span style="color:#ff79c6">else</span> <span style="color:#ff79c6">if</span> (kb.matches(keyData, <span style="color:#f1fa8c">&#34;selectCancel&#34;</span>)) {
+</span></span><span style="display:flex;"><span>      <span style="color:#ff79c6">this</span>.onCancel<span style="color:#ff79c6">?</span>.();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6272a4">// --- Private helpers ---
+</span></span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">private</span> moveSelection(delta: <span style="color:#8be9fd">number</span>)<span style="color:#ff79c6">:</span> <span style="color:#ff79c6">void</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">if</span> (<span style="color:#ff79c6">this</span>.nodes.length <span style="color:#ff79c6">===</span> <span style="color:#bd93f9">0</span>) <span style="color:#ff79c6">return</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">if</span> (<span style="color:#ff79c6">this</span>.options.wrapNavigation) {
+</span></span><span style="display:flex;"><span>      <span style="color:#ff79c6">this</span>.selectedIndex <span style="color:#ff79c6">=</span>
+</span></span><span style="display:flex;"><span>        (<span style="color:#ff79c6">this</span>.selectedIndex <span style="color:#ff79c6">+</span> delta <span style="color:#ff79c6">+</span> <span style="color:#ff79c6">this</span>.nodes.length) <span style="color:#ff79c6">%</span> <span style="color:#ff79c6">this</span>.nodes.length;
+</span></span><span style="display:flex;"><span>    } <span style="color:#ff79c6">else</span> {
+</span></span><span style="display:flex;"><span>      <span style="color:#ff79c6">this</span>.selectedIndex <span style="color:#ff79c6">=</span> <span style="color:#8be9fd;font-style:italic">Math</span>.max(
+</span></span><span style="display:flex;"><span>        <span style="color:#bd93f9">0</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#8be9fd;font-style:italic">Math</span>.min(<span style="color:#ff79c6">this</span>.nodes.length <span style="color:#ff79c6">-</span> <span style="color:#bd93f9">1</span>, <span style="color:#ff79c6">this</span>.selectedIndex <span style="color:#ff79c6">+</span> delta),
+</span></span><span style="display:flex;"><span>      );
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">this</span>.notifySelectionChange();
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">private</span> notifySelectionChange()<span style="color:#ff79c6">:</span> <span style="color:#ff79c6">void</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">const</span> node <span style="color:#ff79c6">=</span> <span style="color:#ff79c6">this</span>.nodes[<span style="color:#ff79c6">this</span>.selectedIndex];
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">if</span> (node) <span style="color:#ff79c6">this</span>.onSelectionChange<span style="color:#ff79c6">?</span>.(node);
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6272a4">/** Default prefix builder using box-drawing characters */</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">private</span> buildDefaultPrefix(node: <span style="color:#8be9fd">FlatTreeNode</span>&lt;<span style="color:#ff79c6">T</span>&gt;)<span style="color:#ff79c6">:</span> <span style="color:#8be9fd">string</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">if</span> (node.depth <span style="color:#ff79c6">===</span> <span style="color:#bd93f9">0</span>) <span style="color:#ff79c6">return</span> <span style="color:#f1fa8c">&#34;&#34;</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">const</span> parts: <span style="color:#8be9fd">string</span>[] <span style="color:#ff79c6">=</span> [];
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">for</span> (<span style="color:#ff79c6">const</span> continues <span style="color:#ff79c6">of</span> node.ancestorContinues) {
+</span></span><span style="display:flex;"><span>      parts.push(continues <span style="color:#ff79c6">?</span> <span style="color:#f1fa8c">&#34;│  &#34;</span> <span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#34;   &#34;</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    parts.push(node.isLast <span style="color:#ff79c6">?</span> <span style="color:#f1fa8c">&#34;└─ &#34;</span> <span style="color:#ff79c6">:</span> <span style="color:#f1fa8c">&#34;├─ &#34;</span>);
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">return</span> parts.join(<span style="color:#f1fa8c">&#34;&#34;</span>);
+</span></span><span style="display:flex;"><span>  }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre><h3>7. Key Design Properties</h3>
+<p><strong>A. The Tree component accepts <code>FlatTreeNode&lt;T&gt;[]</code>, not <code>TreeNode&lt;T&gt;[]</code>.</strong> This is the critical design choice. By accepting pre-flattened nodes:</p>
+<ul>
+<li>Simple consumers call <code>flattenTree(roots)</code> and pass the result.</li>
+<li>Complex consumers (tree-selector.ts) run their own flattening with custom indentation/gutter logic and pass the result.</li>
+<li>Filtering is handled externally: filter + re-flatten + <code>setNodes()</code>.</li>
+</ul>
+<p><strong>B. Prefix rendering is pluggable.</strong> The default <code>buildDefaultPrefix()</code> handles the simple <code>ancestorContinues</code>-based connectors (matching session-selector.ts). Tree-selector.ts can provide a custom <code>renderPrefix</code> that implements its gutter/position-based logic.</p>
+<p><strong>C. Content rendering is always a callback.</strong> <code>renderNode(data, selected, availableWidth)</code> lets the consumer fully control what text appears for each node. This avoids the component needing to know about session entries, tool calls, labels, etc.</p>
+<p><strong>D. The connector styling is applied by the component</strong> via <code>theme.connector()</code>, so the consumer does not need to style the prefix returned by <code>renderPrefix</code> (unless they want to override per-node).</p>
+<h3>8. Exports to Add to index.ts</h3>
+<pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span><span style="color:#ff79c6">export</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">type</span> FlatTreeNode,
+</span></span><span style="display:flex;"><span>  flattenTree,
+</span></span><span style="display:flex;"><span>  Tree,
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">type</span> TreeNode,
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">type</span> TreeOptions,
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">type</span> TreeTheme,
+</span></span><span style="display:flex;"><span>} <span style="color:#ff79c6">from</span> <span style="color:#f1fa8c">&#34;./components/tree.js&#34;</span>;
+</span></span></code></pre><h3>9. Migration Plan</h3>
+<h4>session-selector.ts Migration</h4>
+<p>This is the simpler migration. The <code>SessionList</code> class currently:</p>
+<ol>
+<li>Builds a <code>SessionTreeNode[]</code> tree via <code>buildSessionTree()</code></li>
+<li>Flattens via <code>flattenSessionTree()</code> to <code>FlatSessionNode[]</code></li>
+<li>Renders with <code>buildTreePrefix()</code> and custom line assembly</li>
+<li>Handles navigation internally</li>
+</ol>
+<p>Migration steps:</p>
+<ol>
+<li>Replace <code>FlatSessionNode</code> with <code>FlatTreeNode&lt;SessionInfo&gt;</code>.</li>
+<li>Replace <code>flattenSessionTree()</code> with <code>flattenTree()</code> -- the logic is identical. <code>buildSessionTree()</code> would return <code>TreeNode&lt;SessionInfo&gt;[]</code> instead of the local <code>SessionTreeNode[]</code>.</li>
+<li>Replace the <code>SessionList</code> internal rendering with a <code>Tree&lt;SessionInfo&gt;</code> instance, passing a <code>renderNode</code> callback that produces the session line (name, age, message count, path).</li>
+<li>The tree prefix rendering uses the default (<code>buildDefaultPrefix</code> matches <code>buildTreePrefix</code> exactly).</li>
+<li>Navigation delegates to <code>Tree.handleInput()</code>. Additional key handling (Tab for scope, Ctrl+D for delete, etc.) stays in <code>SessionList.handleInput()</code> -- it calls <code>super.handleInput()</code> or the tree's <code>handleInput()</code> for unhandled keys.</li>
+</ol>
+<p><strong>Estimated changes</strong>: ~60 lines removed (the flat node type, flattenSessionTree, buildTreePrefix, viewport calculation, selection rendering loop), ~20 lines added (Tree instantiation, renderNode callback, glue).</p>
+<h4>tree-selector.ts Migration</h4>
+<p>This is more involved because of the custom flattening logic.</p>
+<p>Migration steps:</p>
+<ol>
+<li>The <code>SessionTreeNode</code> from session-manager.ts becomes <code>TreeNode&lt;SessionEntry &amp; { label?: string }&gt;</code> or the <code>TreeList</code> continues to use its own flattening that produces <code>FlatTreeNode&lt;SessionTreeNode&gt;</code>.</li>
+<li><strong>Custom flattener</strong>: The existing <code>flattenTree()</code> and <code>recalculateVisualStructure()</code> methods stay in <code>TreeList</code> but produce <code>FlatTreeNode&lt;SessionTreeNode&gt;[]</code> instead of <code>FlatNode[]</code>. The <code>indent</code>, <code>showConnector</code>, <code>isLast</code>, <code>gutters</code>, <code>isVirtualRootChild</code> fields are used to compute <code>ancestorContinues</code> and <code>depth</code>, or alternatively the <code>renderPrefix</code> callback is used.</li>
+<li><strong>Custom prefix</strong>: Provide a <code>renderPrefix</code> callback that implements the gutter/position-based prefix rendering (the char-by-char loop at lines 604-631 of tree-selector.ts).</li>
+<li><strong>Custom node rendering</strong>: Provide a <code>renderNode</code> callback wrapping <code>getEntryDisplayText()</code> plus the active path marker and label.</li>
+<li>The <code>Tree&lt;SessionTreeNode&gt;</code> instance handles viewport scrolling and basic navigation. The <code>TreeList.handleInput()</code> adds filter cycling, search, label editing, and delegates unhandled keys to the tree.</li>
+<li>Selection state delegates to <code>tree.setSelectedIndex()</code> / <code>tree.getSelectedIndex()</code>.</li>
+</ol>
+<p><strong>Estimated changes</strong>: The viewport/scroll/render loop (~90 lines) is removed. The prefix loop (~30 lines) moves to a <code>renderPrefix</code> callback. The custom flattener and filter logic (~200 lines) stays as-is but outputs <code>FlatTreeNode&lt;T&gt;[]</code>. Net reduction of ~80-100 lines.</p>
+<h3>10. Test Plan</h3>
+<p>Tests in <code>~/work/pi-mono/packages/tui/test/tree.test.ts</code>:</p>
+<ol>
+<li><strong>flattenTree</strong>: Verify correct depth, isLast, and ancestorContinues for a known tree structure (single root, multi-root, single-child chains, branching).</li>
+<li><strong>Tree.render() - basic</strong>: Render a small tree and verify prefix characters (├─, └─, │) appear correctly.</li>
+<li><strong>Tree.render() - scrolling</strong>: With <code>maxVisible=3</code> and 10 nodes, verify that only 3 content lines + scroll info are rendered.</li>
+<li><strong>Tree.render() - empty</strong>: Verify empty message renders when nodes is empty.</li>
+<li><strong>Tree.render() - truncation</strong>: Verify lines are truncated to the given width.</li>
+<li><strong>Tree.handleInput() - navigation</strong>: Send up/down keystrokes and verify <code>selectedIndex</code> changes, including wrap behavior.</li>
+<li><strong>Tree.handleInput() - page navigation</strong>: Verify page up/down moves by maxVisible.</li>
+<li><strong>Tree.handleInput() - select/cancel</strong>: Verify onSelect and onCancel callbacks fire.</li>
+<li><strong>Tree.setNodes()</strong>: Verify that replacing nodes clamps the selected index.</li>
+<li><strong>Tree.selectWhere()</strong>: Verify finding a node by predicate works.</li>
+<li><strong>Custom renderPrefix</strong>: Verify that providing a custom prefix callback overrides the default connectors.</li>
+</ol>
+<h3>11. Potential Challenges</h3>
+<ol>
+<li>
+<p><strong>Connector styling boundary</strong>: The default <code>buildDefaultPrefix</code> returns unstyled text, and the component wraps it in <code>theme.connector()</code>. If the consumer provides <code>renderPrefix</code>, they may or may not want the theme applied. Solution: document that <code>renderPrefix</code> output is NOT wrapped in <code>theme.connector()</code> -- the consumer is responsible for their own styling in the custom case.</p>
+</li>
+<li>
+<p><strong>Width calculation with ANSI</strong>: The <code>renderNode</code> callback receives <code>availableWidth</code> which must account for the visible width of the cursor + prefix (including any ANSI codes). The component uses <code>visibleWidth()</code> on the rendered cursor and prefix before computing <code>availableWidth</code>.</p>
+</li>
+<li>
+<p><strong>Re-rendering after setNodes()</strong>: When the consumer calls <code>setNodes()</code>, the component should clamp <code>selectedIndex</code> and the next <code>render()</code> call naturally picks up the change. No explicit invalidation is needed since there is no render cache (matching the pattern of <code>SelectList</code> and <code>SettingsList</code>).</p>
+</li>
+<li>
+<p><strong>tree-selector.ts has multipleRoots display adjustment</strong>: When multiple roots exist, tree-selector shifts <code>displayIndent</code> by -1. This is handled in the custom <code>renderPrefix</code> callback -- it is not a generic tree concern.</p>
+</li>
+</ol>
+<h3>Critical Files for Implementation</h3>
+<ul>
+<li><code>~/work/pi-mono/packages/tui/src/components/tree.ts</code> - New file: all types, flattenTree utility, and Tree component class</li>
+<li><code>~/work/pi-mono/packages/tui/src/index.ts</code> - Add exports for Tree, TreeNode, FlatTreeNode, flattenTree, TreeOptions, TreeTheme</li>
+<li><code>~/work/pi-mono/packages/tui/src/components/select-list.ts</code> - Reference pattern for a list component with scrolling, selection, themes, and handleInput</li>
+<li><code>~/work/pi-mono/packages/coding-agent/src/modes/interactive/components/session-selector.ts</code> - First migration target (simpler), contains flattenSessionTree and buildTreePrefix to replace</li>
+<li><code>~/work/pi-mono/packages/coding-agent/src/modes/interactive/components/tree-selector.ts</code> - Second migration target (complex), contains custom flattening/gutter logic that will use renderPrefix callback</li>
+</ul>
+</div>
+        </div>
+    </div>
+    
+</div>
+
+            </div>
+            <footer class="mt-12 pt-6 border-t border-slate-200 dark:border-slate-700 text-center text-xs text-slate-400">
+                Generated by <a href="https://github.com/sonnes/chitragupt" class="text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-300 underline">chitragupt</a>
+            </footer>
+        </div>
+        
+        <nav class="hidden lg:block w-56 shrink-0">
+            <div class="sticky top-8 max-h-[calc(100vh-4rem)] overflow-y-auto">
+                <div class="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-3">Timeline</div>
+                <ol class="list-decimal list-inside flex flex-col gap-1 text-xs marker:text-slate-400 dark:marker:text-slate-500 marker:font-mono">
+                    
+                </ol>
+            </div>
+        </nav>
+    </div>
+</body>
+</html>

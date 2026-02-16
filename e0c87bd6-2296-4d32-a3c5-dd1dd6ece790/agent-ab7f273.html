@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>chitragupt</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style type="text/tailwindcss">
+        @theme {
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+    </style>
+    <style>
+         
+        .prose { font-size: 14px; line-height: 1.7; }
+        .prose p { margin-bottom: 12px; }
+        .prose p:last-child { margin-bottom: 0; }
+        .prose h1 { font-size: 24px; font-weight: 700; margin: 20px 0 12px; }
+        .prose h2 { font-size: 20px; font-weight: 600; margin: 16px 0 10px; }
+        .prose h3 { font-size: 16px; font-weight: 600; margin: 14px 0 8px; }
+        .prose strong { font-weight: 600; }
+        .prose em { font-style: italic; }
+        .prose code { font-family: ui-monospace, monospace; font-size: 12px; padding: 2px 6px; border-radius: 4px; background: #f1f5f9; }
+        .prose pre { margin: 12px 0; border-radius: 8px; overflow-x: auto; }
+        .prose pre code { padding: 0; background: transparent; }
+        .prose ul { list-style: disc; margin: 8px 0; padding-left: 24px; }
+        .prose ol { list-style: decimal; margin: 8px 0; padding-left: 24px; }
+        .prose li { margin-bottom: 4px; }
+        .prose blockquote { border-left: 3px solid #e2e8f0; padding-left: 12px; margin: 12px 0; color: #64748b; }
+        .prose a { color: #2563eb; text-decoration: underline; }
+        .prose table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 13px; }
+        .prose th { text-align: left; padding: 8px 12px; border-bottom: 2px solid #e2e8f0; font-weight: 600; }
+        .prose td { padding: 8px 12px; border-bottom: 1px solid #e2e8f0; }
+        .prose hr { border: none; border-top: 1px solid #e2e8f0; margin: 16px 0; }
+
+         
+        @media (prefers-color-scheme: dark) {
+            .prose code { background: #1e293b; }
+            .prose blockquote { border-color: #334155; color: #94a3b8; }
+            .prose th { border-color: #334155; }
+            .prose td { border-color: #334155; }
+            .prose hr { border-color: #334155; }
+            .prose a { color: #60a5fa; }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-700 dark:text-slate-300 font-sans" style="line-height: 1.65; padding: 48px 24px;">
+    <div class="max-w-6xl mx-auto flex gap-8">
+        
+        <div class="min-w-0 flex-1 max-w-3xl">
+            
+<header class="mb-10">
+  
+  <div class="flex items-baseline gap-4 mb-3">
+    <h1 class="text-3xl font-bold text-slate-900 dark:text-white">
+      Session ab7f273
+    </h1>
+    
+  </div>
+
+  
+  <div class="flex flex-wrap items-center gap-4 text-sm text-slate-500 dark:text-slate-400 mb-6">
+    
+    <span class="flex items-center gap-1.5">
+      <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      <span class="font-medium">@claude</span>
+    </span>
+    
+
+    
+    <span class="flex items-center gap-1.5">
+      <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      1d ago
+    </span>
+    
+
+    
+    <span class="flex items-center gap-1.5">
+      <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+      claude-opus-4-6
+    </span>
+    
+
+    
+  </div>
+
+  
+  <div
+    class="flex flex-wrap gap-6 pt-4 border-t border-slate-200 dark:border-slate-700"
+  >
+    <div class="text-center">
+      <div class="text-lg font-bold text-slate-900 dark:text-white">
+        12
+      </div>
+      <div class="text-xs text-slate-500 uppercase">Input Tokens</div>
+    </div>
+    <div class="text-center">
+      <div class="text-lg font-bold text-slate-900 dark:text-white">
+        62
+      </div>
+      <div class="text-xs text-slate-500 uppercase">Output Tokens</div>
+    </div>
+    
+    <div class="text-center">
+      <div class="text-lg font-bold text-slate-900 dark:text-white">
+        308,466
+      </div>
+      <div class="text-xs text-slate-500 uppercase">Cache Read</div>
+    </div>
+     
+    <div class="text-center">
+      <div class="text-lg font-bold text-slate-900 dark:text-white">
+        41,777
+      </div>
+      <div class="text-xs text-slate-500 uppercase">Cache Write</div>
+    </div>
+    
+  </div>
+  
+</header>
+
+            <div class="flex flex-col gap-8">
+                
+<div id="turn-0" class="flex flex-col gap-4 scroll-mt-6">
+    
+    
+
+    
+    
+    <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden">
+        <details>
+            <summary class="px-5 py-3 flex items-center gap-3 cursor-pointer select-none hover:bg-slate-50 dark:hover:bg-slate-750">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-slate-400 shrink-0"><polyline points="9 18 15 12 9 6"/></svg>
+                <span class="text-sm font-medium text-slate-700 dark:text-slate-300">19 Steps Completed</span>
+                
+            </summary>
+            <div class="px-5 pb-4 flex flex-col gap-3 border-t border-slate-100 dark:border-slate-700 pt-3">
+                <div class="prose dark:prose-invert max-w-none"><p>I'll explore the codebase thoroughly to understand the current implementation before designing the plan.</p>
+</div><details class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden"><summary class="px-4 py-2 flex items-center gap-2 text-slate-900 dark:text-white cursor-pointer select-none min-w-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg><span class="text-xs font-semibold font-mono shrink-0">Read</span> <span class="text-xs font-mono text-slate-500 dark:text-slate-400 truncate">~/work/chitragupt/cmd/cg/render.go</span></summary><div class="px-4 py-3 text-xs overflow-x-auto"><pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;file_path&#34;</span>: <span style="color:#f1fa8c">&#34;~/work/chitragupt/cmd/cg/render.go&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></details><details class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden"><summary class="px-4 py-2 flex items-center gap-2 text-slate-900 dark:text-white cursor-pointer select-none min-w-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg><span class="text-xs font-semibold font-mono shrink-0">Read</span> <span class="text-xs font-mono text-slate-500 dark:text-slate-400 truncate">~/work/chitragupt/cmd/cg/app.go</span></summary><div class="px-4 py-3 text-xs overflow-x-auto"><pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;file_path&#34;</span>: <span style="color:#f1fa8c">&#34;~/work/chitragupt/cmd/cg/app.go&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></details><details class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden"><summary class="px-4 py-2 flex items-center gap-2 text-slate-900 dark:text-white cursor-pointer select-none min-w-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg><span class="text-xs font-semibold font-mono shrink-0">Read</span> <span class="text-xs font-mono text-slate-500 dark:text-slate-400 truncate">~/work/chitragupt/install/install.go</span></summary><div class="px-4 py-3 text-xs overflow-x-auto"><pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;file_path&#34;</span>: <span style="color:#f1fa8c">&#34;~/work/chitragupt/install/install.go&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></details><div class="prose dark:prose-invert max-w-none"><p>Now let me look at the install test file and the render interface to complete my understanding.</p>
+</div><details class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden"><summary class="px-4 py-2 flex items-center gap-2 text-slate-900 dark:text-white cursor-pointer select-none min-w-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg><span class="text-xs font-semibold font-mono shrink-0">Read</span> <span class="text-xs font-mono text-slate-500 dark:text-slate-400 truncate">~/work/chitragupt/install/install_test.go</span></summary><div class="px-4 py-3 text-xs overflow-x-auto"><pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;file_path&#34;</span>: <span style="color:#f1fa8c">&#34;~/work/chitragupt/install/install_test.go&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></details><details class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden"><summary class="px-4 py-2 flex items-center gap-2 text-slate-900 dark:text-white cursor-pointer select-none min-w-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg><span class="text-xs font-semibold font-mono shrink-0">Read</span> <span class="text-xs font-mono text-slate-500 dark:text-slate-400 truncate">~/work/chitragupt/render/render.go</span></summary><div class="px-4 py-3 text-xs overflow-x-auto"><pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;file_path&#34;</span>: <span style="color:#f1fa8c">&#34;~/work/chitragupt/render/render.go&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></details><details class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden"><summary class="px-4 py-2 flex items-center gap-2 text-slate-900 dark:text-white cursor-pointer select-none min-w-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><span class="text-xs font-semibold font-mono shrink-0">Glob</span> <span class="text-xs font-mono text-slate-500 dark:text-slate-400 truncate">~/work/chitragupt/render/**/*.go</span></summary><div class="px-4 py-3 text-xs overflow-x-auto"><pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;pattern&#34;</span>: <span style="color:#f1fa8c">&#34;~/work/chitragupt/render/**/*.go&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><div class="border-t border-slate-200 dark:border-slate-700"><pre class="px-4 py-3 text-xs font-mono overflow-x-auto max-h-96 overflow-y-auto">~/work/chitragupt/render/json/json.go
+~/work/chitragupt/render/markdown/markdown.go
+~/work/chitragupt/render/render.go
+~/work/chitragupt/render/html/embed.go
+~/work/chitragupt/render/html/blocks_test.go
+~/work/chitragupt/render/terminal/summarize.go
+~/work/chitragupt/render/terminal/summarize_test.go
+~/work/chitragupt/render/html/html.go
+~/work/chitragupt/render/html/funcmap.go
+~/work/chitragupt/render/terminal/style.go
+~/work/chitragupt/render/terminal/terminal_test.go
+~/work/chitragupt/render/html/html_test.go
+~/work/chitragupt/render/html/blocks.go
+~/work/chitragupt/render/terminal/terminal.go</pre></div></details><div class="prose dark:prose-invert max-w-none"><p>Let me also check if there is an existing <code>Ext()</code> method or extension mapping on renderers, and look at how the urfave/cli StringSliceFlag works.</p>
+</div><details class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden"><summary class="px-4 py-2 flex items-center gap-2 text-slate-900 dark:text-white cursor-pointer select-none min-w-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg><span class="text-xs font-semibold font-mono shrink-0">Read</span> <span class="text-xs font-mono text-slate-500 dark:text-slate-400 truncate">~/work/chitragupt/render/html/html.go</span></summary><div class="px-4 py-3 text-xs overflow-x-auto"><pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;file_path&#34;</span>: <span style="color:#f1fa8c">&#34;~/work/chitragupt/render/html/html.go&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></details><details class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden"><summary class="px-4 py-2 flex items-center gap-2 text-slate-900 dark:text-white cursor-pointer select-none min-w-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg><span class="text-xs font-semibold font-mono shrink-0">Read</span> <span class="text-xs font-mono text-slate-500 dark:text-slate-400 truncate">~/work/chitragupt/render/json/json.go</span></summary><div class="px-4 py-3 text-xs overflow-x-auto"><pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;file_path&#34;</span>: <span style="color:#f1fa8c">&#34;~/work/chitragupt/render/json/json.go&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></details><details class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden"><summary class="px-4 py-2 flex items-center gap-2 text-slate-900 dark:text-white cursor-pointer select-none min-w-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg><span class="text-xs font-semibold font-mono shrink-0">Read</span> <span class="text-xs font-mono text-slate-500 dark:text-slate-400 truncate">~/work/chitragupt/render/markdown/markdown.go</span></summary><div class="px-4 py-3 text-xs overflow-x-auto"><pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;file_path&#34;</span>: <span style="color:#f1fa8c">&#34;~/work/chitragupt/render/markdown/markdown.go&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></details><details class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden"><summary class="px-4 py-2 flex items-center gap-2 text-slate-900 dark:text-white cursor-pointer select-none min-w-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg><span class="text-xs font-semibold font-mono shrink-0">Read</span> <span class="text-xs font-mono text-slate-500 dark:text-slate-400 truncate">~/work/chitragupt/render/terminal/terminal.go</span></summary><div class="px-4 py-3 text-xs overflow-x-auto"><pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;file_path&#34;</span>: <span style="color:#f1fa8c">&#34;~/work/chitragupt/render/terminal/terminal.go&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></details><div class="prose dark:prose-invert max-w-none"><p>Now let me check how <code>urfave/cli/v3</code> handles <code>StringSliceFlag</code> to understand the API, and also check if there are existing tests for the render command.</p>
+</div><details class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden"><summary class="px-4 py-2 flex items-center gap-2 text-slate-900 dark:text-white cursor-pointer select-none min-w-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><span class="text-xs font-semibold font-mono shrink-0">Glob</span> <span class="text-xs font-mono text-slate-500 dark:text-slate-400 truncate">~/work/chitragupt/cmd/cg/*_test.go</span></summary><div class="px-4 py-3 text-xs overflow-x-auto"><pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;pattern&#34;</span>: <span style="color:#f1fa8c">&#34;~/work/chitragupt/cmd/cg/*_test.go&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><div class="border-t border-slate-200 dark:border-slate-700"><pre class="px-4 py-3 text-xs font-mono overflow-x-auto max-h-96 overflow-y-auto">No files found</pre></div></details><details class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden"><summary class="px-4 py-2 flex items-center gap-2 text-slate-900 dark:text-white cursor-pointer select-none min-w-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><span class="text-xs font-semibold font-mono shrink-0">Grep</span> <span class="text-xs font-mono text-slate-500 dark:text-slate-400 truncate">StringSliceFlag</span></summary><div class="px-4 py-3 text-xs overflow-x-auto"><pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;-n&#34;</span>: <span style="color:#ff79c6">true</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;output_mode&#34;</span>: <span style="color:#f1fa8c">&#34;content&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;path&#34;</span>: <span style="color:#f1fa8c">&#34;~/work/chitragupt&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;pattern&#34;</span>: <span style="color:#f1fa8c">&#34;StringSliceFlag&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><div class="border-t border-slate-200 dark:border-slate-700"><pre class="px-4 py-3 text-xs font-mono overflow-x-auto max-h-96 overflow-y-auto">cmd/cg/render.go:50:			&amp;cli.StringSliceFlag{</pre></div></details><details class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden"><summary class="px-4 py-2 flex items-center gap-2 text-slate-900 dark:text-white cursor-pointer select-none min-w-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><span class="text-xs font-semibold font-mono shrink-0">Grep</span> <span class="text-xs font-mono text-slate-500 dark:text-slate-400 truncate">StringSlice\(</span></summary><div class="px-4 py-3 text-xs overflow-x-auto"><pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;-n&#34;</span>: <span style="color:#ff79c6">true</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;output_mode&#34;</span>: <span style="color:#f1fa8c">&#34;content&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;path&#34;</span>: <span style="color:#f1fa8c">&#34;~/work/chitragupt&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;pattern&#34;</span>: <span style="color:#f1fa8c">&#34;StringSlice\\(&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><div class="border-t border-slate-200 dark:border-slate-700"><pre class="px-4 py-3 text-xs font-mono overflow-x-auto max-h-96 overflow-y-auto">cmd/cg/app.go:106:	rules := cmd.StringSlice(&#34;redact&#34;)</pre></div></details><div class="prose dark:prose-invert max-w-none"><p>Good. The codebase already uses <code>StringSliceFlag</code> with <code>cmd.StringSlice(&quot;redact&quot;)</code> -- that confirms the API pattern. Let me also check the existing <code>formatExtension</code> function in <code>install.go</code> since it already maps format names to extensions -- we may want to reuse or consolidate this.</p>
+</div><details class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden"><summary class="px-4 py-2 flex items-center gap-2 text-slate-900 dark:text-white cursor-pointer select-none min-w-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><span class="text-xs font-semibold font-mono shrink-0">Grep</span> <span class="text-xs font-mono text-slate-500 dark:text-slate-400 truncate">formatExtension</span></summary><div class="px-4 py-3 text-xs overflow-x-auto"><pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;-n&#34;</span>: <span style="color:#ff79c6">true</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;output_mode&#34;</span>: <span style="color:#f1fa8c">&#34;content&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;path&#34;</span>: <span style="color:#f1fa8c">&#34;~/work/chitragupt&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;pattern&#34;</span>: <span style="color:#f1fa8c">&#34;formatExtension&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><div class="border-t border-slate-200 dark:border-slate-700"><pre class="px-4 py-3 text-xs font-mono overflow-x-auto max-h-96 overflow-y-auto">install/install.go:302:// formatExtension maps a render format to its file extension.
+install/install.go:303:func formatExtension(format string) string {
+install/install.go:319:	ext := formatExtension(format)</pre></div></details><details class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden"><summary class="px-4 py-2 flex items-center gap-2 text-slate-900 dark:text-white cursor-pointer select-none min-w-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg><span class="text-xs font-semibold font-mono shrink-0">Read</span> <span class="text-xs font-mono text-slate-500 dark:text-slate-400 truncate">~/work/chitragupt/cmd/cg/main.go</span></summary><div class="px-4 py-3 text-xs overflow-x-auto"><pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;file_path&#34;</span>: <span style="color:#f1fa8c">&#34;~/work/chitragupt/cmd/cg/main.go&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></details><div class="prose dark:prose-invert max-w-none"><p>Now let me check the <code>install</code> command CLI definition to see how the Config.Format is wired up.</p>
+</div><details class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden"><summary class="px-4 py-2 flex items-center gap-2 text-slate-900 dark:text-white cursor-pointer select-none min-w-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><span class="text-xs font-semibold font-mono shrink-0">Glob</span> <span class="text-xs font-mono text-slate-500 dark:text-slate-400 truncate">~/work/chitragupt/cmd/cg/install.go</span></summary><div class="px-4 py-3 text-xs overflow-x-auto"><pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;pattern&#34;</span>: <span style="color:#f1fa8c">&#34;~/work/chitragupt/cmd/cg/install.go&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><div class="border-t border-slate-200 dark:border-slate-700"><pre class="px-4 py-3 text-xs font-mono overflow-x-auto max-h-96 overflow-y-auto">~/work/chitragupt/cmd/cg/install.go</pre></div></details><details class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden"><summary class="px-4 py-2 flex items-center gap-2 text-slate-900 dark:text-white cursor-pointer select-none min-w-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg><span class="text-xs font-semibold font-mono shrink-0">Read</span> <span class="text-xs font-mono text-slate-500 dark:text-slate-400 truncate">~/work/chitragupt/cmd/cg/install.go</span></summary><div class="px-4 py-3 text-xs overflow-x-auto"><pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;file_path&#34;</span>: <span style="color:#f1fa8c">&#34;~/work/chitragupt/cmd/cg/install.go&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></details><div class="prose dark:prose-invert max-w-none"><p>Now let me check whether the <code>serve</code> command also references the <code>-o</code> flag or format logic.</p>
+</div><details class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden"><summary class="px-4 py-2 flex items-center gap-2 text-slate-900 dark:text-white cursor-pointer select-none min-w-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><span class="text-xs font-semibold font-mono shrink-0">Glob</span> <span class="text-xs font-mono text-slate-500 dark:text-slate-400 truncate">~/work/chitragupt/cmd/cg/serve.go</span></summary><div class="px-4 py-3 text-xs overflow-x-auto"><pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;pattern&#34;</span>: <span style="color:#f1fa8c">&#34;~/work/chitragupt/cmd/cg/serve.go&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><div class="border-t border-slate-200 dark:border-slate-700"><pre class="px-4 py-3 text-xs font-mono overflow-x-auto max-h-96 overflow-y-auto">~/work/chitragupt/cmd/cg/serve.go</pre></div></details><details class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden"><summary class="px-4 py-2 flex items-center gap-2 text-slate-900 dark:text-white cursor-pointer select-none min-w-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg><span class="text-xs font-semibold font-mono shrink-0">Read</span> <span class="text-xs font-mono text-slate-500 dark:text-slate-400 truncate">~/work/chitragupt/cmd/cg/serve.go</span></summary><div class="px-4 py-3 text-xs overflow-x-auto"><pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;file_path&#34;</span>: <span style="color:#f1fa8c">&#34;~/work/chitragupt/cmd/cg/serve.go&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></details>
+            </div>
+        </details>
+    </div>
+    
+
+    
+    
+    <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-5 border-l-4 border-l-emerald-500">
+        <div class="flex flex-col gap-3">
+            <div class="prose dark:prose-invert max-w-none"><p>Good, <code>serve</code> has no dependency on the format flag. I now have a complete picture. Let me produce the implementation plan.</p>
+<hr>
+<h2>Implementation Plan: Refactor CLI Flags on the <code>render</code> Command</h2>
+<h3>Overview</h3>
+<p>This refactoring renames <code>-o</code> to <code>--format</code> (as a multi-value <code>StringSliceFlag</code>), renames <code>--out-dir</code> to <code>--out</code>, and generalizes the directory-rendering logic to work with any format, not just HTML. Three files need modification; the rest of the system (the <code>Renderer</code> interface, <code>app.renderer()</code>, the individual renderer implementations) remain unchanged.</p>
+<hr>
+<h3>Step 1: Add a <code>formatExtension</code> helper to <code>cmd/cg/render.go</code></h3>
+<p>The <code>install</code> package already has a <code>formatExtension</code> function (at <code>~/work/chitragupt/install/install.go</code> lines 302-314), but it is unexported and lives in a separate package. Rather than exporting it or creating a shared utility package for a 10-line switch, duplicate it in <code>render.go</code> where it is needed. The two call sites serve different purposes (install-time script generation vs. render-time file naming), so coupling them is not worth it.</p>
+<p>Add this near the bottom of <code>render.go</code>:</p>
+<pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span><span style="color:#6272a4">// formatExtension maps a format name to its file extension (with leading dot).</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">formatExtension</span>(format <span style="color:#8be9fd">string</span>) <span style="color:#8be9fd">string</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">switch</span> format {
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">case</span> <span style="color:#f1fa8c">&#34;html&#34;</span>:
+</span></span><span style="display:flex;"><span>		<span style="color:#ff79c6">return</span> <span style="color:#f1fa8c">&#34;.html&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">case</span> <span style="color:#f1fa8c">&#34;terminal&#34;</span>:
+</span></span><span style="display:flex;"><span>		<span style="color:#ff79c6">return</span> <span style="color:#f1fa8c">&#34;.txt&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">case</span> <span style="color:#f1fa8c">&#34;markdown&#34;</span>:
+</span></span><span style="display:flex;"><span>		<span style="color:#ff79c6">return</span> <span style="color:#f1fa8c">&#34;.md&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">case</span> <span style="color:#f1fa8c">&#34;json&#34;</span>:
+</span></span><span style="display:flex;"><span>		<span style="color:#ff79c6">return</span> <span style="color:#f1fa8c">&#34;.json&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">default</span>:
+</span></span><span style="display:flex;"><span>		<span style="color:#ff79c6">return</span> <span style="color:#f1fa8c">&#34;.&#34;</span> <span style="color:#ff79c6">+</span> format
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre><p>Note: The <code>install</code> package version does not handle <code>&quot;terminal&quot;</code> (it is only used for stored transcript formats like jsonl/html/json/markdown). The render command version should handle <code>&quot;terminal&quot;</code> since it is a valid render format.</p>
+<hr>
+<h3>Step 2: Modify flag definitions in <code>renderCmd()</code> (in <code>~/work/chitragupt/cmd/cg/render.go</code>)</h3>
+<p><strong>Change 1</strong>: Replace the <code>-o</code> <code>StringFlag</code> (lines 42-46) with a <code>--format</code> <code>StringSliceFlag</code>.</p>
+<p>Current code:</p>
+<pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span><span style="color:#ff79c6">&amp;</span>cli.StringFlag{
+</span></span><span style="display:flex;"><span>    Name:  <span style="color:#f1fa8c">&#34;o&#34;</span>,
+</span></span><span style="display:flex;"><span>    Usage: <span style="color:#f1fa8c">&#34;Output format: html, markdown, json, terminal&#34;</span>,
+</span></span><span style="display:flex;"><span>    Value: <span style="color:#f1fa8c">&#34;terminal&#34;</span>,
+</span></span><span style="display:flex;"><span>},
+</span></span></code></pre><p>New code:</p>
+<pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span><span style="color:#ff79c6">&amp;</span>cli.StringSliceFlag{
+</span></span><span style="display:flex;"><span>    Name:  <span style="color:#f1fa8c">&#34;format&#34;</span>,
+</span></span><span style="display:flex;"><span>    Usage: <span style="color:#f1fa8c">&#34;Output format(s): html, markdown, json, terminal (repeatable)&#34;</span>,
+</span></span><span style="display:flex;"><span>},
+</span></span></code></pre><p>Note: <code>StringSliceFlag</code> in urfave/cli v3 does not support a <code>Value</code> default the same way <code>StringFlag</code> does. The default behavior (&quot;terminal&quot; when nothing specified) will be handled in the action logic.</p>
+<p><strong>Change 2</strong>: Rename <code>--out-dir</code> to <code>--out</code> (lines 58-61).</p>
+<p>Current code:</p>
+<pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span><span style="color:#ff79c6">&amp;</span>cli.StringFlag{
+</span></span><span style="display:flex;"><span>    Name:  <span style="color:#f1fa8c">&#34;out-dir&#34;</span>,
+</span></span><span style="display:flex;"><span>    Usage: <span style="color:#f1fa8c">&#34;Output directory (writes index.html + agent-*.html for sub-agents)&#34;</span>,
+</span></span><span style="display:flex;"><span>},
+</span></span></code></pre><p>New code:</p>
+<pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span><span style="color:#ff79c6">&amp;</span>cli.StringFlag{
+</span></span><span style="display:flex;"><span>    Name:  <span style="color:#f1fa8c">&#34;out&#34;</span>,
+</span></span><span style="display:flex;"><span>    Usage: <span style="color:#f1fa8c">&#34;Output directory (writes index.{ext} + agent-{id}.{ext} for each format)&#34;</span>,
+</span></span><span style="display:flex;"><span>},
+</span></span></code></pre><hr>
+<h3>Step 3: Rewrite the Action function body (lines 63-129 in <code>~/work/chitragupt/cmd/cg/render.go</code>)</h3>
+<p>The logic after the redaction and compact steps (roughly lines 107-128) needs to be replaced. Here is the new logic in full:</p>
+<pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span><span style="color:#6272a4">// Resolve formats — default to [&#34;terminal&#34;] if none specified.</span>
+</span></span><span style="display:flex;"><span>formats <span style="color:#ff79c6">:=</span> cmd.<span style="color:#50fa7b">StringSlice</span>(<span style="color:#f1fa8c">&#34;format&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">if</span> <span style="color:#8be9fd;font-style:italic">len</span>(formats) <span style="color:#ff79c6">==</span> <span style="color:#bd93f9">0</span> {
+</span></span><span style="display:flex;"><span>    formats = []<span style="color:#8be9fd">string</span>{<span style="color:#f1fa8c">&#34;terminal&#34;</span>}
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>outDir <span style="color:#ff79c6">:=</span> cmd.<span style="color:#50fa7b">String</span>(<span style="color:#f1fa8c">&#34;out&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">// Validate: multiple formats require --out.</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">if</span> <span style="color:#8be9fd;font-style:italic">len</span>(formats) &gt; <span style="color:#bd93f9">1</span> <span style="color:#ff79c6">&amp;&amp;</span> outDir <span style="color:#ff79c6">==</span> <span style="color:#f1fa8c">&#34;&#34;</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">return</span> fmt.<span style="color:#50fa7b">Errorf</span>(<span style="color:#f1fa8c">&#34;--out is required when specifying multiple formats&#34;</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">if</span> outDir <span style="color:#ff79c6">==</span> <span style="color:#f1fa8c">&#34;&#34;</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// Single format, write to stdout.</span>
+</span></span><span style="display:flex;"><span>    rnd, err <span style="color:#ff79c6">:=</span> a.<span style="color:#50fa7b">renderer</span>(formats[<span style="color:#bd93f9">0</span>])
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">if</span> err <span style="color:#ff79c6">!=</span> <span style="color:#ff79c6">nil</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">return</span> err
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">for</span> _, t <span style="color:#ff79c6">:=</span> <span style="color:#ff79c6">range</span> transcripts {
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">if</span> err <span style="color:#ff79c6">:=</span> rnd.<span style="color:#50fa7b">Render</span>(os.Stdout, t); err <span style="color:#ff79c6">!=</span> <span style="color:#ff79c6">nil</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#ff79c6">return</span> fmt.<span style="color:#50fa7b">Errorf</span>(<span style="color:#f1fa8c">&#34;render: %w&#34;</span>, err)
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">return</span> <span style="color:#ff79c6">nil</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">// --out specified: render each format into the directory.</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">for</span> _, format <span style="color:#ff79c6">:=</span> <span style="color:#ff79c6">range</span> formats {
+</span></span><span style="display:flex;"><span>    rnd, err <span style="color:#ff79c6">:=</span> a.<span style="color:#50fa7b">renderer</span>(format)
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">if</span> err <span style="color:#ff79c6">!=</span> <span style="color:#ff79c6">nil</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">return</span> err
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">for</span> _, t <span style="color:#ff79c6">:=</span> <span style="color:#ff79c6">range</span> transcripts {
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">if</span> err <span style="color:#ff79c6">:=</span> <span style="color:#50fa7b">renderToDir</span>(rnd, t, outDir, format); err <span style="color:#ff79c6">!=</span> <span style="color:#ff79c6">nil</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#ff79c6">return</span> err
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">return</span> <span style="color:#ff79c6">nil</span>
+</span></span></code></pre><p>Key behavioral notes:</p>
+<ul>
+<li><code>cmd.StringSlice(&quot;format&quot;)</code> returns <code>[]string{}</code> (empty) when the user passes no <code>--format</code> flags, which is why we default to <code>[&quot;terminal&quot;]</code> in code.</li>
+<li>The single-format + no-<code>--out</code> path preserves exact current behavior: render to stdout.</li>
+<li>The multi-format + no-<code>--out</code> path errors out early with a clear message.</li>
+<li>The <code>--out</code> path iterates over formats, calling <code>renderToDir</code> for each.</li>
+</ul>
+<hr>
+<h3>Step 4: Generalize <code>renderToDir</code> signature and body (in <code>~/work/chitragupt/cmd/cg/render.go</code>)</h3>
+<p>The current <code>renderToDir</code> function hardcodes <code>.html</code> in file names. It needs a <code>format</code> parameter to derive the correct extension.</p>
+<p>Current signature (line 143):</p>
+<pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">renderToDir</span>(rnd render.Renderer, t <span style="color:#ff79c6">*</span>core.Transcript, outDir <span style="color:#8be9fd">string</span>) <span style="color:#8be9fd">error</span> {
+</span></span></code></pre><p>New signature:</p>
+<pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">renderToDir</span>(rnd render.Renderer, t <span style="color:#ff79c6">*</span>core.Transcript, outDir, format <span style="color:#8be9fd">string</span>) <span style="color:#8be9fd">error</span> {
+</span></span></code></pre><p>Updated body:</p>
+<pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">renderToDir</span>(rnd render.Renderer, t <span style="color:#ff79c6">*</span>core.Transcript, outDir, format <span style="color:#8be9fd">string</span>) <span style="color:#8be9fd">error</span> {
+</span></span><span style="display:flex;"><span>	ext <span style="color:#ff79c6">:=</span> <span style="color:#50fa7b">formatExtension</span>(format)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">if</span> err <span style="color:#ff79c6">:=</span> os.<span style="color:#50fa7b">MkdirAll</span>(outDir, <span style="color:#bd93f9">0</span>o755); err <span style="color:#ff79c6">!=</span> <span style="color:#ff79c6">nil</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#ff79c6">return</span> fmt.<span style="color:#50fa7b">Errorf</span>(<span style="color:#f1fa8c">&#34;create output directory: %w&#34;</span>, err)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#6272a4">// Write main transcript.</span>
+</span></span><span style="display:flex;"><span>	mainPath <span style="color:#ff79c6">:=</span> filepath.<span style="color:#50fa7b">Join</span>(outDir, <span style="color:#f1fa8c">&#34;index&#34;</span><span style="color:#ff79c6">+</span>ext)
+</span></span><span style="display:flex;"><span>	f, err <span style="color:#ff79c6">:=</span> os.<span style="color:#50fa7b">Create</span>(mainPath)
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">if</span> err <span style="color:#ff79c6">!=</span> <span style="color:#ff79c6">nil</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#ff79c6">return</span> fmt.<span style="color:#50fa7b">Errorf</span>(<span style="color:#f1fa8c">&#34;create %s: %w&#34;</span>, mainPath, err)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">defer</span> f.<span style="color:#50fa7b">Close</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">if</span> err <span style="color:#ff79c6">:=</span> rnd.<span style="color:#50fa7b">Render</span>(f, t); err <span style="color:#ff79c6">!=</span> <span style="color:#ff79c6">nil</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#ff79c6">return</span> fmt.<span style="color:#50fa7b">Errorf</span>(<span style="color:#f1fa8c">&#34;render main transcript: %w&#34;</span>, err)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#6272a4">// Write each sub-agent transcript.</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">for</span> _, sub <span style="color:#ff79c6">:=</span> <span style="color:#ff79c6">range</span> t.SubAgents {
+</span></span><span style="display:flex;"><span>		safeName <span style="color:#ff79c6">:=</span> filepath.<span style="color:#50fa7b">Base</span>(sub.SessionID)
+</span></span><span style="display:flex;"><span>		subPath <span style="color:#ff79c6">:=</span> filepath.<span style="color:#50fa7b">Join</span>(outDir, <span style="color:#f1fa8c">&#34;agent-&#34;</span><span style="color:#ff79c6">+</span>safeName<span style="color:#ff79c6">+</span>ext)
+</span></span><span style="display:flex;"><span>		<span style="color:#ff79c6">if</span> err <span style="color:#ff79c6">:=</span> <span style="color:#50fa7b">renderFile</span>(rnd, sub, subPath); err <span style="color:#ff79c6">!=</span> <span style="color:#ff79c6">nil</span> {
+</span></span><span style="display:flex;"><span>			<span style="color:#ff79c6">return</span> err
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">return</span> <span style="color:#ff79c6">nil</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre><p>The <code>renderFile</code> helper (lines 172-183) is format-agnostic already -- it takes a path and writes to it. No changes needed.</p>
+<hr>
+<h3>Step 5: Update <code>buildSaveTranscriptScript</code> in <code>~/work/chitragupt/install/install.go</code></h3>
+<p>At line 342, the generated shell script uses <code>-o %s</code>. Change this to <code>--format %s</code>.</p>
+<p>Current (line 342):</p>
+<pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>cg render <span style="color:#ff79c6">--</span>agent <span style="color:#ff79c6">%</span>s <span style="color:#ff79c6">--</span>file <span style="color:#f1fa8c">&#34;$TRANSCRIPT_PATH&#34;</span> <span style="color:#ff79c6">-</span>o <span style="color:#ff79c6">%</span>s &gt; <span style="color:#f1fa8c">&#34;$DEST&#34;</span>
+</span></span></code></pre><p>New:</p>
+<pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>cg render <span style="color:#ff79c6">--</span>agent <span style="color:#ff79c6">%</span>s <span style="color:#ff79c6">--</span>file <span style="color:#f1fa8c">&#34;$TRANSCRIPT_PATH&#34;</span> <span style="color:#ff79c6">--</span>format <span style="color:#ff79c6">%</span>s &gt; <span style="color:#f1fa8c">&#34;$DEST&#34;</span>
+</span></span></code></pre><p>This is the only change in <code>install.go</code>. The <code>formatExtension</code> function in this file remains unchanged; it serves the install script's file-extension logic and is independent of the render command.</p>
+<hr>
+<h3>Step 6: Update test assertions in <code>~/work/chitragupt/install/install_test.go</code></h3>
+<p>Three locations assert on the old <code>-o</code> flag string and need to be updated to <code>--format</code>:</p>
+<p><strong>Line 88</strong> in <code>TestRun</code> / &quot;claude hook installed&quot;:</p>
+<pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span><span style="color:#6272a4">// Current:</span>
+</span></span><span style="display:flex;"><span>assert.<span style="color:#50fa7b">Contains</span>(t, <span style="color:#8be9fd;font-style:italic">string</span>(script), <span style="color:#f1fa8c">&#34;-o jsonl&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">// New:</span>
+</span></span><span style="display:flex;"><span>assert.<span style="color:#50fa7b">Contains</span>(t, <span style="color:#8be9fd;font-style:italic">string</span>(script), <span style="color:#f1fa8c">&#34;--format jsonl&#34;</span>)
+</span></span></code></pre><p><strong>Line 248</strong> in <code>TestInstallClaudeHook</code> / &quot;bakes format into script&quot;:</p>
+<pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span><span style="color:#6272a4">// Current:</span>
+</span></span><span style="display:flex;"><span>assert.<span style="color:#50fa7b">Contains</span>(t, <span style="color:#8be9fd;font-style:italic">string</span>(script), <span style="color:#f1fa8c">&#34;-o html&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">// New:</span>
+</span></span><span style="display:flex;"><span>assert.<span style="color:#50fa7b">Contains</span>(t, <span style="color:#8be9fd;font-style:italic">string</span>(script), <span style="color:#f1fa8c">&#34;--format html&#34;</span>)
+</span></span></code></pre><p><strong>Line 269</strong> in <code>TestBuildSaveTranscriptScript</code> (table-driven loop):</p>
+<pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span><span style="color:#6272a4">// Current:</span>
+</span></span><span style="display:flex;"><span>assert.<span style="color:#50fa7b">Contains</span>(t, script, <span style="color:#f1fa8c">&#34;-o &#34;</span><span style="color:#ff79c6">+</span>tt.format)
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">// New:</span>
+</span></span><span style="display:flex;"><span>assert.<span style="color:#50fa7b">Contains</span>(t, script, <span style="color:#f1fa8c">&#34;--format &#34;</span><span style="color:#ff79c6">+</span>tt.format)
+</span></span></code></pre><hr>
+<h3>Step 7: Verification and edge cases</h3>
+<p>After making all changes, run the full test suite:</p>
+<pre><code>go test ./...
+</code></pre>
+<p>Edge cases to verify manually or via new tests:</p>
+<ol>
+<li><strong>No <code>--format</code> flag</strong>: should default to <code>&quot;terminal&quot;</code> and render to stdout (backward-compatible).</li>
+<li><strong>Single <code>--format html</code></strong>: should render to stdout (backward-compatible with the old <code>-o html</code>).</li>
+<li><strong>Single <code>--format html --out ./dist</code></strong>: should create <code>./dist/index.html</code> and <code>./dist/agent-*.html</code>.</li>
+<li><strong>Multiple <code>--format html --format json --out ./dist</code></strong>: should create <code>index.html</code>, <code>index.json</code>, <code>agent-*.html</code>, <code>agent-*.json</code>.</li>
+<li><strong>Multiple formats without <code>--out</code></strong>: should produce a clear error message.</li>
+<li><strong>Single <code>--format terminal --out ./dist</code></strong>: should create <code>./dist/index.txt</code>.</li>
+<li><strong>Install hook script</strong>: <code>cg install --format html</code> should generate a script containing <code>--format html</code> (not <code>-o html</code>).</li>
+</ol>
+<hr>
+<h3>Summary of changes by file</h3>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Lines affected</th>
+<th>Change description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>cmd/cg/render.go</code></td>
+<td>Flag definitions (~lines 42-61)</td>
+<td>Replace <code>-o</code> StringFlag with <code>--format</code> StringSliceFlag; rename <code>--out-dir</code> to <code>--out</code></td>
+</tr>
+<tr>
+<td><code>cmd/cg/render.go</code></td>
+<td>Action body (~lines 107-128)</td>
+<td>New multi-format dispatch logic with validation</td>
+</tr>
+<tr>
+<td><code>cmd/cg/render.go</code></td>
+<td><code>renderToDir</code> (~lines 143-170)</td>
+<td>Add <code>format</code> parameter; use <code>formatExtension(format)</code> instead of hardcoded <code>.html</code></td>
+</tr>
+<tr>
+<td><code>cmd/cg/render.go</code></td>
+<td>New function (bottom of file)</td>
+<td>Add <code>formatExtension()</code> helper</td>
+</tr>
+<tr>
+<td><code>install/install.go</code></td>
+<td>Line 342</td>
+<td>Change <code>-o %s</code> to <code>--format %s</code> in generated script</td>
+</tr>
+<tr>
+<td><code>install/install_test.go</code></td>
+<td>Lines 88, 248, 269</td>
+<td>Change <code>-o</code> assertions to <code>--format</code></td>
+</tr>
+</tbody>
+</table>
+<p>No changes are needed to:</p>
+<ul>
+<li><code>cmd/cg/app.go</code> -- <code>renderer(name)</code> is called in a loop; its single-name interface works as-is</li>
+<li><code>render/render.go</code> -- the <code>Renderer</code> interface is unchanged</li>
+<li>Any renderer implementation -- they are format-agnostic (take <code>io.Writer</code>, write output)</li>
+<li><code>cmd/cg/main.go</code> or <code>cmd/cg/serve.go</code> -- no dependency on these flags</li>
+</ul>
+<hr>
+<h3>Critical Files for Implementation</h3>
+<ul>
+<li><code>~/work/chitragupt/cmd/cg/render.go</code> - Primary file: flag definitions, action logic, <code>renderToDir</code> generalization, new <code>formatExtension</code> helper</li>
+<li><code>~/work/chitragupt/install/install.go</code> - Single-line change in <code>buildSaveTranscriptScript</code> at line 342: <code>-o</code> to <code>--format</code></li>
+<li><code>~/work/chitragupt/install/install_test.go</code> - Three assertion updates from <code>-o</code> to <code>--format</code> (lines 88, 248, 269)</li>
+<li><code>~/work/chitragupt/cmd/cg/app.go</code> - Reference file: confirms <code>renderer(name)</code> interface is compatible with per-format loop (no changes needed)</li>
+<li><code>~/work/chitragupt/render/render.go</code> - Reference file: confirms <code>Renderer</code> interface is stable (no changes needed)</li>
+</ul>
+</div>
+        </div>
+    </div>
+    
+</div>
+
+            </div>
+            <footer class="mt-12 pt-6 border-t border-slate-200 dark:border-slate-700 text-center text-xs text-slate-400">
+                Generated by <a href="https://github.com/sonnes/chitragupt" class="text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-300 underline">chitragupt</a>
+            </footer>
+        </div>
+        
+        <nav class="hidden lg:block w-56 shrink-0">
+            <div class="sticky top-8 max-h-[calc(100vh-4rem)] overflow-y-auto">
+                <div class="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-3">Timeline</div>
+                <ol class="list-decimal list-inside flex flex-col gap-1 text-xs marker:text-slate-400 dark:marker:text-slate-500 marker:font-mono">
+                    
+                </ol>
+            </div>
+        </nav>
+    </div>
+</body>
+</html>

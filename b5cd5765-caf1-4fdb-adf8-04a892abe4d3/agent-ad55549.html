@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>chitragupt</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style type="text/tailwindcss">
+        @theme {
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+    </style>
+    <style>
+         
+        .prose { font-size: 14px; line-height: 1.7; }
+        .prose p { margin-bottom: 12px; }
+        .prose p:last-child { margin-bottom: 0; }
+        .prose h1 { font-size: 24px; font-weight: 700; margin: 20px 0 12px; }
+        .prose h2 { font-size: 20px; font-weight: 600; margin: 16px 0 10px; }
+        .prose h3 { font-size: 16px; font-weight: 600; margin: 14px 0 8px; }
+        .prose strong { font-weight: 600; }
+        .prose em { font-style: italic; }
+        .prose code { font-family: ui-monospace, monospace; font-size: 12px; padding: 2px 6px; border-radius: 4px; background: #f1f5f9; }
+        .prose pre { margin: 12px 0; border-radius: 8px; overflow-x: auto; }
+        .prose pre code { padding: 0; background: transparent; }
+        .prose ul { list-style: disc; margin: 8px 0; padding-left: 24px; }
+        .prose ol { list-style: decimal; margin: 8px 0; padding-left: 24px; }
+        .prose li { margin-bottom: 4px; }
+        .prose blockquote { border-left: 3px solid #e2e8f0; padding-left: 12px; margin: 12px 0; color: #64748b; }
+        .prose a { color: #2563eb; text-decoration: underline; }
+        .prose table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 13px; }
+        .prose th { text-align: left; padding: 8px 12px; border-bottom: 2px solid #e2e8f0; font-weight: 600; }
+        .prose td { padding: 8px 12px; border-bottom: 1px solid #e2e8f0; }
+        .prose hr { border: none; border-top: 1px solid #e2e8f0; margin: 16px 0; }
+
+         
+        @media (prefers-color-scheme: dark) {
+            .prose code { background: #1e293b; }
+            .prose blockquote { border-color: #334155; color: #94a3b8; }
+            .prose th { border-color: #334155; }
+            .prose td { border-color: #334155; }
+            .prose hr { border-color: #334155; }
+            .prose a { color: #60a5fa; }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-700 dark:text-slate-300 font-sans" style="line-height: 1.65; padding: 48px 24px;">
+    <div class="max-w-6xl mx-auto flex gap-8">
+        
+        <div class="min-w-0 flex-1 max-w-3xl">
+            
+<header class="mb-10">
+  
+  <div class="flex items-baseline gap-4 mb-3">
+    <h1 class="text-3xl font-bold text-slate-900 dark:text-white">
+      Session ad55549
+    </h1>
+    
+  </div>
+
+  
+  <div class="flex flex-wrap items-center gap-4 text-sm text-slate-500 dark:text-slate-400 mb-6">
+    
+    <span class="flex items-center gap-1.5">
+      <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      <span class="font-medium">@claude</span>
+    </span>
+    
+
+    
+    <span class="flex items-center gap-1.5">
+      <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      1d ago
+    </span>
+    
+
+    
+    <span class="flex items-center gap-1.5">
+      <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+      claude-opus-4-6
+    </span>
+    
+
+    
+  </div>
+
+  
+  <div
+    class="flex flex-wrap gap-6 pt-4 border-t border-slate-200 dark:border-slate-700"
+  >
+    <div class="text-center">
+      <div class="text-lg font-bold text-slate-900 dark:text-white">
+        13
+      </div>
+      <div class="text-xs text-slate-500 uppercase">Input Tokens</div>
+    </div>
+    <div class="text-center">
+      <div class="text-lg font-bold text-slate-900 dark:text-white">
+        109
+      </div>
+      <div class="text-xs text-slate-500 uppercase">Output Tokens</div>
+    </div>
+    
+    <div class="text-center">
+      <div class="text-lg font-bold text-slate-900 dark:text-white">
+        444,059
+      </div>
+      <div class="text-xs text-slate-500 uppercase">Cache Read</div>
+    </div>
+     
+    <div class="text-center">
+      <div class="text-lg font-bold text-slate-900 dark:text-white">
+        40,096
+      </div>
+      <div class="text-xs text-slate-500 uppercase">Cache Write</div>
+    </div>
+    
+  </div>
+  
+</header>
+
+            <div class="flex flex-col gap-8">
+                
+<div id="turn-0" class="flex flex-col gap-4 scroll-mt-6">
+    
+    
+
+    
+    
+    <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden">
+        <details>
+            <summary class="px-5 py-3 flex items-center gap-3 cursor-pointer select-none hover:bg-slate-50 dark:hover:bg-slate-750">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-slate-400 shrink-0"><polyline points="9 18 15 12 9 6"/></svg>
+                <span class="text-sm font-medium text-slate-700 dark:text-slate-300">28 Steps Completed</span>
+                
+            </summary>
+            <div class="px-5 pb-4 flex flex-col gap-3 border-t border-slate-100 dark:border-slate-700 pt-3">
+                <div class="prose dark:prose-invert max-w-none"><p>I'll explore the codebase thoroughly to understand the current architecture before designing the implementation plan.</p>
+</div><details class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden"><summary class="px-4 py-2 flex items-center gap-2 text-slate-900 dark:text-white cursor-pointer select-none min-w-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg><span class="text-xs font-semibold font-mono shrink-0">Read</span> <span class="text-xs font-mono text-slate-500 dark:text-slate-400 truncate">~/work/chitragupt/core/transcript.go</span></summary><div class="px-4 py-3 text-xs overflow-x-auto"><pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;file_path&#34;</span>: <span style="color:#f1fa8c">&#34;~/work/chitragupt/core/transcript.go&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></details><details class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden"><summary class="px-4 py-2 flex items-center gap-2 text-slate-900 dark:text-white cursor-pointer select-none min-w-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg><span class="text-xs font-semibold font-mono shrink-0">Read</span> <span class="text-xs font-mono text-slate-500 dark:text-slate-400 truncate">~/work/chitragupt/render/html/templates/header.html</span></summary><div class="px-4 py-3 text-xs overflow-x-auto"><pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;file_path&#34;</span>: <span style="color:#f1fa8c">&#34;~/work/chitragupt/render/html/templates/header.html&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></details><details class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden"><summary class="px-4 py-2 flex items-center gap-2 text-slate-900 dark:text-white cursor-pointer select-none min-w-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg><span class="text-xs font-semibold font-mono shrink-0">Read</span> <span class="text-xs font-mono text-slate-500 dark:text-slate-400 truncate">~/work/chitragupt/render/terminal/terminal.go</span></summary><div class="px-4 py-3 text-xs overflow-x-auto"><pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;file_path&#34;</span>: <span style="color:#f1fa8c">&#34;~/work/chitragupt/render/terminal/terminal.go&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></details><details class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden"><summary class="px-4 py-2 flex items-center gap-2 text-slate-900 dark:text-white cursor-pointer select-none min-w-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg><span class="text-xs font-semibold font-mono shrink-0">Read</span> <span class="text-xs font-mono text-slate-500 dark:text-slate-400 truncate">~/work/chitragupt/cmd/cg/render.go</span></summary><div class="px-4 py-3 text-xs overflow-x-auto"><pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;file_path&#34;</span>: <span style="color:#f1fa8c">&#34;~/work/chitragupt/cmd/cg/render.go&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></details><details class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden"><summary class="px-4 py-2 flex items-center gap-2 text-slate-900 dark:text-white cursor-pointer select-none min-w-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg><span class="text-xs font-semibold font-mono shrink-0">Read</span> <span class="text-xs font-mono text-slate-500 dark:text-slate-400 truncate">~/work/chitragupt/compact/compact.go</span></summary><div class="px-4 py-3 text-xs overflow-x-auto"><pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;file_path&#34;</span>: <span style="color:#f1fa8c">&#34;~/work/chitragupt/compact/compact.go&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></details><details class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden"><summary class="px-4 py-2 flex items-center gap-2 text-slate-900 dark:text-white cursor-pointer select-none min-w-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg><span class="text-xs font-semibold font-mono shrink-0">Read</span> <span class="text-xs font-mono text-slate-500 dark:text-slate-400 truncate">~/work/chitragupt/render/html/funcmap.go</span></summary><div class="px-4 py-3 text-xs overflow-x-auto"><pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;file_path&#34;</span>: <span style="color:#f1fa8c">&#34;~/work/chitragupt/render/html/funcmap.go&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></details><details class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden"><summary class="px-4 py-2 flex items-center gap-2 text-slate-900 dark:text-white cursor-pointer select-none min-w-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg><span class="text-xs font-semibold font-mono shrink-0">Read</span> <span class="text-xs font-mono text-slate-500 dark:text-slate-400 truncate">~/work/chitragupt/render/terminal/style.go</span></summary><div class="px-4 py-3 text-xs overflow-x-auto"><pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;file_path&#34;</span>: <span style="color:#f1fa8c">&#34;~/work/chitragupt/render/terminal/style.go&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></details><details class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden"><summary class="px-4 py-2 flex items-center gap-2 text-slate-900 dark:text-white cursor-pointer select-none min-w-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg><span class="text-xs font-semibold font-mono shrink-0">Read</span> <span class="text-xs font-mono text-slate-500 dark:text-slate-400 truncate">~/work/chitragupt/render/html/html.go</span></summary><div class="px-4 py-3 text-xs overflow-x-auto"><pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;file_path&#34;</span>: <span style="color:#f1fa8c">&#34;~/work/chitragupt/render/html/html.go&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></details><div class="prose dark:prose-invert max-w-none"><p>Now let me explore more of the codebase to understand the transformer interface and how tool names map to edit/write operations.</p>
+</div><details class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden"><summary class="px-4 py-2 flex items-center gap-2 text-slate-900 dark:text-white cursor-pointer select-none min-w-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><span class="text-xs font-semibold font-mono shrink-0">Glob</span> <span class="text-xs font-mono text-slate-500 dark:text-slate-400 truncate">~/work/chitragupt/core/*.go</span></summary><div class="px-4 py-3 text-xs overflow-x-auto"><pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;pattern&#34;</span>: <span style="color:#f1fa8c">&#34;~/work/chitragupt/core/*.go&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><div class="border-t border-slate-200 dark:border-slate-700"><pre class="px-4 py-3 text-xs font-mono overflow-x-auto max-h-96 overflow-y-auto">~/work/chitragupt/core/transcript.go
+~/work/chitragupt/core/transform.go</pre></div></details><details class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden"><summary class="px-4 py-2 flex items-center gap-2 text-slate-900 dark:text-white cursor-pointer select-none min-w-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><span class="text-xs font-semibold font-mono shrink-0">Glob</span> <span class="text-xs font-mono text-slate-500 dark:text-slate-400 truncate">~/work/chitragupt/**/*_test.go</span></summary><div class="px-4 py-3 text-xs overflow-x-auto"><pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;pattern&#34;</span>: <span style="color:#f1fa8c">&#34;~/work/chitragupt/**/*_test.go&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><div class="border-t border-slate-200 dark:border-slate-700"><pre class="px-4 py-3 text-xs font-mono overflow-x-auto max-h-96 overflow-y-auto">~/work/chitragupt/redact/redact_test.go
+~/work/chitragupt/reader/claude/claude_test.go
+~/work/chitragupt/render/html/blocks_test.go
+~/work/chitragupt/render/html/html_test.go
+~/work/chitragupt/render/terminal/summarize_test.go
+~/work/chitragupt/compact/compact_test.go
+~/work/chitragupt/render/terminal/terminal_test.go
+~/work/chitragupt/install/install_test.go</pre></div></details><details class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden"><summary class="px-4 py-2 flex items-center gap-2 text-slate-900 dark:text-white cursor-pointer select-none min-w-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><span class="text-xs font-semibold font-mono shrink-0">Glob</span> <span class="text-xs font-mono text-slate-500 dark:text-slate-400 truncate">~/work/chitragupt/render/html/templates/*.html</span></summary><div class="px-4 py-3 text-xs overflow-x-auto"><pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;pattern&#34;</span>: <span style="color:#f1fa8c">&#34;~/work/chitragupt/render/html/templates/*.html&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><div class="border-t border-slate-200 dark:border-slate-700"><pre class="px-4 py-3 text-xs font-mono overflow-x-auto max-h-96 overflow-y-auto">~/work/chitragupt/render/html/templates/message.html
+~/work/chitragupt/render/html/templates/page.html
+~/work/chitragupt/render/html/templates/header.html</pre></div></details><details class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden"><summary class="px-4 py-2 flex items-center gap-2 text-slate-900 dark:text-white cursor-pointer select-none min-w-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><span class="text-xs font-semibold font-mono shrink-0">Glob</span> <span class="text-xs font-mono text-slate-500 dark:text-slate-400 truncate">~/work/chitragupt/testdata/*.jsonl</span></summary><div class="px-4 py-3 text-xs overflow-x-auto"><pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;pattern&#34;</span>: <span style="color:#f1fa8c">&#34;~/work/chitragupt/testdata/*.jsonl&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><div class="border-t border-slate-200 dark:border-slate-700"><pre class="px-4 py-3 text-xs font-mono overflow-x-auto max-h-96 overflow-y-auto">No files found</pre></div></details><details class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden"><summary class="px-4 py-2 flex items-center gap-2 text-slate-900 dark:text-white cursor-pointer select-none min-w-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg><span class="text-xs font-semibold font-mono shrink-0">Read</span> <span class="text-xs font-mono text-slate-500 dark:text-slate-400 truncate">~/work/chitragupt/core/transform.go</span></summary><div class="px-4 py-3 text-xs overflow-x-auto"><pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;file_path&#34;</span>: <span style="color:#f1fa8c">&#34;~/work/chitragupt/core/transform.go&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></details><details class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden"><summary class="px-4 py-2 flex items-center gap-2 text-slate-900 dark:text-white cursor-pointer select-none min-w-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg><span class="text-xs font-semibold font-mono shrink-0">Read</span> <span class="text-xs font-mono text-slate-500 dark:text-slate-400 truncate">~/work/chitragupt/compact/compact_test.go</span></summary><div class="px-4 py-3 text-xs overflow-x-auto"><pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;file_path&#34;</span>: <span style="color:#f1fa8c">&#34;~/work/chitragupt/compact/compact_test.go&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></details><details class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden"><summary class="px-4 py-2 flex items-center gap-2 text-slate-900 dark:text-white cursor-pointer select-none min-w-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg><span class="text-xs font-semibold font-mono shrink-0">Read</span> <span class="text-xs font-mono text-slate-500 dark:text-slate-400 truncate">~/work/chitragupt/render/html/templates/page.html</span></summary><div class="px-4 py-3 text-xs overflow-x-auto"><pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;file_path&#34;</span>: <span style="color:#f1fa8c">&#34;~/work/chitragupt/render/html/templates/page.html&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></details><details class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden"><summary class="px-4 py-2 flex items-center gap-2 text-slate-900 dark:text-white cursor-pointer select-none min-w-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg><span class="text-xs font-semibold font-mono shrink-0">Read</span> <span class="text-xs font-mono text-slate-500 dark:text-slate-400 truncate">~/work/chitragupt/render/terminal/terminal_test.go</span></summary><div class="px-4 py-3 text-xs overflow-x-auto"><pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;file_path&#34;</span>: <span style="color:#f1fa8c">&#34;~/work/chitragupt/render/terminal/terminal_test.go&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></details><details class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden"><summary class="px-4 py-2 flex items-center gap-2 text-slate-900 dark:text-white cursor-pointer select-none min-w-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg><span class="text-xs font-semibold font-mono shrink-0">Read</span> <span class="text-xs font-mono text-slate-500 dark:text-slate-400 truncate">~/work/chitragupt/render/html/html_test.go</span></summary><div class="px-4 py-3 text-xs overflow-x-auto"><pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;file_path&#34;</span>: <span style="color:#f1fa8c">&#34;~/work/chitragupt/render/html/html_test.go&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></details><div class="prose dark:prose-invert max-w-none"><p>Let me also check the summarize file and the embed setup for templates.</p>
+</div><details class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden"><summary class="px-4 py-2 flex items-center gap-2 text-slate-900 dark:text-white cursor-pointer select-none min-w-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><span class="text-xs font-semibold font-mono shrink-0">Glob</span> <span class="text-xs font-mono text-slate-500 dark:text-slate-400 truncate">~/work/chitragupt/render/terminal/summarize*.go</span></summary><div class="px-4 py-3 text-xs overflow-x-auto"><pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;pattern&#34;</span>: <span style="color:#f1fa8c">&#34;~/work/chitragupt/render/terminal/summarize*.go&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><div class="border-t border-slate-200 dark:border-slate-700"><pre class="px-4 py-3 text-xs font-mono overflow-x-auto max-h-96 overflow-y-auto">~/work/chitragupt/render/terminal/summarize.go
+~/work/chitragupt/render/terminal/summarize_test.go</pre></div></details><details class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden"><summary class="px-4 py-2 flex items-center gap-2 text-slate-900 dark:text-white cursor-pointer select-none min-w-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><span class="text-xs font-semibold font-mono shrink-0">Glob</span> <span class="text-xs font-mono text-slate-500 dark:text-slate-400 truncate">~/work/chitragupt/render/html/embed*.go</span></summary><div class="px-4 py-3 text-xs overflow-x-auto"><pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;pattern&#34;</span>: <span style="color:#f1fa8c">&#34;~/work/chitragupt/render/html/embed*.go&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><div class="border-t border-slate-200 dark:border-slate-700"><pre class="px-4 py-3 text-xs font-mono overflow-x-auto max-h-96 overflow-y-auto">~/work/chitragupt/render/html/embed.go</pre></div></details><details class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden"><summary class="px-4 py-2 flex items-center gap-2 text-slate-900 dark:text-white cursor-pointer select-none min-w-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><span class="text-xs font-semibold font-mono shrink-0">Grep</span> <span class="text-xs font-mono text-slate-500 dark:text-slate-400 truncate">embed</span></summary><div class="px-4 py-3 text-xs overflow-x-auto"><pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;output_mode&#34;</span>: <span style="color:#f1fa8c">&#34;content&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;path&#34;</span>: <span style="color:#f1fa8c">&#34;~/work/chitragupt/render/html&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;pattern&#34;</span>: <span style="color:#f1fa8c">&#34;embed&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><div class="border-t border-slate-200 dark:border-slate-700"><pre class="px-4 py-3 text-xs font-mono overflow-x-auto max-h-96 overflow-y-auto">render/html/embed.go:3:import &#34;embed&#34;
+render/html/embed.go:5://go:embed templates/*.html
+render/html/embed.go:6:var content embed.FS</pre></div></details><details class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden"><summary class="px-4 py-2 flex items-center gap-2 text-slate-900 dark:text-white cursor-pointer select-none min-w-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg><span class="text-xs font-semibold font-mono shrink-0">Read</span> <span class="text-xs font-mono text-slate-500 dark:text-slate-400 truncate">~/work/chitragupt/render/html/embed.go</span></summary><div class="px-4 py-3 text-xs overflow-x-auto"><pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;file_path&#34;</span>: <span style="color:#f1fa8c">&#34;~/work/chitragupt/render/html/embed.go&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></details><details class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden"><summary class="px-4 py-2 flex items-center gap-2 text-slate-900 dark:text-white cursor-pointer select-none min-w-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg><span class="text-xs font-semibold font-mono shrink-0">Read</span> <span class="text-xs font-mono text-slate-500 dark:text-slate-400 truncate">~/work/chitragupt/render/terminal/summarize.go</span></summary><div class="px-4 py-3 text-xs overflow-x-auto"><pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;file_path&#34;</span>: <span style="color:#f1fa8c">&#34;~/work/chitragupt/render/terminal/summarize.go&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></details><details class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden"><summary class="px-4 py-2 flex items-center gap-2 text-slate-900 dark:text-white cursor-pointer select-none min-w-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg><span class="text-xs font-semibold font-mono shrink-0">Read</span> <span class="text-xs font-mono text-slate-500 dark:text-slate-400 truncate">~/work/chitragupt/render/html/templates/message.html</span></summary><div class="px-4 py-3 text-xs overflow-x-auto"><pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;file_path&#34;</span>: <span style="color:#f1fa8c">&#34;~/work/chitragupt/render/html/templates/message.html&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></details><div class="prose dark:prose-invert max-w-none"><p>Now let me check the main CLI app structure and the <code>newApp</code>/<code>renderer</code> helper.</p>
+</div><details class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden"><summary class="px-4 py-2 flex items-center gap-2 text-slate-900 dark:text-white cursor-pointer select-none min-w-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><span class="text-xs font-semibold font-mono shrink-0">Glob</span> <span class="text-xs font-mono text-slate-500 dark:text-slate-400 truncate">~/work/chitragupt/cmd/cg/*.go</span></summary><div class="px-4 py-3 text-xs overflow-x-auto"><pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;pattern&#34;</span>: <span style="color:#f1fa8c">&#34;~/work/chitragupt/cmd/cg/*.go&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><div class="border-t border-slate-200 dark:border-slate-700"><pre class="px-4 py-3 text-xs font-mono overflow-x-auto max-h-96 overflow-y-auto">~/work/chitragupt/cmd/cg/serve.go
+~/work/chitragupt/cmd/cg/app.go
+~/work/chitragupt/cmd/cg/render.go
+~/work/chitragupt/cmd/cg/install.go
+~/work/chitragupt/cmd/cg/main.go</pre></div></details><details class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden"><summary class="px-4 py-2 flex items-center gap-2 text-slate-900 dark:text-white cursor-pointer select-none min-w-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg><span class="text-xs font-semibold font-mono shrink-0">Read</span> <span class="text-xs font-mono text-slate-500 dark:text-slate-400 truncate">~/work/chitragupt/cmd/cg/app.go</span></summary><div class="px-4 py-3 text-xs overflow-x-auto"><pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;file_path&#34;</span>: <span style="color:#f1fa8c">&#34;~/work/chitragupt/cmd/cg/app.go&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></details><div class="prose dark:prose-invert max-w-none"><p>Now let me check whether there is an existing <code>Renderer</code> interface and what the <code>render</code> package looks like.</p>
+</div><details class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden"><summary class="px-4 py-2 flex items-center gap-2 text-slate-900 dark:text-white cursor-pointer select-none min-w-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><span class="text-xs font-semibold font-mono shrink-0">Glob</span> <span class="text-xs font-mono text-slate-500 dark:text-slate-400 truncate">~/work/chitragupt/render/*.go</span></summary><div class="px-4 py-3 text-xs overflow-x-auto"><pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;pattern&#34;</span>: <span style="color:#f1fa8c">&#34;~/work/chitragupt/render/*.go&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><div class="border-t border-slate-200 dark:border-slate-700"><pre class="px-4 py-3 text-xs font-mono overflow-x-auto max-h-96 overflow-y-auto">~/work/chitragupt/render/json/json.go
+~/work/chitragupt/render/markdown/markdown.go
+~/work/chitragupt/render/render.go
+~/work/chitragupt/render/html/embed.go
+~/work/chitragupt/render/html/blocks_test.go
+~/work/chitragupt/render/html/html_test.go
+~/work/chitragupt/render/terminal/summarize.go
+~/work/chitragupt/render/terminal/summarize_test.go
+~/work/chitragupt/render/html/blocks.go
+~/work/chitragupt/render/html/funcmap.go
+~/work/chitragupt/render/html/html.go
+~/work/chitragupt/render/terminal/style.go
+~/work/chitragupt/render/terminal/terminal.go
+~/work/chitragupt/render/terminal/terminal_test.go</pre></div></details><details class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden"><summary class="px-4 py-2 flex items-center gap-2 text-slate-900 dark:text-white cursor-pointer select-none min-w-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg><span class="text-xs font-semibold font-mono shrink-0">Read</span> <span class="text-xs font-mono text-slate-500 dark:text-slate-400 truncate">~/work/chitragupt/render/render.go</span></summary><div class="px-4 py-3 text-xs overflow-x-auto"><pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;file_path&#34;</span>: <span style="color:#f1fa8c">&#34;~/work/chitragupt/render/render.go&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></details><div class="prose dark:prose-invert max-w-none"><p>Now I have a thorough understanding of the codebase. Let me also check the serve.go to see if it uses the render pipeline too, since the hook is mentioned in the git log.</p>
+</div><details class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden"><summary class="px-4 py-2 flex items-center gap-2 text-slate-900 dark:text-white cursor-pointer select-none min-w-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg><span class="text-xs font-semibold font-mono shrink-0">Read</span> <span class="text-xs font-mono text-slate-500 dark:text-slate-400 truncate">~/work/chitragupt/cmd/cg/serve.go</span></summary><div class="px-4 py-3 text-xs overflow-x-auto"><pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;file_path&#34;</span>: <span style="color:#f1fa8c">&#34;~/work/chitragupt/cmd/cg/serve.go&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></details>
+            </div>
+        </details>
+    </div>
+    
+
+    
+    
+    <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-5 border-l-4 border-l-emerald-500">
+        <div class="flex flex-col gap-3">
+            <div class="prose dark:prose-invert max-w-none"><p>I now have a complete picture of the codebase. Here is the detailed implementation plan.</p>
+<hr>
+<h2>Implementation Plan: Restyle Header Metadata with Diff Stats</h2>
+<h3>Overview</h3>
+<p>This plan adds diff stats computation to the core data model, integrates it into the render pipeline before compact transformation, and restyled both the HTML and terminal headers to match the target two-row layout:</p>
+<ul>
+<li><strong>Row 1</strong>: Title + colored diff stats (<code>+N ~N -N</code>)</li>
+<li><strong>Row 2</strong>: <code>@agent  relative_time  model  dir(branch)</code></li>
+</ul>
+<h3>Step 1: Add <code>DiffStats</code> struct and <code>ComputeDiffStats</code> to <code>core/transcript.go</code></h3>
+<p>Add a new struct and field to the <code>Transcript</code>, plus a computation function.</p>
+<p><strong>File</strong>: <code>~/work/chitragupt/core/transcript.go</code></p>
+<p>Add the following after the <code>Usage</code> struct (around line 38):</p>
+<pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span><span style="color:#6272a4">// DiffStats summarizes file-level edit statistics across the session.</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">type</span> DiffStats <span style="color:#8be9fd;font-style:italic">struct</span> {
+</span></span><span style="display:flex;"><span>	Added   <span style="color:#8be9fd">int</span> <span style="color:#6272a4">// total lines added (from Write content + Edit new_string)</span>
+</span></span><span style="display:flex;"><span>	Removed <span style="color:#8be9fd">int</span> <span style="color:#6272a4">// total lines removed (from Edit old_string)</span>
+</span></span><span style="display:flex;"><span>	Changed <span style="color:#8be9fd">int</span> <span style="color:#6272a4">// number of unique files touched</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre><p>Add a new field to the <code>Transcript</code> struct (after <code>Usage</code>):</p>
+<pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>DiffStats <span style="color:#ff79c6">*</span>DiffStats <span style="color:#f1fa8c">`json:&#34;diff_stats,omitempty&#34;`</span>
+</span></span></code></pre><p><strong>New file</strong>: <code>~/work/chitragupt/core/diffstats.go</code></p>
+<p>This function walks all messages and extracts line counts from <code>Write</code> and <code>Edit</code> tool_use blocks. It uses a <code>countLines</code> helper (see below). The logic:</p>
+<pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span><span style="color:#ff79c6">package</span> core
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">import</span> <span style="color:#f1fa8c">&#34;strings&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">// ComputeDiffStats walks all tool_use blocks in the transcript and computes</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">// aggregate line-level diff statistics. It must be called BEFORE compact</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">// transformation, which mutates tool input strings.</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">ComputeDiffStats</span>(t <span style="color:#ff79c6">*</span>Transcript) <span style="color:#ff79c6">*</span>DiffStats {
+</span></span><span style="display:flex;"><span>	files <span style="color:#ff79c6">:=</span> <span style="color:#8be9fd;font-style:italic">make</span>(<span style="color:#8be9fd;font-style:italic">map</span>[<span style="color:#8be9fd">string</span>]<span style="color:#8be9fd">bool</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#8be9fd;font-style:italic">var</span> added, removed <span style="color:#8be9fd">int</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">for</span> _, msg <span style="color:#ff79c6">:=</span> <span style="color:#ff79c6">range</span> t.Messages {
+</span></span><span style="display:flex;"><span>		<span style="color:#ff79c6">for</span> _, b <span style="color:#ff79c6">:=</span> <span style="color:#ff79c6">range</span> msg.Content {
+</span></span><span style="display:flex;"><span>			<span style="color:#ff79c6">if</span> b.Type <span style="color:#ff79c6">!=</span> BlockToolUse {
+</span></span><span style="display:flex;"><span>				<span style="color:#ff79c6">continue</span>
+</span></span><span style="display:flex;"><span>			}
+</span></span><span style="display:flex;"><span>			m, ok <span style="color:#ff79c6">:=</span> b.Input.(<span style="color:#8be9fd;font-style:italic">map</span>[<span style="color:#8be9fd">string</span>]<span style="color:#8be9fd">any</span>)
+</span></span><span style="display:flex;"><span>			<span style="color:#ff79c6">if</span> !ok <span style="color:#ff79c6">||</span> m <span style="color:#ff79c6">==</span> <span style="color:#ff79c6">nil</span> {
+</span></span><span style="display:flex;"><span>				<span style="color:#ff79c6">continue</span>
+</span></span><span style="display:flex;"><span>			}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>			name <span style="color:#ff79c6">:=</span> strings.<span style="color:#50fa7b">ToLower</span>(b.Name)
+</span></span><span style="display:flex;"><span>			<span style="color:#ff79c6">switch</span> name {
+</span></span><span style="display:flex;"><span>			<span style="color:#ff79c6">case</span> <span style="color:#f1fa8c">&#34;write&#34;</span>:
+</span></span><span style="display:flex;"><span>				<span style="color:#ff79c6">if</span> fp <span style="color:#ff79c6">:=</span> <span style="color:#50fa7b">stringVal</span>(m, <span style="color:#f1fa8c">&#34;file_path&#34;</span>); fp <span style="color:#ff79c6">!=</span> <span style="color:#f1fa8c">&#34;&#34;</span> {
+</span></span><span style="display:flex;"><span>					files[fp] = <span style="color:#ff79c6">true</span>
+</span></span><span style="display:flex;"><span>				}
+</span></span><span style="display:flex;"><span>				<span style="color:#ff79c6">if</span> content <span style="color:#ff79c6">:=</span> <span style="color:#50fa7b">stringVal</span>(m, <span style="color:#f1fa8c">&#34;content&#34;</span>); content <span style="color:#ff79c6">!=</span> <span style="color:#f1fa8c">&#34;&#34;</span> {
+</span></span><span style="display:flex;"><span>					added <span style="color:#ff79c6">+=</span> <span style="color:#50fa7b">countLines</span>(content)
+</span></span><span style="display:flex;"><span>				}
+</span></span><span style="display:flex;"><span>			<span style="color:#ff79c6">case</span> <span style="color:#f1fa8c">&#34;edit&#34;</span>:
+</span></span><span style="display:flex;"><span>				<span style="color:#ff79c6">if</span> fp <span style="color:#ff79c6">:=</span> <span style="color:#50fa7b">stringVal</span>(m, <span style="color:#f1fa8c">&#34;file_path&#34;</span>); fp <span style="color:#ff79c6">!=</span> <span style="color:#f1fa8c">&#34;&#34;</span> {
+</span></span><span style="display:flex;"><span>					files[fp] = <span style="color:#ff79c6">true</span>
+</span></span><span style="display:flex;"><span>				}
+</span></span><span style="display:flex;"><span>				<span style="color:#ff79c6">if</span> old <span style="color:#ff79c6">:=</span> <span style="color:#50fa7b">stringVal</span>(m, <span style="color:#f1fa8c">&#34;old_string&#34;</span>); old <span style="color:#ff79c6">!=</span> <span style="color:#f1fa8c">&#34;&#34;</span> {
+</span></span><span style="display:flex;"><span>					removed <span style="color:#ff79c6">+=</span> <span style="color:#50fa7b">countLines</span>(old)
+</span></span><span style="display:flex;"><span>				}
+</span></span><span style="display:flex;"><span>				<span style="color:#ff79c6">if</span> new_ <span style="color:#ff79c6">:=</span> <span style="color:#50fa7b">stringVal</span>(m, <span style="color:#f1fa8c">&#34;new_string&#34;</span>); new_ <span style="color:#ff79c6">!=</span> <span style="color:#f1fa8c">&#34;&#34;</span> {
+</span></span><span style="display:flex;"><span>					added <span style="color:#ff79c6">+=</span> <span style="color:#50fa7b">countLines</span>(new_)
+</span></span><span style="display:flex;"><span>				}
+</span></span><span style="display:flex;"><span>			}
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">if</span> added <span style="color:#ff79c6">==</span> <span style="color:#bd93f9">0</span> <span style="color:#ff79c6">&amp;&amp;</span> removed <span style="color:#ff79c6">==</span> <span style="color:#bd93f9">0</span> <span style="color:#ff79c6">&amp;&amp;</span> <span style="color:#8be9fd;font-style:italic">len</span>(files) <span style="color:#ff79c6">==</span> <span style="color:#bd93f9">0</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#ff79c6">return</span> <span style="color:#ff79c6">nil</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">return</span> <span style="color:#ff79c6">&amp;</span>DiffStats{
+</span></span><span style="display:flex;"><span>		Added:   added,
+</span></span><span style="display:flex;"><span>		Removed: removed,
+</span></span><span style="display:flex;"><span>		Changed: <span style="color:#8be9fd;font-style:italic">len</span>(files),
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">// stringVal safely extracts a string from a map[string]any.</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">stringVal</span>(m <span style="color:#8be9fd;font-style:italic">map</span>[<span style="color:#8be9fd">string</span>]<span style="color:#8be9fd">any</span>, key <span style="color:#8be9fd">string</span>) <span style="color:#8be9fd">string</span> {
+</span></span><span style="display:flex;"><span>	v, ok <span style="color:#ff79c6">:=</span> m[key]
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">if</span> !ok {
+</span></span><span style="display:flex;"><span>		<span style="color:#ff79c6">return</span> <span style="color:#f1fa8c">&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	s, ok <span style="color:#ff79c6">:=</span> v.(<span style="color:#8be9fd">string</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">if</span> !ok {
+</span></span><span style="display:flex;"><span>		<span style="color:#ff79c6">return</span> <span style="color:#f1fa8c">&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">return</span> s
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">// countLines returns the number of lines in s.</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">// Empty string has 0 lines. A string without newlines has 1 line.</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">countLines</span>(s <span style="color:#8be9fd">string</span>) <span style="color:#8be9fd">int</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">if</span> s <span style="color:#ff79c6">==</span> <span style="color:#f1fa8c">&#34;&#34;</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#ff79c6">return</span> <span style="color:#bd93f9">0</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	n <span style="color:#ff79c6">:=</span> strings.<span style="color:#50fa7b">Count</span>(s, <span style="color:#f1fa8c">&#34;\n&#34;</span>) <span style="color:#ff79c6">+</span> <span style="color:#bd93f9">1</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">if</span> strings.<span style="color:#50fa7b">HasSuffix</span>(s, <span style="color:#f1fa8c">&#34;\n&#34;</span>) {
+</span></span><span style="display:flex;"><span>		n<span style="color:#ff79c6">--</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">return</span> n
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre><p>Note: The <code>countLines</code> function here duplicates <code>compact.countLines</code>. This is intentional -- the <code>core</code> package should not import <code>compact</code> (that would create a circular dependency since compact imports core). Both implementations are trivial (7 lines). An alternative would be to export it from a shared utility package, but the duplication is acceptable given the simplicity.</p>
+<h3>Step 2: Add <code>relativeTime</code> function</h3>
+<p>This function formats a <code>time.Time</code> as a human-readable relative time string like &quot;2m ago&quot;, &quot;3h ago&quot;, &quot;1w ago&quot;, &quot;2mo ago&quot;.</p>
+<p><strong>File</strong>: <code>~/work/chitragupt/core/diffstats.go</code> (or a new <code>~/work/chitragupt/core/format.go</code> if preferred for organization)</p>
+<pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span><span style="color:#6272a4">// RelativeTime formats a time.Time as a human-readable relative string.</span>
+</span></span><span style="display:flex;"><span><span style="color:#6272a4">// Examples: &#34;just now&#34;, &#34;5m ago&#34;, &#34;3h ago&#34;, &#34;2d ago&#34;, &#34;1w ago&#34;, &#34;3mo ago&#34;, &#34;1y ago&#34;.</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">RelativeTime</span>(t time.Time) <span style="color:#8be9fd">string</span> {
+</span></span><span style="display:flex;"><span>	d <span style="color:#ff79c6">:=</span> time.<span style="color:#50fa7b">Since</span>(t)
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">switch</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">case</span> d &lt; time.Minute:
+</span></span><span style="display:flex;"><span>		<span style="color:#ff79c6">return</span> <span style="color:#f1fa8c">&#34;just now&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">case</span> d &lt; time.Hour:
+</span></span><span style="display:flex;"><span>		<span style="color:#ff79c6">return</span> fmt.<span style="color:#50fa7b">Sprintf</span>(<span style="color:#f1fa8c">&#34;%dm ago&#34;</span>, <span style="color:#8be9fd;font-style:italic">int</span>(d.<span style="color:#50fa7b">Minutes</span>()))
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">case</span> d &lt; <span style="color:#bd93f9">24</span><span style="color:#ff79c6">*</span>time.Hour:
+</span></span><span style="display:flex;"><span>		<span style="color:#ff79c6">return</span> fmt.<span style="color:#50fa7b">Sprintf</span>(<span style="color:#f1fa8c">&#34;%dh ago&#34;</span>, <span style="color:#8be9fd;font-style:italic">int</span>(d.<span style="color:#50fa7b">Hours</span>()))
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">case</span> d &lt; <span style="color:#bd93f9">7</span><span style="color:#ff79c6">*</span><span style="color:#bd93f9">24</span><span style="color:#ff79c6">*</span>time.Hour:
+</span></span><span style="display:flex;"><span>		<span style="color:#ff79c6">return</span> fmt.<span style="color:#50fa7b">Sprintf</span>(<span style="color:#f1fa8c">&#34;%dd ago&#34;</span>, <span style="color:#8be9fd;font-style:italic">int</span>(d.<span style="color:#50fa7b">Hours</span>()<span style="color:#ff79c6">/</span><span style="color:#bd93f9">24</span>))
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">case</span> d &lt; <span style="color:#bd93f9">30</span><span style="color:#ff79c6">*</span><span style="color:#bd93f9">24</span><span style="color:#ff79c6">*</span>time.Hour:
+</span></span><span style="display:flex;"><span>		<span style="color:#ff79c6">return</span> fmt.<span style="color:#50fa7b">Sprintf</span>(<span style="color:#f1fa8c">&#34;%dw ago&#34;</span>, <span style="color:#8be9fd;font-style:italic">int</span>(d.<span style="color:#50fa7b">Hours</span>()<span style="color:#ff79c6">/</span>(<span style="color:#bd93f9">24</span><span style="color:#ff79c6">*</span><span style="color:#bd93f9">7</span>)))
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">case</span> d &lt; <span style="color:#bd93f9">365</span><span style="color:#ff79c6">*</span><span style="color:#bd93f9">24</span><span style="color:#ff79c6">*</span>time.Hour:
+</span></span><span style="display:flex;"><span>		<span style="color:#ff79c6">return</span> fmt.<span style="color:#50fa7b">Sprintf</span>(<span style="color:#f1fa8c">&#34;%dmo ago&#34;</span>, <span style="color:#8be9fd;font-style:italic">int</span>(d.<span style="color:#50fa7b">Hours</span>()<span style="color:#ff79c6">/</span>(<span style="color:#bd93f9">24</span><span style="color:#ff79c6">*</span><span style="color:#bd93f9">30</span>)))
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">default</span>:
+</span></span><span style="display:flex;"><span>		<span style="color:#ff79c6">return</span> fmt.<span style="color:#50fa7b">Sprintf</span>(<span style="color:#f1fa8c">&#34;%dy ago&#34;</span>, <span style="color:#8be9fd;font-style:italic">int</span>(d.<span style="color:#50fa7b">Hours</span>()<span style="color:#ff79c6">/</span>(<span style="color:#bd93f9">24</span><span style="color:#ff79c6">*</span><span style="color:#bd93f9">365</span>)))
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre><p>This is placed in <code>core</code> so both the HTML funcmap and the terminal renderer can use it without duplication.</p>
+<h3>Step 3: Compute diff stats in the CLI render command BEFORE compact</h3>
+<p><strong>File</strong>: <code>~/work/chitragupt/cmd/cg/render.go</code></p>
+<p>Insert diff stats computation <strong>after</strong> redaction but <strong>before</strong> compact transformation (around line 82, before the <code>if v := cmd.String(&quot;compact&quot;)</code> block):</p>
+<pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span><span style="color:#6272a4">// Compute diff stats BEFORE compact, which mutates tool input strings.</span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">for</span> _, t <span style="color:#ff79c6">:=</span> <span style="color:#ff79c6">range</span> transcripts {
+</span></span><span style="display:flex;"><span>    t.DiffStats = core.<span style="color:#50fa7b">ComputeDiffStats</span>(t)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre><p>The full ordering in the Action function becomes:</p>
+<ol>
+<li>Read transcripts</li>
+<li>Redact</li>
+<li><strong>Compute diff stats</strong> (new)</li>
+<li>Compact</li>
+<li>Render</li>
+</ol>
+<h3>Step 4: Add <code>relativeTime</code> to the HTML template function map</h3>
+<p><strong>File</strong>: <code>~/work/chitragupt/render/html/funcmap.go</code></p>
+<p>Add a new entry to the <code>funcMap()</code> return:</p>
+<pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span><span style="color:#f1fa8c">&#34;relativeTime&#34;</span>: relativeTime,
+</span></span></code></pre><p>Add the function implementation:</p>
+<pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">relativeTime</span>(t <span style="color:#8be9fd">any</span>) <span style="color:#8be9fd">string</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">switch</span> v <span style="color:#ff79c6">:=</span> t.(<span style="color:#8be9fd;font-style:italic">type</span>) {
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">case</span> time.Time:
+</span></span><span style="display:flex;"><span>		<span style="color:#ff79c6">return</span> core.<span style="color:#50fa7b">RelativeTime</span>(v)
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">case</span> <span style="color:#ff79c6">*</span>time.Time:
+</span></span><span style="display:flex;"><span>		<span style="color:#ff79c6">if</span> v <span style="color:#ff79c6">==</span> <span style="color:#ff79c6">nil</span> {
+</span></span><span style="display:flex;"><span>			<span style="color:#ff79c6">return</span> <span style="color:#f1fa8c">&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>		<span style="color:#ff79c6">return</span> core.<span style="color:#50fa7b">RelativeTime</span>(<span style="color:#ff79c6">*</span>v)
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">default</span>:
+</span></span><span style="display:flex;"><span>		<span style="color:#ff79c6">return</span> <span style="color:#f1fa8c">&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre><p>This follows the existing pattern of <code>formatTime</code> which accepts <code>any</code> and type-switches on <code>time.Time</code> / <code>*time.Time</code>.</p>
+<p>Also add SVG icon helpers for the metadata items. Add new entries to <code>funcMap()</code>:</p>
+<pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span><span style="color:#f1fa8c">&#34;metaIcon&#34;</span>: metaIcon,
+</span></span></code></pre><p>And the function:</p>
+<pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span><span style="color:#6272a4">// metaIcon returns an inline SVG icon for metadata items (12x12, currentColor).</span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">metaIcon</span>(name <span style="color:#8be9fd">string</span>) template.HTML {
+</span></span><span style="display:flex;"><span>	icons <span style="color:#ff79c6">:=</span> <span style="color:#8be9fd;font-style:italic">map</span>[<span style="color:#8be9fd">string</span>]<span style="color:#8be9fd">string</span>{
+</span></span><span style="display:flex;"><span>		<span style="color:#f1fa8c">&#34;user&#34;</span>:   <span style="color:#f1fa8c">`&lt;svg ...&gt;&lt;!-- user/person icon --&gt;&lt;/svg&gt;`</span>,
+</span></span><span style="display:flex;"><span>		<span style="color:#f1fa8c">&#34;clock&#34;</span>:  <span style="color:#f1fa8c">`&lt;svg ...&gt;&lt;!-- clock icon --&gt;&lt;/svg&gt;`</span>,
+</span></span><span style="display:flex;"><span>		<span style="color:#f1fa8c">&#34;model&#34;</span>:  <span style="color:#f1fa8c">`&lt;svg ...&gt;&lt;!-- sparkle/star icon --&gt;&lt;/svg&gt;`</span>,
+</span></span><span style="display:flex;"><span>		<span style="color:#f1fa8c">&#34;folder&#34;</span>: <span style="color:#f1fa8c">`&lt;svg ...&gt;&lt;!-- folder icon --&gt;&lt;/svg&gt;`</span>,
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	svg, ok <span style="color:#ff79c6">:=</span> icons[name]
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">if</span> !ok {
+</span></span><span style="display:flex;"><span>		<span style="color:#ff79c6">return</span> <span style="color:#f1fa8c">&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">return</span> template.<span style="color:#50fa7b">HTML</span>(svg)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre><p>Use Lucide icons (consistent with existing <code>toolIcons</code>) at 12x12 size:</p>
+<ul>
+<li>&quot;user&quot;: person icon (for @agent)</li>
+<li>&quot;clock&quot;: clock icon (for relative time)</li>
+<li>&quot;model&quot;: sparkle/star icon (for model name)</li>
+<li>&quot;folder&quot;: folder-git icon (for dir + branch)</li>
+</ul>
+<h3>Step 5: Update <code>pageData</code> to carry diff stats</h3>
+<p><strong>File</strong>: <code>~/work/chitragupt/render/html/html.go</code></p>
+<p>The <code>pageData</code> struct already has <code>Transcript</code> which will carry <code>DiffStats</code> as a field. No struct changes needed for diff stats since the template accesses <code>.Transcript.DiffStats</code>.</p>
+<p>However, we should remove <code>OverallDuration</code> from <code>pageData</code> since the new layout no longer shows duration in the header (the relative time replaces it). Actually, looking at the requirements more carefully -- the target layout uses relative time (&quot;1w ago&quot;) instead of duration. The <code>OverallDuration</code> was used in the old header but is no longer needed in the new header. We can keep the field for backward compatibility or remove it. <strong>Decision</strong>: Keep it for now but stop using it in the header template; it may still be useful elsewhere.</p>
+<h3>Step 6: Restyle <code>header.html</code> template</h3>
+<p><strong>File</strong>: <code>~/work/chitragupt/render/html/templates/header.html</code></p>
+<p>Replace the entire template with:</p>
+<pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>{{define &#34;header.html&#34;}}
+</span></span><span style="display:flex;"><span>&lt;<span style="color:#ff79c6">header</span> <span style="color:#50fa7b">class</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;mb-10&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>  <span style="color:#6272a4">&lt;!-- Row 1: Title + Diff Stats --&gt;</span>
+</span></span><span style="display:flex;"><span>  &lt;<span style="color:#ff79c6">div</span> <span style="color:#50fa7b">class</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;flex items-baseline gap-4 mb-3&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>    &lt;<span style="color:#ff79c6">h1</span> <span style="color:#50fa7b">class</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;text-3xl font-bold text-slate-900 dark:text-white&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>      {{if .Transcript.Title}}{{.Transcript.Title}}{{else}}Session
+</span></span><span style="display:flex;"><span>      {{.Transcript.SessionID}}{{end}}
+</span></span><span style="display:flex;"><span>    &lt;/<span style="color:#ff79c6">h1</span>&gt;
+</span></span><span style="display:flex;"><span>    {{if .Transcript.DiffStats}}
+</span></span><span style="display:flex;"><span>    &lt;<span style="color:#ff79c6">div</span> <span style="color:#50fa7b">class</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;flex items-center gap-3 text-sm font-mono font-semibold&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>      {{if .Transcript.DiffStats.Added}}&lt;<span style="color:#ff79c6">span</span> <span style="color:#50fa7b">class</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;text-emerald-600 dark:text-emerald-400&#34;</span>&gt;+{{formatNumber .Transcript.DiffStats.Added}}&lt;/<span style="color:#ff79c6">span</span>&gt;{{end}}
+</span></span><span style="display:flex;"><span>      {{if .Transcript.DiffStats.Changed}}&lt;<span style="color:#ff79c6">span</span> <span style="color:#50fa7b">class</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;text-amber-600 dark:text-amber-400&#34;</span>&gt;~{{formatNumber .Transcript.DiffStats.Changed}}&lt;/<span style="color:#ff79c6">span</span>&gt;{{end}}
+</span></span><span style="display:flex;"><span>      {{if .Transcript.DiffStats.Removed}}&lt;<span style="color:#ff79c6">span</span> <span style="color:#50fa7b">class</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;text-red-600 dark:text-red-400&#34;</span>&gt;-{{formatNumber .Transcript.DiffStats.Removed}}&lt;/<span style="color:#ff79c6">span</span>&gt;{{end}}
+</span></span><span style="display:flex;"><span>    &lt;/<span style="color:#ff79c6">div</span>&gt;
+</span></span><span style="display:flex;"><span>    {{end}}
+</span></span><span style="display:flex;"><span>  &lt;/<span style="color:#ff79c6">div</span>&gt;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6272a4">&lt;!-- Row 2: Metadata items with icons --&gt;</span>
+</span></span><span style="display:flex;"><span>  &lt;<span style="color:#ff79c6">div</span> <span style="color:#50fa7b">class</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;flex flex-wrap items-center gap-4 text-sm text-slate-500 dark:text-slate-400 mb-6&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>    {{if .Transcript.Agent}}
+</span></span><span style="display:flex;"><span>    &lt;<span style="color:#ff79c6">span</span> <span style="color:#50fa7b">class</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;flex items-center gap-1.5&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>      {{metaIcon &#34;user&#34;}}
+</span></span><span style="display:flex;"><span>      &lt;<span style="color:#ff79c6">span</span> <span style="color:#50fa7b">class</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;font-medium&#34;</span>&gt;@{{.Transcript.Agent}}&lt;/<span style="color:#ff79c6">span</span>&gt;
+</span></span><span style="display:flex;"><span>    &lt;/<span style="color:#ff79c6">span</span>&gt;
+</span></span><span style="display:flex;"><span>    {{end}}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    {{if not .Transcript.CreatedAt.IsZero}}
+</span></span><span style="display:flex;"><span>    &lt;<span style="color:#ff79c6">span</span> <span style="color:#50fa7b">class</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;flex items-center gap-1.5&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>      {{metaIcon &#34;clock&#34;}}
+</span></span><span style="display:flex;"><span>      {{relativeTime .Transcript.CreatedAt}}
+</span></span><span style="display:flex;"><span>    &lt;/<span style="color:#ff79c6">span</span>&gt;
+</span></span><span style="display:flex;"><span>    {{end}}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    {{if .Transcript.Model}}
+</span></span><span style="display:flex;"><span>    &lt;<span style="color:#ff79c6">span</span> <span style="color:#50fa7b">class</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;flex items-center gap-1.5&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>      {{metaIcon &#34;model&#34;}}
+</span></span><span style="display:flex;"><span>      {{.Transcript.Model}}
+</span></span><span style="display:flex;"><span>    &lt;/<span style="color:#ff79c6">span</span>&gt;
+</span></span><span style="display:flex;"><span>    {{end}}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    {{if .Transcript.Dir}}
+</span></span><span style="display:flex;"><span>    &lt;<span style="color:#ff79c6">span</span> <span style="color:#50fa7b">class</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;flex items-center gap-1.5 font-mono text-xs&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>      {{metaIcon &#34;folder&#34;}}
+</span></span><span style="display:flex;"><span>      {{.Transcript.Dir}}{{if .Transcript.GitBranch}}({{.Transcript.GitBranch}}){{end}}
+</span></span><span style="display:flex;"><span>    &lt;/<span style="color:#ff79c6">span</span>&gt;
+</span></span><span style="display:flex;"><span>    {{end}}
+</span></span><span style="display:flex;"><span>  &lt;/<span style="color:#ff79c6">div</span>&gt;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  {{if .Transcript.Usage}}
+</span></span><span style="display:flex;"><span>  &lt;<span style="color:#ff79c6">div</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#50fa7b">class</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;flex flex-wrap gap-6 pt-4 border-t border-slate-200 dark:border-slate-700&#34;</span>
+</span></span><span style="display:flex;"><span>  &gt;
+</span></span><span style="display:flex;"><span>    &lt;<span style="color:#ff79c6">div</span> <span style="color:#50fa7b">class</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;text-center&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>      &lt;<span style="color:#ff79c6">div</span> <span style="color:#50fa7b">class</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;text-lg font-bold text-slate-900 dark:text-white&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>        {{formatNumber .Transcript.Usage.InputTokens}}
+</span></span><span style="display:flex;"><span>      &lt;/<span style="color:#ff79c6">div</span>&gt;
+</span></span><span style="display:flex;"><span>      &lt;<span style="color:#ff79c6">div</span> <span style="color:#50fa7b">class</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;text-xs text-slate-500 uppercase&#34;</span>&gt;Input Tokens&lt;/<span style="color:#ff79c6">div</span>&gt;
+</span></span><span style="display:flex;"><span>    &lt;/<span style="color:#ff79c6">div</span>&gt;
+</span></span><span style="display:flex;"><span>    &lt;<span style="color:#ff79c6">div</span> <span style="color:#50fa7b">class</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;text-center&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>      &lt;<span style="color:#ff79c6">div</span> <span style="color:#50fa7b">class</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;text-lg font-bold text-slate-900 dark:text-white&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>        {{formatNumber .Transcript.Usage.OutputTokens}}
+</span></span><span style="display:flex;"><span>      &lt;/<span style="color:#ff79c6">div</span>&gt;
+</span></span><span style="display:flex;"><span>      &lt;<span style="color:#ff79c6">div</span> <span style="color:#50fa7b">class</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;text-xs text-slate-500 uppercase&#34;</span>&gt;Output Tokens&lt;/<span style="color:#ff79c6">div</span>&gt;
+</span></span><span style="display:flex;"><span>    &lt;/<span style="color:#ff79c6">div</span>&gt;
+</span></span><span style="display:flex;"><span>    {{if .Transcript.Usage.CacheReadTokens}}
+</span></span><span style="display:flex;"><span>    &lt;<span style="color:#ff79c6">div</span> <span style="color:#50fa7b">class</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;text-center&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>      &lt;<span style="color:#ff79c6">div</span> <span style="color:#50fa7b">class</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;text-lg font-bold text-slate-900 dark:text-white&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>        {{formatNumber .Transcript.Usage.CacheReadTokens}}
+</span></span><span style="display:flex;"><span>      &lt;/<span style="color:#ff79c6">div</span>&gt;
+</span></span><span style="display:flex;"><span>      &lt;<span style="color:#ff79c6">div</span> <span style="color:#50fa7b">class</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;text-xs text-slate-500 uppercase&#34;</span>&gt;Cache Read&lt;/<span style="color:#ff79c6">div</span>&gt;
+</span></span><span style="display:flex;"><span>    &lt;/<span style="color:#ff79c6">div</span>&gt;
+</span></span><span style="display:flex;"><span>    {{end}} {{if .Transcript.Usage.CacheCreationTokens}}
+</span></span><span style="display:flex;"><span>    &lt;<span style="color:#ff79c6">div</span> <span style="color:#50fa7b">class</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;text-center&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>      &lt;<span style="color:#ff79c6">div</span> <span style="color:#50fa7b">class</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;text-lg font-bold text-slate-900 dark:text-white&#34;</span>&gt;
+</span></span><span style="display:flex;"><span>        {{formatNumber .Transcript.Usage.CacheCreationTokens}}
+</span></span><span style="display:flex;"><span>      &lt;/<span style="color:#ff79c6">div</span>&gt;
+</span></span><span style="display:flex;"><span>      &lt;<span style="color:#ff79c6">div</span> <span style="color:#50fa7b">class</span><span style="color:#ff79c6">=</span><span style="color:#f1fa8c">&#34;text-xs text-slate-500 uppercase&#34;</span>&gt;Cache Write&lt;/<span style="color:#ff79c6">div</span>&gt;
+</span></span><span style="display:flex;"><span>    &lt;/<span style="color:#ff79c6">div</span>&gt;
+</span></span><span style="display:flex;"><span>    {{end}}
+</span></span><span style="display:flex;"><span>  &lt;/<span style="color:#ff79c6">div</span>&gt;
+</span></span><span style="display:flex;"><span>  {{end}}
+</span></span><span style="display:flex;"><span>&lt;/<span style="color:#ff79c6">header</span>&gt;
+</span></span><span style="display:flex;"><span>{{end}}
+</span></span></code></pre><p>Key changes from the current template:</p>
+<ul>
+<li>Row 1 now has title and diff stats on the same line using <code>flex items-baseline</code></li>
+<li>Diff stats are color-coded: green for additions, amber for modifications, red for deletions</li>
+<li>Row 2 consolidates agent, relative time, model, and dir(branch) with icon prefixes</li>
+<li>The old separate &quot;date&quot; and &quot;duration badge&quot; are replaced by a single relative time</li>
+<li>Token usage section remains unchanged below</li>
+</ul>
+<h3>Step 7: Update terminal <code>writeHeader</code> function</h3>
+<p><strong>File</strong>: <code>~/work/chitragupt/render/terminal/terminal.go</code></p>
+<p>Replace the <code>writeHeader</code> function with the new layout:</p>
+<pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">writeHeader</span>(w io.Writer, t <span style="color:#ff79c6">*</span>core.Transcript) {
+</span></span><span style="display:flex;"><span>	<span style="color:#6272a4">// Row 1: Title + diff stats</span>
+</span></span><span style="display:flex;"><span>	title <span style="color:#ff79c6">:=</span> t.Title
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">if</span> title <span style="color:#ff79c6">==</span> <span style="color:#f1fa8c">&#34;&#34;</span> <span style="color:#ff79c6">&amp;&amp;</span> t.SessionID <span style="color:#ff79c6">!=</span> <span style="color:#f1fa8c">&#34;&#34;</span> {
+</span></span><span style="display:flex;"><span>		title = <span style="color:#f1fa8c">&#34;Session &#34;</span> <span style="color:#ff79c6">+</span> t.SessionID
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	row1 <span style="color:#ff79c6">:=</span> styleTitle.<span style="color:#50fa7b">Render</span>(title)
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">if</span> t.DiffStats <span style="color:#ff79c6">!=</span> <span style="color:#ff79c6">nil</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#8be9fd;font-style:italic">var</span> stats []<span style="color:#8be9fd">string</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#ff79c6">if</span> t.DiffStats.Added &gt; <span style="color:#bd93f9">0</span> {
+</span></span><span style="display:flex;"><span>			stats = <span style="color:#8be9fd;font-style:italic">append</span>(stats, styleAdded.<span style="color:#50fa7b">Render</span>(fmt.<span style="color:#50fa7b">Sprintf</span>(<span style="color:#f1fa8c">&#34;+%s&#34;</span>, <span style="color:#50fa7b">formatNumber</span>(t.DiffStats.Added))))
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>		<span style="color:#ff79c6">if</span> t.DiffStats.Changed &gt; <span style="color:#bd93f9">0</span> {
+</span></span><span style="display:flex;"><span>			stats = <span style="color:#8be9fd;font-style:italic">append</span>(stats, styleChanged.<span style="color:#50fa7b">Render</span>(fmt.<span style="color:#50fa7b">Sprintf</span>(<span style="color:#f1fa8c">&#34;~%s&#34;</span>, <span style="color:#50fa7b">formatNumber</span>(t.DiffStats.Changed))))
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>		<span style="color:#ff79c6">if</span> t.DiffStats.Removed &gt; <span style="color:#bd93f9">0</span> {
+</span></span><span style="display:flex;"><span>			stats = <span style="color:#8be9fd;font-style:italic">append</span>(stats, styleRemoved.<span style="color:#50fa7b">Render</span>(fmt.<span style="color:#50fa7b">Sprintf</span>(<span style="color:#f1fa8c">&#34;-%s&#34;</span>, <span style="color:#50fa7b">formatNumber</span>(t.DiffStats.Removed))))
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>		<span style="color:#ff79c6">if</span> <span style="color:#8be9fd;font-style:italic">len</span>(stats) &gt; <span style="color:#bd93f9">0</span> {
+</span></span><span style="display:flex;"><span>			row1 <span style="color:#ff79c6">+=</span> <span style="color:#f1fa8c">&#34;  &#34;</span> <span style="color:#ff79c6">+</span> strings.<span style="color:#50fa7b">Join</span>(stats, <span style="color:#f1fa8c">&#34; &#34;</span>)
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	fmt.<span style="color:#50fa7b">Fprintln</span>(w, row1)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#6272a4">// Row 2: @agent  relative_time  model  dir(branch)</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#8be9fd;font-style:italic">var</span> parts []<span style="color:#8be9fd">string</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">if</span> t.Agent <span style="color:#ff79c6">!=</span> <span style="color:#f1fa8c">&#34;&#34;</span> {
+</span></span><span style="display:flex;"><span>		parts = <span style="color:#8be9fd;font-style:italic">append</span>(parts, <span style="color:#f1fa8c">&#34;@&#34;</span><span style="color:#ff79c6">+</span>t.Agent)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">if</span> !t.CreatedAt.<span style="color:#50fa7b">IsZero</span>() {
+</span></span><span style="display:flex;"><span>		parts = <span style="color:#8be9fd;font-style:italic">append</span>(parts, core.<span style="color:#50fa7b">RelativeTime</span>(t.CreatedAt))
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">if</span> t.Model <span style="color:#ff79c6">!=</span> <span style="color:#f1fa8c">&#34;&#34;</span> {
+</span></span><span style="display:flex;"><span>		parts = <span style="color:#8be9fd;font-style:italic">append</span>(parts, t.Model)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">if</span> t.Dir <span style="color:#ff79c6">!=</span> <span style="color:#f1fa8c">&#34;&#34;</span> {
+</span></span><span style="display:flex;"><span>		dir <span style="color:#ff79c6">:=</span> t.Dir
+</span></span><span style="display:flex;"><span>		<span style="color:#ff79c6">if</span> t.GitBranch <span style="color:#ff79c6">!=</span> <span style="color:#f1fa8c">&#34;&#34;</span> {
+</span></span><span style="display:flex;"><span>			dir <span style="color:#ff79c6">+=</span> <span style="color:#f1fa8c">&#34;(&#34;</span> <span style="color:#ff79c6">+</span> t.GitBranch <span style="color:#ff79c6">+</span> <span style="color:#f1fa8c">&#34;)&#34;</span>
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>		parts = <span style="color:#8be9fd;font-style:italic">append</span>(parts, dir)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">if</span> <span style="color:#8be9fd;font-style:italic">len</span>(parts) &gt; <span style="color:#bd93f9">0</span> {
+</span></span><span style="display:flex;"><span>		fmt.<span style="color:#50fa7b">Fprintln</span>(w, styleMeta.<span style="color:#50fa7b">Render</span>(strings.<span style="color:#50fa7b">Join</span>(parts, <span style="color:#f1fa8c">&#34;  &#34;</span>)))
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#6272a4">// Usage stats (unchanged)</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">if</span> t.Usage <span style="color:#ff79c6">!=</span> <span style="color:#ff79c6">nil</span> {
+</span></span><span style="display:flex;"><span>		fmt.<span style="color:#50fa7b">Fprintln</span>(w)
+</span></span><span style="display:flex;"><span>		<span style="color:#50fa7b">writeUsage</span>(w, t.Usage)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre><p>This removes the separate duration badge and the three-line layout, collapsing metadata into two lines that mirror the HTML layout.</p>
+<h3>Step 8: Add diff stat styles to terminal</h3>
+<p><strong>File</strong>: <code>~/work/chitragupt/render/terminal/style.go</code></p>
+<p>Add new colors and styles for diff stats:</p>
+<pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span><span style="color:#6272a4">// Diff stat colors.</span>
+</span></span><span style="display:flex;"><span>colorAdded   = lipgloss.AdaptiveColor{Light: <span style="color:#f1fa8c">&#34;#16a34a&#34;</span>, Dark: <span style="color:#f1fa8c">&#34;#4ade80&#34;</span>} <span style="color:#6272a4">// green</span>
+</span></span><span style="display:flex;"><span>colorChanged = lipgloss.AdaptiveColor{Light: <span style="color:#f1fa8c">&#34;#ca8a04&#34;</span>, Dark: <span style="color:#f1fa8c">&#34;#facc15&#34;</span>} <span style="color:#6272a4">// yellow/amber</span>
+</span></span><span style="display:flex;"><span>colorRemoved = lipgloss.AdaptiveColor{Light: <span style="color:#f1fa8c">&#34;#dc2626&#34;</span>, Dark: <span style="color:#f1fa8c">&#34;#f87171&#34;</span>} <span style="color:#6272a4">// red</span>
+</span></span></code></pre><p>And the styles:</p>
+<pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>styleAdded   = lipgloss.<span style="color:#50fa7b">NewStyle</span>().<span style="color:#50fa7b">Foreground</span>(colorAdded).<span style="color:#50fa7b">Bold</span>(<span style="color:#ff79c6">true</span>)
+</span></span><span style="display:flex;"><span>styleChanged = lipgloss.<span style="color:#50fa7b">NewStyle</span>().<span style="color:#50fa7b">Foreground</span>(colorChanged).<span style="color:#50fa7b">Bold</span>(<span style="color:#ff79c6">true</span>)
+</span></span><span style="display:flex;"><span>styleRemoved = lipgloss.<span style="color:#50fa7b">NewStyle</span>().<span style="color:#50fa7b">Foreground</span>(colorRemoved).<span style="color:#50fa7b">Bold</span>(<span style="color:#ff79c6">true</span>)
+</span></span></code></pre><h3>Step 9: Add tests</h3>
+<p><strong>New file</strong>: <code>~/work/chitragupt/core/diffstats_test.go</code></p>
+<p>Table-driven tests using <code>testify</code>:</p>
+<pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span><span style="color:#ff79c6">package</span> core
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ff79c6">import</span> (
+</span></span><span style="display:flex;"><span>	<span style="color:#f1fa8c">&#34;testing&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#f1fa8c">&#34;time&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#f1fa8c">&#34;github.com/stretchr/testify/assert&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#f1fa8c">&#34;github.com/stretchr/testify/require&#34;</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">TestComputeDiffStats</span>(t <span style="color:#ff79c6">*</span>testing.T) {
+</span></span><span style="display:flex;"><span>	tests <span style="color:#ff79c6">:=</span> []<span style="color:#8be9fd;font-style:italic">struct</span> {
+</span></span><span style="display:flex;"><span>		name    <span style="color:#8be9fd">string</span>
+</span></span><span style="display:flex;"><span>		msgs    []Message
+</span></span><span style="display:flex;"><span>		want    <span style="color:#ff79c6">*</span>DiffStats
+</span></span><span style="display:flex;"><span>	}{
+</span></span><span style="display:flex;"><span>		{
+</span></span><span style="display:flex;"><span>			name: <span style="color:#f1fa8c">&#34;write adds lines&#34;</span>,
+</span></span><span style="display:flex;"><span>			msgs: []Message{{
+</span></span><span style="display:flex;"><span>				Role: RoleAssistant,
+</span></span><span style="display:flex;"><span>				Content: []ContentBlock{{
+</span></span><span style="display:flex;"><span>					Type: BlockToolUse, Name: <span style="color:#f1fa8c">&#34;Write&#34;</span>,
+</span></span><span style="display:flex;"><span>					Input: <span style="color:#8be9fd;font-style:italic">map</span>[<span style="color:#8be9fd">string</span>]<span style="color:#8be9fd">any</span>{
+</span></span><span style="display:flex;"><span>						<span style="color:#f1fa8c">&#34;file_path&#34;</span>: <span style="color:#f1fa8c">&#34;/tmp/foo.go&#34;</span>,
+</span></span><span style="display:flex;"><span>						<span style="color:#f1fa8c">&#34;content&#34;</span>:   <span style="color:#f1fa8c">&#34;line1\nline2\nline3\n&#34;</span>,
+</span></span><span style="display:flex;"><span>					},
+</span></span><span style="display:flex;"><span>				}},
+</span></span><span style="display:flex;"><span>			}},
+</span></span><span style="display:flex;"><span>			want: <span style="color:#ff79c6">&amp;</span>DiffStats{Added: <span style="color:#bd93f9">3</span>, Removed: <span style="color:#bd93f9">0</span>, Changed: <span style="color:#bd93f9">1</span>},
+</span></span><span style="display:flex;"><span>		},
+</span></span><span style="display:flex;"><span>		{
+</span></span><span style="display:flex;"><span>			name: <span style="color:#f1fa8c">&#34;edit adds and removes&#34;</span>,
+</span></span><span style="display:flex;"><span>			msgs: []Message{{
+</span></span><span style="display:flex;"><span>				Role: RoleAssistant,
+</span></span><span style="display:flex;"><span>				Content: []ContentBlock{{
+</span></span><span style="display:flex;"><span>					Type: BlockToolUse, Name: <span style="color:#f1fa8c">&#34;Edit&#34;</span>,
+</span></span><span style="display:flex;"><span>					Input: <span style="color:#8be9fd;font-style:italic">map</span>[<span style="color:#8be9fd">string</span>]<span style="color:#8be9fd">any</span>{
+</span></span><span style="display:flex;"><span>						<span style="color:#f1fa8c">&#34;file_path&#34;</span>:  <span style="color:#f1fa8c">&#34;/tmp/bar.go&#34;</span>,
+</span></span><span style="display:flex;"><span>						<span style="color:#f1fa8c">&#34;old_string&#34;</span>: <span style="color:#f1fa8c">&#34;old1\nold2\n&#34;</span>,
+</span></span><span style="display:flex;"><span>						<span style="color:#f1fa8c">&#34;new_string&#34;</span>: <span style="color:#f1fa8c">&#34;new1\nnew2\nnew3\n&#34;</span>,
+</span></span><span style="display:flex;"><span>					},
+</span></span><span style="display:flex;"><span>				}},
+</span></span><span style="display:flex;"><span>			}},
+</span></span><span style="display:flex;"><span>			want: <span style="color:#ff79c6">&amp;</span>DiffStats{Added: <span style="color:#bd93f9">3</span>, Removed: <span style="color:#bd93f9">2</span>, Changed: <span style="color:#bd93f9">1</span>},
+</span></span><span style="display:flex;"><span>		},
+</span></span><span style="display:flex;"><span>		{
+</span></span><span style="display:flex;"><span>			name: <span style="color:#f1fa8c">&#34;multiple files counted&#34;</span>,
+</span></span><span style="display:flex;"><span>			msgs: []Message{
+</span></span><span style="display:flex;"><span>				{
+</span></span><span style="display:flex;"><span>					Role: RoleAssistant,
+</span></span><span style="display:flex;"><span>					Content: []ContentBlock{
+</span></span><span style="display:flex;"><span>						{Type: BlockToolUse, Name: <span style="color:#f1fa8c">&#34;Write&#34;</span>, Input: <span style="color:#8be9fd;font-style:italic">map</span>[<span style="color:#8be9fd">string</span>]<span style="color:#8be9fd">any</span>{<span style="color:#f1fa8c">&#34;file_path&#34;</span>: <span style="color:#f1fa8c">&#34;/a.go&#34;</span>, <span style="color:#f1fa8c">&#34;content&#34;</span>: <span style="color:#f1fa8c">&#34;x\n&#34;</span>}},
+</span></span><span style="display:flex;"><span>						{Type: BlockToolUse, Name: <span style="color:#f1fa8c">&#34;Edit&#34;</span>, Input: <span style="color:#8be9fd;font-style:italic">map</span>[<span style="color:#8be9fd">string</span>]<span style="color:#8be9fd">any</span>{<span style="color:#f1fa8c">&#34;file_path&#34;</span>: <span style="color:#f1fa8c">&#34;/b.go&#34;</span>, <span style="color:#f1fa8c">&#34;old_string&#34;</span>: <span style="color:#f1fa8c">&#34;y\n&#34;</span>, <span style="color:#f1fa8c">&#34;new_string&#34;</span>: <span style="color:#f1fa8c">&#34;z\n&#34;</span>}},
+</span></span><span style="display:flex;"><span>					},
+</span></span><span style="display:flex;"><span>				},
+</span></span><span style="display:flex;"><span>			},
+</span></span><span style="display:flex;"><span>			want: <span style="color:#ff79c6">&amp;</span>DiffStats{Added: <span style="color:#bd93f9">2</span>, Removed: <span style="color:#bd93f9">1</span>, Changed: <span style="color:#bd93f9">2</span>},
+</span></span><span style="display:flex;"><span>		},
+</span></span><span style="display:flex;"><span>		{
+</span></span><span style="display:flex;"><span>			name: <span style="color:#f1fa8c">&#34;same file counted once&#34;</span>,
+</span></span><span style="display:flex;"><span>			msgs: []Message{
+</span></span><span style="display:flex;"><span>				{
+</span></span><span style="display:flex;"><span>					Role: RoleAssistant,
+</span></span><span style="display:flex;"><span>					Content: []ContentBlock{
+</span></span><span style="display:flex;"><span>						{Type: BlockToolUse, Name: <span style="color:#f1fa8c">&#34;Write&#34;</span>, Input: <span style="color:#8be9fd;font-style:italic">map</span>[<span style="color:#8be9fd">string</span>]<span style="color:#8be9fd">any</span>{<span style="color:#f1fa8c">&#34;file_path&#34;</span>: <span style="color:#f1fa8c">&#34;/a.go&#34;</span>, <span style="color:#f1fa8c">&#34;content&#34;</span>: <span style="color:#f1fa8c">&#34;x\n&#34;</span>}},
+</span></span><span style="display:flex;"><span>						{Type: BlockToolUse, Name: <span style="color:#f1fa8c">&#34;Edit&#34;</span>, Input: <span style="color:#8be9fd;font-style:italic">map</span>[<span style="color:#8be9fd">string</span>]<span style="color:#8be9fd">any</span>{<span style="color:#f1fa8c">&#34;file_path&#34;</span>: <span style="color:#f1fa8c">&#34;/a.go&#34;</span>, <span style="color:#f1fa8c">&#34;old_string&#34;</span>: <span style="color:#f1fa8c">&#34;y\n&#34;</span>, <span style="color:#f1fa8c">&#34;new_string&#34;</span>: <span style="color:#f1fa8c">&#34;z\n&#34;</span>}},
+</span></span><span style="display:flex;"><span>					},
+</span></span><span style="display:flex;"><span>				},
+</span></span><span style="display:flex;"><span>			},
+</span></span><span style="display:flex;"><span>			want: <span style="color:#ff79c6">&amp;</span>DiffStats{Added: <span style="color:#bd93f9">2</span>, Removed: <span style="color:#bd93f9">1</span>, Changed: <span style="color:#bd93f9">1</span>},
+</span></span><span style="display:flex;"><span>		},
+</span></span><span style="display:flex;"><span>		{
+</span></span><span style="display:flex;"><span>			name: <span style="color:#f1fa8c">&#34;no edits returns nil&#34;</span>,
+</span></span><span style="display:flex;"><span>			msgs: []Message{{
+</span></span><span style="display:flex;"><span>				Role: RoleAssistant,
+</span></span><span style="display:flex;"><span>				Content: []ContentBlock{
+</span></span><span style="display:flex;"><span>					{Type: BlockToolUse, Name: <span style="color:#f1fa8c">&#34;Bash&#34;</span>, Input: <span style="color:#8be9fd;font-style:italic">map</span>[<span style="color:#8be9fd">string</span>]<span style="color:#8be9fd">any</span>{<span style="color:#f1fa8c">&#34;command&#34;</span>: <span style="color:#f1fa8c">&#34;ls&#34;</span>}},
+</span></span><span style="display:flex;"><span>				},
+</span></span><span style="display:flex;"><span>			}},
+</span></span><span style="display:flex;"><span>			want: <span style="color:#ff79c6">nil</span>,
+</span></span><span style="display:flex;"><span>		},
+</span></span><span style="display:flex;"><span>		{
+</span></span><span style="display:flex;"><span>			name: <span style="color:#f1fa8c">&#34;nil input handled&#34;</span>,
+</span></span><span style="display:flex;"><span>			msgs: []Message{{
+</span></span><span style="display:flex;"><span>				Role: RoleAssistant,
+</span></span><span style="display:flex;"><span>				Content: []ContentBlock{
+</span></span><span style="display:flex;"><span>					{Type: BlockToolUse, Name: <span style="color:#f1fa8c">&#34;Write&#34;</span>, Input: <span style="color:#ff79c6">nil</span>},
+</span></span><span style="display:flex;"><span>				},
+</span></span><span style="display:flex;"><span>			}},
+</span></span><span style="display:flex;"><span>			want: <span style="color:#ff79c6">nil</span>,
+</span></span><span style="display:flex;"><span>		},
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">for</span> _, tt <span style="color:#ff79c6">:=</span> <span style="color:#ff79c6">range</span> tests {
+</span></span><span style="display:flex;"><span>		t.<span style="color:#50fa7b">Run</span>(tt.name, <span style="color:#8be9fd;font-style:italic">func</span>(t <span style="color:#ff79c6">*</span>testing.T) {
+</span></span><span style="display:flex;"><span>			tr <span style="color:#ff79c6">:=</span> <span style="color:#ff79c6">&amp;</span>Transcript{
+</span></span><span style="display:flex;"><span>				SessionID: <span style="color:#f1fa8c">&#34;test&#34;</span>,
+</span></span><span style="display:flex;"><span>				Agent:     <span style="color:#f1fa8c">&#34;claude&#34;</span>,
+</span></span><span style="display:flex;"><span>				CreatedAt: time.<span style="color:#50fa7b">Now</span>(),
+</span></span><span style="display:flex;"><span>				Messages:  tt.msgs,
+</span></span><span style="display:flex;"><span>			}
+</span></span><span style="display:flex;"><span>			got <span style="color:#ff79c6">:=</span> <span style="color:#50fa7b">ComputeDiffStats</span>(tr)
+</span></span><span style="display:flex;"><span>			<span style="color:#ff79c6">if</span> tt.want <span style="color:#ff79c6">==</span> <span style="color:#ff79c6">nil</span> {
+</span></span><span style="display:flex;"><span>				assert.<span style="color:#50fa7b">Nil</span>(t, got)
+</span></span><span style="display:flex;"><span>			} <span style="color:#ff79c6">else</span> {
+</span></span><span style="display:flex;"><span>				require.<span style="color:#50fa7b">NotNil</span>(t, got)
+</span></span><span style="display:flex;"><span>				assert.<span style="color:#50fa7b">Equal</span>(t, tt.want.Added, got.Added)
+</span></span><span style="display:flex;"><span>				assert.<span style="color:#50fa7b">Equal</span>(t, tt.want.Removed, got.Removed)
+</span></span><span style="display:flex;"><span>				assert.<span style="color:#50fa7b">Equal</span>(t, tt.want.Changed, got.Changed)
+</span></span><span style="display:flex;"><span>			}
+</span></span><span style="display:flex;"><span>		})
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">TestRelativeTime</span>(t <span style="color:#ff79c6">*</span>testing.T) {
+</span></span><span style="display:flex;"><span>	tests <span style="color:#ff79c6">:=</span> []<span style="color:#8be9fd;font-style:italic">struct</span> {
+</span></span><span style="display:flex;"><span>		name <span style="color:#8be9fd">string</span>
+</span></span><span style="display:flex;"><span>		ago  time.Duration
+</span></span><span style="display:flex;"><span>		want <span style="color:#8be9fd">string</span>
+</span></span><span style="display:flex;"><span>	}{
+</span></span><span style="display:flex;"><span>		{<span style="color:#f1fa8c">&#34;just now&#34;</span>, <span style="color:#bd93f9">30</span> <span style="color:#ff79c6">*</span> time.Second, <span style="color:#f1fa8c">&#34;just now&#34;</span>},
+</span></span><span style="display:flex;"><span>		{<span style="color:#f1fa8c">&#34;minutes&#34;</span>, <span style="color:#bd93f9">5</span> <span style="color:#ff79c6">*</span> time.Minute, <span style="color:#f1fa8c">&#34;5m ago&#34;</span>},
+</span></span><span style="display:flex;"><span>		{<span style="color:#f1fa8c">&#34;hours&#34;</span>, <span style="color:#bd93f9">3</span> <span style="color:#ff79c6">*</span> time.Hour, <span style="color:#f1fa8c">&#34;3h ago&#34;</span>},
+</span></span><span style="display:flex;"><span>		{<span style="color:#f1fa8c">&#34;days&#34;</span>, <span style="color:#bd93f9">2</span> <span style="color:#ff79c6">*</span> <span style="color:#bd93f9">24</span> <span style="color:#ff79c6">*</span> time.Hour, <span style="color:#f1fa8c">&#34;2d ago&#34;</span>},
+</span></span><span style="display:flex;"><span>		{<span style="color:#f1fa8c">&#34;weeks&#34;</span>, <span style="color:#bd93f9">14</span> <span style="color:#ff79c6">*</span> <span style="color:#bd93f9">24</span> <span style="color:#ff79c6">*</span> time.Hour, <span style="color:#f1fa8c">&#34;2w ago&#34;</span>},
+</span></span><span style="display:flex;"><span>		{<span style="color:#f1fa8c">&#34;months&#34;</span>, <span style="color:#bd93f9">60</span> <span style="color:#ff79c6">*</span> <span style="color:#bd93f9">24</span> <span style="color:#ff79c6">*</span> time.Hour, <span style="color:#f1fa8c">&#34;2mo ago&#34;</span>},
+</span></span><span style="display:flex;"><span>		{<span style="color:#f1fa8c">&#34;years&#34;</span>, <span style="color:#bd93f9">400</span> <span style="color:#ff79c6">*</span> <span style="color:#bd93f9">24</span> <span style="color:#ff79c6">*</span> time.Hour, <span style="color:#f1fa8c">&#34;1y ago&#34;</span>},
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">for</span> _, tt <span style="color:#ff79c6">:=</span> <span style="color:#ff79c6">range</span> tests {
+</span></span><span style="display:flex;"><span>		t.<span style="color:#50fa7b">Run</span>(tt.name, <span style="color:#8be9fd;font-style:italic">func</span>(t <span style="color:#ff79c6">*</span>testing.T) {
+</span></span><span style="display:flex;"><span>			ts <span style="color:#ff79c6">:=</span> time.<span style="color:#50fa7b">Now</span>().<span style="color:#50fa7b">Add</span>(<span style="color:#ff79c6">-</span>tt.ago)
+</span></span><span style="display:flex;"><span>			assert.<span style="color:#50fa7b">Equal</span>(t, tt.want, <span style="color:#50fa7b">RelativeTime</span>(ts))
+</span></span><span style="display:flex;"><span>		})
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre><p><strong>Update</strong>: <code>~/work/chitragupt/render/terminal/terminal_test.go</code></p>
+<p>Update <code>TestRenderHeader</code> to verify the new layout:</p>
+<ul>
+<li>Check for <code>@claude</code> instead of just <code>claude</code></li>
+<li>Check for diff stats rendering when present</li>
+<li>Add a new test with <code>DiffStats</code> populated on the transcript</li>
+</ul>
+<pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">TestRenderHeaderWithDiffStats</span>(t <span style="color:#ff79c6">*</span>testing.T) {
+</span></span><span style="display:flex;"><span>	now <span style="color:#ff79c6">:=</span> time.<span style="color:#50fa7b">Now</span>()
+</span></span><span style="display:flex;"><span>	later <span style="color:#ff79c6">:=</span> now.<span style="color:#50fa7b">Add</span>(<span style="color:#bd93f9">72</span><span style="color:#ff79c6">*</span>time.Hour <span style="color:#ff79c6">+</span> <span style="color:#bd93f9">44</span><span style="color:#ff79c6">*</span>time.Minute)
+</span></span><span style="display:flex;"><span>	tr <span style="color:#ff79c6">:=</span> <span style="color:#ff79c6">&amp;</span>core.Transcript{
+</span></span><span style="display:flex;"><span>		SessionID: <span style="color:#f1fa8c">&#34;abc-123&#34;</span>,
+</span></span><span style="display:flex;"><span>		Agent:     <span style="color:#f1fa8c">&#34;claude&#34;</span>,
+</span></span><span style="display:flex;"><span>		Model:     <span style="color:#f1fa8c">&#34;claude-opus-4-5-20251101&#34;</span>,
+</span></span><span style="display:flex;"><span>		Dir:       <span style="color:#f1fa8c">&#34;/Users/test&#34;</span>,
+</span></span><span style="display:flex;"><span>		GitBranch: <span style="color:#f1fa8c">&#34;main&#34;</span>,
+</span></span><span style="display:flex;"><span>		CreatedAt: now,
+</span></span><span style="display:flex;"><span>		UpdatedAt: <span style="color:#ff79c6">&amp;</span>later,
+</span></span><span style="display:flex;"><span>		DiffStats: <span style="color:#ff79c6">&amp;</span>core.DiffStats{Added: <span style="color:#bd93f9">14</span>, Removed: <span style="color:#bd93f9">24</span>, Changed: <span style="color:#bd93f9">5</span>},
+</span></span><span style="display:flex;"><span>		Usage: <span style="color:#ff79c6">&amp;</span>core.Usage{
+</span></span><span style="display:flex;"><span>			InputTokens:  <span style="color:#bd93f9">229</span>,
+</span></span><span style="display:flex;"><span>			OutputTokens: <span style="color:#bd93f9">1273</span>,
+</span></span><span style="display:flex;"><span>		},
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	r <span style="color:#ff79c6">:=</span> <span style="color:#ff79c6">&amp;</span>Renderer{Width: <span style="color:#bd93f9">100</span>}
+</span></span><span style="display:flex;"><span>	<span style="color:#8be9fd;font-style:italic">var</span> buf bytes.Buffer
+</span></span><span style="display:flex;"><span>	require.<span style="color:#50fa7b">NoError</span>(t, r.<span style="color:#50fa7b">Render</span>(<span style="color:#ff79c6">&amp;</span>buf, tr))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	out <span style="color:#ff79c6">:=</span> ansi.<span style="color:#50fa7b">Strip</span>(buf.<span style="color:#50fa7b">String</span>())
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	assert.<span style="color:#50fa7b">Contains</span>(t, out, <span style="color:#f1fa8c">&#34;+14&#34;</span>)
+</span></span><span style="display:flex;"><span>	assert.<span style="color:#50fa7b">Contains</span>(t, out, <span style="color:#f1fa8c">&#34;~5&#34;</span>)
+</span></span><span style="display:flex;"><span>	assert.<span style="color:#50fa7b">Contains</span>(t, out, <span style="color:#f1fa8c">&#34;-24&#34;</span>)
+</span></span><span style="display:flex;"><span>	assert.<span style="color:#50fa7b">Contains</span>(t, out, <span style="color:#f1fa8c">&#34;@claude&#34;</span>)
+</span></span><span style="display:flex;"><span>	assert.<span style="color:#50fa7b">Contains</span>(t, out, <span style="color:#f1fa8c">&#34;just now&#34;</span>)
+</span></span><span style="display:flex;"><span>	assert.<span style="color:#50fa7b">Contains</span>(t, out, <span style="color:#f1fa8c">&#34;/Users/test(main)&#34;</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre><p><strong>Update</strong>: <code>~/work/chitragupt/render/html/html_test.go</code></p>
+<p>Update <code>TestRenderFullPage</code> to verify the new header layout:</p>
+<pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>t.<span style="color:#50fa7b">Run</span>(<span style="color:#f1fa8c">&#34;diff stats&#34;</span>, <span style="color:#8be9fd;font-style:italic">func</span>(t <span style="color:#ff79c6">*</span>testing.T) {
+</span></span><span style="display:flex;"><span>	<span style="color:#6272a4">// Re-build with diff stats</span>
+</span></span><span style="display:flex;"><span>	tr <span style="color:#ff79c6">:=</span> <span style="color:#50fa7b">buildTestTranscript</span>()
+</span></span><span style="display:flex;"><span>	tr.DiffStats = <span style="color:#ff79c6">&amp;</span>core.DiffStats{Added: <span style="color:#bd93f9">100</span>, Removed: <span style="color:#bd93f9">50</span>, Changed: <span style="color:#bd93f9">3</span>}
+</span></span><span style="display:flex;"><span>	r <span style="color:#ff79c6">:=</span> <span style="color:#50fa7b">New</span>()
+</span></span><span style="display:flex;"><span>	<span style="color:#8be9fd;font-style:italic">var</span> buf bytes.Buffer
+</span></span><span style="display:flex;"><span>	require.<span style="color:#50fa7b">NoError</span>(t, r.<span style="color:#50fa7b">Render</span>(<span style="color:#ff79c6">&amp;</span>buf, tr))
+</span></span><span style="display:flex;"><span>	html <span style="color:#ff79c6">:=</span> buf.<span style="color:#50fa7b">String</span>()
+</span></span><span style="display:flex;"><span>	assert.<span style="color:#50fa7b">Contains</span>(t, html, <span style="color:#f1fa8c">&#34;+100&#34;</span>)
+</span></span><span style="display:flex;"><span>	assert.<span style="color:#50fa7b">Contains</span>(t, html, <span style="color:#f1fa8c">&#34;~3&#34;</span>)
+</span></span><span style="display:flex;"><span>	assert.<span style="color:#50fa7b">Contains</span>(t, html, <span style="color:#f1fa8c">&#34;-50&#34;</span>)
+</span></span><span style="display:flex;"><span>	assert.<span style="color:#50fa7b">Contains</span>(t, html, <span style="color:#f1fa8c">&#34;text-emerald-600&#34;</span>) <span style="color:#6272a4">// green for added</span>
+</span></span><span style="display:flex;"><span>	assert.<span style="color:#50fa7b">Contains</span>(t, html, <span style="color:#f1fa8c">&#34;text-red-600&#34;</span>)     <span style="color:#6272a4">// red for removed</span>
+</span></span><span style="display:flex;"><span>})
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>t.<span style="color:#50fa7b">Run</span>(<span style="color:#f1fa8c">&#34;relative time&#34;</span>, <span style="color:#8be9fd;font-style:italic">func</span>(t <span style="color:#ff79c6">*</span>testing.T) {
+</span></span><span style="display:flex;"><span>	html <span style="color:#ff79c6">:=</span> buf.<span style="color:#50fa7b">String</span>()
+</span></span><span style="display:flex;"><span>	<span style="color:#6272a4">// CreatedAt is in the past, so relative time should appear</span>
+</span></span><span style="display:flex;"><span>	assert.<span style="color:#50fa7b">Contains</span>(t, html, <span style="color:#f1fa8c">&#34;ago&#34;</span>)
+</span></span><span style="display:flex;"><span>})
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>t.<span style="color:#50fa7b">Run</span>(<span style="color:#f1fa8c">&#34;agent with @&#34;</span>, <span style="color:#8be9fd;font-style:italic">func</span>(t <span style="color:#ff79c6">*</span>testing.T) {
+</span></span><span style="display:flex;"><span>	assert.<span style="color:#50fa7b">Contains</span>(t, html, <span style="color:#f1fa8c">&#34;@claude&#34;</span>)
+</span></span><span style="display:flex;"><span>})
+</span></span></code></pre><h3>Step 10: Update existing header test assertions</h3>
+<p>The existing <code>TestRenderHeader</code> in <code>terminal_test.go</code> checks for <code>&quot;72h 44m&quot;</code> (duration badge) and <code>&quot;claude&quot;</code> (without @). These assertions need updating:</p>
+<ul>
+<li>Remove assertion for <code>&quot;72h 44m&quot;</code> (duration badge is gone from the header)</li>
+<li>Change <code>assert.Contains(t, out, &quot;claude&quot;)</code> -- this will still pass since <code>@claude</code> contains <code>claude</code>, but it is cleaner to assert <code>@claude</code></li>
+<li>The test sets <code>CreatedAt: now</code>, so relative time will be <code>&quot;just now&quot;</code> -- add assertion for that</li>
+<li>Change assertion for <code>&quot;/Users/test (main)&quot;</code> to <code>&quot;/Users/test(main)&quot;</code> (no space before paren in new layout)</li>
+</ul>
+<p>Similarly in <code>html_test.go</code>, update assertions:</p>
+<ul>
+<li><code>&quot;Jan 22, 2026&quot;</code> (absolute date) is no longer in the header; replace with <code>&quot;ago&quot;</code> check for relative time</li>
+<li><code>&quot;30m&quot;</code> duration badge is no longer shown</li>
+</ul>
+<h3>Summary of Files Changed</h3>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Change Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>~/work/chitragupt/core/transcript.go</code></td>
+<td>Add <code>DiffStats</code> struct and field</td>
+</tr>
+<tr>
+<td><code>~/work/chitragupt/core/diffstats.go</code></td>
+<td><strong>New file</strong>: <code>ComputeDiffStats</code>, <code>RelativeTime</code>, helpers</td>
+</tr>
+<tr>
+<td><code>~/work/chitragupt/core/diffstats_test.go</code></td>
+<td><strong>New file</strong>: tests for diff stats and relative time</td>
+</tr>
+<tr>
+<td><code>~/work/chitragupt/cmd/cg/render.go</code></td>
+<td>Insert diff stats computation before compact</td>
+</tr>
+<tr>
+<td><code>~/work/chitragupt/render/html/funcmap.go</code></td>
+<td>Add <code>relativeTime</code> and <code>metaIcon</code> template functions</td>
+</tr>
+<tr>
+<td><code>~/work/chitragupt/render/html/templates/header.html</code></td>
+<td>Complete restyle to two-row layout</td>
+</tr>
+<tr>
+<td><code>~/work/chitragupt/render/html/html_test.go</code></td>
+<td>Update header assertions</td>
+</tr>
+<tr>
+<td><code>~/work/chitragupt/render/terminal/terminal.go</code></td>
+<td>Restyle <code>writeHeader</code> to two-row layout</td>
+</tr>
+<tr>
+<td><code>~/work/chitragupt/render/terminal/style.go</code></td>
+<td>Add diff stat color and style definitions</td>
+</tr>
+<tr>
+<td><code>~/work/chitragupt/render/terminal/terminal_test.go</code></td>
+<td>Update header assertions, add diff stats test</td>
+</tr>
+</tbody>
+</table>
+<h3>Implementation Ordering</h3>
+<ol>
+<li><strong>Core data model first</strong> (Step 1-2): <code>DiffStats</code> struct, <code>ComputeDiffStats</code>, <code>RelativeTime</code> in <code>core/</code></li>
+<li><strong>Tests for core</strong> (Step 9 partial): <code>core/diffstats_test.go</code></li>
+<li><strong>CLI pipeline</strong> (Step 3): Insert computation in <code>render.go</code></li>
+<li><strong>Terminal renderer</strong> (Step 7-8): Update <code>writeHeader</code> + add styles</li>
+<li><strong>HTML renderer</strong> (Step 4-6): Update funcmap, restyle template</li>
+<li><strong>Test updates</strong> (Step 9-10): Fix existing assertions in both renderer test files</li>
+</ol>
+<h3>Potential Challenges</h3>
+<ol>
+<li>
+<p><strong>Compact mutation ordering</strong>: The critical constraint is that <code>ComputeDiffStats</code> must run before compact. The plan inserts it explicitly between redaction and compaction in <code>render.go</code>. The <code>serve.go</code> command is currently unimplemented, but when it is, it must follow the same ordering.</p>
+</li>
+<li>
+<p><strong><code>countLines</code> duplication</strong>: The <code>core</code> and <code>compact</code> packages both need <code>countLines</code>. Since <code>core</code> cannot import <code>compact</code> (and vice versa would create coupling), the 7-line function is duplicated. This is acceptable and could be refactored into a shared <code>internal/textutil</code> package later if desired.</p>
+</li>
+<li>
+<p><strong>Relative time in tests</strong>: <code>RelativeTime</code> uses <code>time.Since()</code> internally, making it sensitive to test execution time. The tests use <code>time.Now().Add(-duration)</code> which should be stable. For the HTML/terminal integration tests, the transcript's <code>CreatedAt</code> is set to <code>time.Now()</code> so <code>relativeTime</code> will return <code>&quot;just now&quot;</code> deterministically.</p>
+</li>
+<li>
+<p><strong>Template <code>IsZero</code> call</strong>: The HTML template uses <code>.Transcript.CreatedAt.IsZero</code> -- this works because <code>CreatedAt</code> is a value type (<code>time.Time</code>), not a pointer. The <code>not</code> function in Go templates will negate it correctly.</p>
+</li>
+<li>
+<p><strong>Dir(branch) spacing</strong>: The target layout shows <code>dir(branch)</code> with no space before the paren. The current code has <code>dir + &quot; (&quot; + branch + &quot;)&quot;</code>. Both the terminal and HTML templates need the space removed to match the target.</p>
+</li>
+</ol>
+<h3>Critical Files for Implementation</h3>
+<ul>
+<li><code>~/work/chitragupt/core/transcript.go</code> - Add <code>DiffStats</code> struct and new field on <code>Transcript</code></li>
+<li><code>~/work/chitragupt/cmd/cg/render.go</code> - Insert diff stats computation before compact in the pipeline</li>
+<li><code>~/work/chitragupt/render/html/templates/header.html</code> - Complete restyle to the new two-row layout with diff stats and icon metadata</li>
+<li><code>~/work/chitragupt/render/terminal/terminal.go</code> - Restyle <code>writeHeader</code> to match the new two-row layout</li>
+<li><code>~/work/chitragupt/render/html/funcmap.go</code> - Add <code>relativeTime</code> and <code>metaIcon</code> template functions</li>
+</ul>
+</div>
+        </div>
+    </div>
+    
+</div>
+
+            </div>
+            <footer class="mt-12 pt-6 border-t border-slate-200 dark:border-slate-700 text-center text-xs text-slate-400">
+                Generated by <a href="https://github.com/sonnes/chitragupt" class="text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-300 underline">chitragupt</a>
+            </footer>
+        </div>
+        
+        <nav class="hidden lg:block w-56 shrink-0">
+            <div class="sticky top-8 max-h-[calc(100vh-4rem)] overflow-y-auto">
+                <div class="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-3">Timeline</div>
+                <ol class="list-decimal list-inside flex flex-col gap-1 text-xs marker:text-slate-400 dark:marker:text-slate-500 marker:font-mono">
+                    
+                </ol>
+            </div>
+        </nav>
+    </div>
+</body>
+</html>

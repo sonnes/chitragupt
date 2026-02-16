@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>chitragupt</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style type="text/tailwindcss">
+        @theme {
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+    </style>
+    <style>
+         
+        .prose { font-size: 14px; line-height: 1.7; }
+        .prose p { margin-bottom: 12px; }
+        .prose p:last-child { margin-bottom: 0; }
+        .prose h1 { font-size: 24px; font-weight: 700; margin: 20px 0 12px; }
+        .prose h2 { font-size: 20px; font-weight: 600; margin: 16px 0 10px; }
+        .prose h3 { font-size: 16px; font-weight: 600; margin: 14px 0 8px; }
+        .prose strong { font-weight: 600; }
+        .prose em { font-style: italic; }
+        .prose code { font-family: ui-monospace, monospace; font-size: 12px; padding: 2px 6px; border-radius: 4px; background: #f1f5f9; }
+        .prose pre { margin: 12px 0; border-radius: 8px; overflow-x: auto; }
+        .prose pre code { padding: 0; background: transparent; }
+        .prose ul { list-style: disc; margin: 8px 0; padding-left: 24px; }
+        .prose ol { list-style: decimal; margin: 8px 0; padding-left: 24px; }
+        .prose li { margin-bottom: 4px; }
+        .prose blockquote { border-left: 3px solid #e2e8f0; padding-left: 12px; margin: 12px 0; color: #64748b; }
+        .prose a { color: #2563eb; text-decoration: underline; }
+        .prose table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 13px; }
+        .prose th { text-align: left; padding: 8px 12px; border-bottom: 2px solid #e2e8f0; font-weight: 600; }
+        .prose td { padding: 8px 12px; border-bottom: 1px solid #e2e8f0; }
+        .prose hr { border: none; border-top: 1px solid #e2e8f0; margin: 16px 0; }
+
+         
+        @media (prefers-color-scheme: dark) {
+            .prose code { background: #1e293b; }
+            .prose blockquote { border-color: #334155; color: #94a3b8; }
+            .prose th { border-color: #334155; }
+            .prose td { border-color: #334155; }
+            .prose hr { border-color: #334155; }
+            .prose a { color: #60a5fa; }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-700 dark:text-slate-300 font-sans" style="line-height: 1.65; padding: 48px 24px;">
+    <div class="max-w-6xl mx-auto flex gap-8">
+        
+        <div class="min-w-0 flex-1 max-w-3xl">
+            
+<header class="mb-10">
+  
+  <div class="flex items-baseline gap-4 mb-3">
+    <h1 class="text-3xl font-bold text-slate-900 dark:text-white">
+      Session a8ddf03
+    </h1>
+    
+  </div>
+
+  
+  <div class="flex flex-wrap items-center gap-4 text-sm text-slate-500 dark:text-slate-400 mb-6">
+    
+    <span class="flex items-center gap-1.5">
+      <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      <span class="font-medium">@claude</span>
+    </span>
+    
+
+    
+    <span class="flex items-center gap-1.5">
+      <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      1d ago
+    </span>
+    
+
+    
+    <span class="flex items-center gap-1.5">
+      <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+      claude-haiku-4-5-20251001
+    </span>
+    
+
+    
+  </div>
+
+  
+  <div
+    class="flex flex-wrap gap-6 pt-4 border-t border-slate-200 dark:border-slate-700"
+  >
+    <div class="text-center">
+      <div class="text-lg font-bold text-slate-900 dark:text-white">
+        14
+      </div>
+      <div class="text-xs text-slate-500 uppercase">Input Tokens</div>
+    </div>
+    <div class="text-center">
+      <div class="text-lg font-bold text-slate-900 dark:text-white">
+        10
+      </div>
+      <div class="text-xs text-slate-500 uppercase">Output Tokens</div>
+    </div>
+    
+    <div class="text-center">
+      <div class="text-lg font-bold text-slate-900 dark:text-white">
+        30,173
+      </div>
+      <div class="text-xs text-slate-500 uppercase">Cache Read</div>
+    </div>
+     
+    <div class="text-center">
+      <div class="text-lg font-bold text-slate-900 dark:text-white">
+        21,805
+      </div>
+      <div class="text-xs text-slate-500 uppercase">Cache Write</div>
+    </div>
+    
+  </div>
+  
+</header>
+
+            <div class="flex flex-col gap-8">
+                
+<div id="turn-0" class="flex flex-col gap-4 scroll-mt-6">
+    
+    
+
+    
+    
+    <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden">
+        <details>
+            <summary class="px-5 py-3 flex items-center gap-3 cursor-pointer select-none hover:bg-slate-50 dark:hover:bg-slate-750">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-slate-400 shrink-0"><polyline points="9 18 15 12 9 6"/></svg>
+                <span class="text-sm font-medium text-slate-700 dark:text-slate-300">6 Steps Completed</span>
+                
+            </summary>
+            <div class="px-5 pb-4 flex flex-col gap-3 border-t border-slate-100 dark:border-slate-700 pt-3">
+                <div class="prose dark:prose-invert max-w-none"><p>I'll help you explore the CLI command structure for this Go project. Let me start by checking what files exist in the <code>cmd/cg/</code> directory and then read them thoroughly.</p>
+</div><details class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden"><summary class="px-4 py-2 flex items-center gap-2 text-slate-900 dark:text-white cursor-pointer select-none min-w-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg><span class="text-xs font-semibold font-mono shrink-0">Bash</span> <span class="text-xs font-mono text-slate-500 dark:text-slate-400 truncate">find ~/work/chitragupt/cmd/cg -type f -name &#34;*.go&#34; | sort</span></summary><div class="px-4 py-3 text-xs overflow-x-auto"><pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;command&#34;</span>: <span style="color:#f1fa8c">&#34;find ~/work/chitragupt/cmd/cg -type f -name \&#34;*.go\&#34; | sort&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><div class="border-t border-slate-200 dark:border-slate-700"><pre class="px-4 py-3 text-xs font-mono overflow-x-auto max-h-96 overflow-y-auto">~/work/chitragupt/cmd/cg/app.go
+~/work/chitragupt/cmd/cg/install.go
+~/work/chitragupt/cmd/cg/main.go
+~/work/chitragupt/cmd/cg/render.go
+~/work/chitragupt/cmd/cg/serve.go</pre></div></details><div class="prose dark:prose-invert max-w-none"><p>Now let me read all the command files in order:</p>
+</div><details class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden"><summary class="px-4 py-2 flex items-center gap-2 text-slate-900 dark:text-white cursor-pointer select-none min-w-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg><span class="text-xs font-semibold font-mono shrink-0">Read</span> <span class="text-xs font-mono text-slate-500 dark:text-slate-400 truncate">~/work/chitragupt/cmd/cg/main.go</span></summary><div class="px-4 py-3 text-xs overflow-x-auto"><pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;file_path&#34;</span>: <span style="color:#f1fa8c">&#34;~/work/chitragupt/cmd/cg/main.go&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></details><details class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden"><summary class="px-4 py-2 flex items-center gap-2 text-slate-900 dark:text-white cursor-pointer select-none min-w-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg><span class="text-xs font-semibold font-mono shrink-0">Read</span> <span class="text-xs font-mono text-slate-500 dark:text-slate-400 truncate">~/work/chitragupt/cmd/cg/app.go</span></summary><div class="px-4 py-3 text-xs overflow-x-auto"><pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;file_path&#34;</span>: <span style="color:#f1fa8c">&#34;~/work/chitragupt/cmd/cg/app.go&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></details><details class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden"><summary class="px-4 py-2 flex items-center gap-2 text-slate-900 dark:text-white cursor-pointer select-none min-w-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg><span class="text-xs font-semibold font-mono shrink-0">Read</span> <span class="text-xs font-mono text-slate-500 dark:text-slate-400 truncate">~/work/chitragupt/cmd/cg/render.go</span></summary><div class="px-4 py-3 text-xs overflow-x-auto"><pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;file_path&#34;</span>: <span style="color:#f1fa8c">&#34;~/work/chitragupt/cmd/cg/render.go&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></details><details class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden"><summary class="px-4 py-2 flex items-center gap-2 text-slate-900 dark:text-white cursor-pointer select-none min-w-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg><span class="text-xs font-semibold font-mono shrink-0">Read</span> <span class="text-xs font-mono text-slate-500 dark:text-slate-400 truncate">~/work/chitragupt/cmd/cg/serve.go</span></summary><div class="px-4 py-3 text-xs overflow-x-auto"><pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;file_path&#34;</span>: <span style="color:#f1fa8c">&#34;~/work/chitragupt/cmd/cg/serve.go&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></details><details class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden"><summary class="px-4 py-2 flex items-center gap-2 text-slate-900 dark:text-white cursor-pointer select-none min-w-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg><span class="text-xs font-semibold font-mono shrink-0">Read</span> <span class="text-xs font-mono text-slate-500 dark:text-slate-400 truncate">~/work/chitragupt/cmd/cg/install.go</span></summary><div class="px-4 py-3 text-xs overflow-x-auto"><pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;file_path&#34;</span>: <span style="color:#f1fa8c">&#34;~/work/chitragupt/cmd/cg/install.go&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></details>
+            </div>
+        </details>
+    </div>
+    
+
+    
+    
+    <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-5 border-l-4 border-l-emerald-500">
+        <div class="flex flex-col gap-3">
+            <div class="prose dark:prose-invert max-w-none"><p>Perfect! I've successfully read all the CLI command files. Here's a comprehensive overview of the Go project's CLI command structure:</p>
+<h2>CLI Command Structure Overview</h2>
+<h3>Main Entry Point: <code>main.go</code></h3>
+<ul>
+<li><strong>Framework</strong>: Uses <code>github.com/urfave/cli/v3</code> (urfave/cli)</li>
+<li><strong>Root Command</strong>: <code>cg</code> - &quot;Convert CLI agent session logs into shareable, human-readable transcripts&quot;</li>
+<li><strong>Root Flag</strong>: <code>--log</code> (default: &quot;error&quot;) - Controls logging level (debug, info, warn, error)</li>
+<li><strong>Three Subcommands</strong>: <code>render</code>, <code>serve</code>, and <code>install</code></li>
+</ul>
+<hr>
+<h3>1. <strong><code>render.go</code></strong> - Render Command (FULLY IMPLEMENTED)</h3>
+<p>Converts session files to transcripts in various formats.</p>
+<p><strong>Usage</strong>: <code>cg render --agent &lt;name&gt; [--file|--session|--project|--all] [options]</code></p>
+<p><strong>Flags</strong>:</p>
+<ul>
+<li><code>--agent, -a</code> (required): Agent name (claude, codex, opencode, cursor)</li>
+<li><code>--file, -f</code>: Path to a session file</li>
+<li><code>--session, -s</code>: Session ID to convert</li>
+<li><code>--project, -p</code>: Project name (converts all sessions in project)</li>
+<li><code>--all</code>: Convert all sessions
+<ul>
+<li><strong>Constraint</strong>: Exactly one of {file, session, project, all} required</li>
+</ul>
+</li>
+<li><code>--format, --fmt</code>: Output format(s): html, markdown, json, terminal (repeatable)</li>
+<li><code>--no-redact</code>: Disable redaction of secrets and PII</li>
+<li><code>--redact, -r</code>: Allowlist of rules to redact (e.g., --redact=secrets,pii)</li>
+<li><code>--compact, -c</code>: Enable compact mode; use --compact=no-thinking to strip thinking blocks</li>
+<li><code>--out, -o</code>: Output directory (writes index.{ext} + agent-{id}.{ext} for each format)</li>
+</ul>
+<p><strong>Key Logic</strong>:</p>
+<ul>
+<li>Reads transcripts via <code>readTranscripts()</code> which dispatches to appropriate Reader method</li>
+<li>Applies redaction via <code>newRedactor()</code> (unless --no-redact set)</li>
+<li>Computes diff stats before compaction</li>
+<li>Applies optional compaction</li>
+<li>Default format is &quot;terminal&quot; if none specified</li>
+<li>Multiple formats require --out directory</li>
+<li>Renders to stdout or to files in output directory</li>
+</ul>
+<hr>
+<h3>2. <strong><code>serve.go</code></strong> - Serve Command (STUB - NOT IMPLEMENTED)</h3>
+<p>Serves sessions for browsing in local web UI.</p>
+<p><strong>Usage</strong>: <code>cg serve --agent &lt;name&gt; [--all] [--dir &lt;path&gt;] [--port &lt;num&gt;]</code></p>
+<p><strong>Flags</strong>:</p>
+<ul>
+<li><code>--agent</code> (required): Agent name (claude, codex, opencode, cursor)</li>
+<li><code>--all</code>: Serve all sessions</li>
+<li><code>--dir</code>: Directory of sessions to serve</li>
+<li><code>--port</code> (default: 8080): Port to listen on</li>
+</ul>
+<p><strong>Status</strong>: Currently prints &quot;serve: not implemented&quot; and returns nil</p>
+<hr>
+<h3>3. <strong><code>install.go</code></strong> - Install Command (IMPLEMENTED)</h3>
+<p>Sets up git infrastructure for storing agent session transcripts.</p>
+<p><strong>Usage</strong>: <code>cg install [--agent &lt;name&gt;] [--format &lt;fmt&gt;] [--branch &lt;name&gt;]</code></p>
+<p><strong>Flags</strong>:</p>
+<ul>
+<li><code>--agent</code> (default: &quot;claude&quot;): Agent name (currently only &quot;claude&quot; supported)</li>
+<li><code>--format</code> (default: &quot;jsonl&quot;): Transcript format</li>
+<li><code>--branch</code> (default: &quot;transcripts&quot;): Branch name for transcripts</li>
+</ul>
+<p><strong>Key Logic</strong>:</p>
+<ul>
+<li>Creates orphan branch and git worktree</li>
+<li>Installs hooks to automatically capture sessions</li>
+<li>Sessions saved to <code>.transcripts/&lt;agent&gt;/</code> on separate branch</li>
+<li>Only &quot;claude&quot; agent currently supported</li>
+</ul>
+<hr>
+<h3>4. <strong><code>app.go</code></strong> - Application Registry and Shared Utilities</h3>
+<p>Contains the core app infrastructure used by all commands.</p>
+<p><strong>Key Components</strong>:</p>
+<p><strong>Registry Pattern</strong> (<code>newApp()</code>):</p>
+<pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">type</span> app <span style="color:#8be9fd;font-style:italic">struct</span> {
+</span></span><span style="display:flex;"><span>    readers   <span style="color:#8be9fd;font-style:italic">map</span>[<span style="color:#8be9fd">string</span>]<span style="color:#8be9fd;font-style:italic">func</span>() reader.Reader
+</span></span><span style="display:flex;"><span>    renderers <span style="color:#8be9fd;font-style:italic">map</span>[<span style="color:#8be9fd">string</span>]<span style="color:#8be9fd;font-style:italic">func</span>() render.Renderer
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre><ul>
+<li><strong>Readers</strong>: Maps agent names to Reader implementations (currently: &quot;claude&quot;)</li>
+<li><strong>Renderers</strong>: Maps format names to Renderer implementations (terminal, html)</li>
+</ul>
+<p><strong>Flag-Based Dispatch</strong> (<code>readTranscripts()</code>):</p>
+<ul>
+<li>Validates exactly one of {file, session, project, all} is set</li>
+<li>Dispatches to appropriate Reader method:
+<ul>
+<li><code>--file</code>: <code>r.ReadFile(path)</code> → returns single transcript</li>
+<li><code>--session</code>: <code>r.ReadSession(id)</code> → returns single transcript</li>
+<li><code>--project</code>: <code>r.ReadProject(name)</code> → returns transcript slice</li>
+<li><code>--all</code>: <code>r.ReadAll()</code> → returns transcript slice</li>
+</ul>
+</li>
+</ul>
+<p><strong>Redaction Configuration</strong> (<code>newRedactor()</code>):</p>
+<ul>
+<li><code>--no-redact</code>: Returns nil redactor (no redaction)</li>
+<li><code>--redact</code>: Allowlist of rules (secrets, pii)</li>
+<li>Default (no flags): Both secrets and pii redaction enabled</li>
+</ul>
+<hr>
+<h2>Key Design Patterns</h2>
+<ol>
+<li><strong>CLI Framework</strong>: urfave/cli v3 with subcommands</li>
+<li><strong>Flag Validation</strong>: Mutual exclusivity enforcement for source flags</li>
+<li><strong>Registry Pattern</strong>: Pluggable readers and renderers</li>
+<li><strong>Redaction Strategy</strong>: Optional filtering with rule allowlisting</li>
+<li><strong>Output Flexibility</strong>: stdout for single format, files for multiple formats</li>
+</ol>
+<h2>Summary for <code>serve.go</code> Implementation</h2>
+<p>The serve command follows the same patterns as render:</p>
+<ul>
+<li>Required <code>--agent</code> flag</li>
+<li>Source options: <code>--all</code> or <code>--dir</code> (similar to render's source flags)</li>
+<li>Port configuration with sensible default</li>
+<li>Currently needs implementation of actual HTTP server and session browsing logic</li>
+</ul>
+</div>
+        </div>
+    </div>
+    
+</div>
+
+            </div>
+            <footer class="mt-12 pt-6 border-t border-slate-200 dark:border-slate-700 text-center text-xs text-slate-400">
+                Generated by <a href="https://github.com/sonnes/chitragupt" class="text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-300 underline">chitragupt</a>
+            </footer>
+        </div>
+        
+        <nav class="hidden lg:block w-56 shrink-0">
+            <div class="sticky top-8 max-h-[calc(100vh-4rem)] overflow-y-auto">
+                <div class="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-3">Timeline</div>
+                <ol class="list-decimal list-inside flex flex-col gap-1 text-xs marker:text-slate-400 dark:marker:text-slate-500 marker:font-mono">
+                    
+                </ol>
+            </div>
+        </nav>
+    </div>
+</body>
+</html>
