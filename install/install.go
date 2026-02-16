@@ -16,7 +16,7 @@ import (
 // Config holds the settings for the install command.
 type Config struct {
 	Agent   string   // agent name, e.g. "claude"
-	Formats []string // output formats, e.g. ["html", "jsonl"]
+	Formats []string // output formats, e.g. ["html", "json"]
 	Branch  string   // orphan branch name, e.g. "transcripts"
 	Dir     string   // git repository root (auto-detected if empty)
 }
@@ -33,8 +33,9 @@ func Run(cfg Config) error {
 
 	worktreeDir := filepath.Join(cfg.Dir, ".transcripts")
 
+	worktreeExists := false
 	if _, err := os.Stat(worktreeDir); err == nil {
-		return fmt.Errorf(".transcripts/ already exists; run 'cg uninstall' first or remove it manually")
+		worktreeExists = true
 	}
 
 	steps := []struct {
@@ -42,7 +43,12 @@ func Run(cfg Config) error {
 		fn   func() error
 	}{
 		{"create orphan branch", func() error { return createOrphanBranch(cfg.Dir, cfg.Branch) }},
-		{"add git worktree", func() error { return addWorktree(cfg.Dir, cfg.Branch, worktreeDir) }},
+		{"add git worktree", func() error {
+			if worktreeExists {
+				return nil
+			}
+			return addWorktree(cfg.Dir, cfg.Branch, worktreeDir)
+		}},
 		{"update .gitignore", func() error { return ensureGitignore(cfg.Dir) }},
 		{"install Claude Code hook", func() error { return installClaudeHook(cfg.Dir, cfg.Agent, cfg.Formats) }},
 		{"install git post-commit hook", func() error { return installPostCommitHook(cfg.Dir) }},
@@ -157,6 +163,7 @@ type matcherGroup struct {
 
 type hookHandler struct {
 	Type    string `json:"type"`
+	Async   bool   `json:"async"`
 	Command string `json:"command"`
 }
 
@@ -191,6 +198,7 @@ func installClaudeHook(repoDir, agent string, formats []string) error {
 
 	handler := hookHandler{
 		Type:    "command",
+		Async:   true,
 		Command: `"$CLAUDE_PROJECT_DIR"/.claude/hooks/save-transcript.sh`,
 	}
 
@@ -304,7 +312,7 @@ func formatExtension(format string) string {
 	case "json":
 		return ".json"
 	default:
-		return "." + format // e.g. "jsonl" → ".jsonl"
+		return "." + format // e.g. "json" → ".json"
 	}
 }
 

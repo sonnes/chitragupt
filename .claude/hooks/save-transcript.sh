@@ -19,7 +19,7 @@ if [ ! -d "$DEST_DIR" ]; then
   exit 0
 fi
 
-cg render --agent claude --file "$TRANSCRIPT_PATH" --format jsonl --format html --out "$DEST_DIR/$SESSION_ID"
+cg render --agent claude --file "$TRANSCRIPT_PATH" --format html --out "$DEST_DIR/$SESSION_ID"
 
 cg manifest upsert --agent claude --file "$TRANSCRIPT_PATH" \
   --manifest "$CLAUDE_PROJECT_DIR/.transcripts/manifest.json" \

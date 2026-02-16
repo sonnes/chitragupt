@@ -120,10 +120,8 @@ func TestRunIdempotent(t *testing.T) {
 
 	require.NoError(t, Run(cfg))
 
-	// Second run should fail because .transcripts/ already exists
-	err := Run(cfg)
-	assert.Error(t, err)
-	assert.Contains(t, err.Error(), "already exists")
+	// Second run should succeed (idempotent)
+	require.NoError(t, Run(cfg))
 }
 
 func TestEnsureGitignore(t *testing.T) {

@@ -141,7 +141,13 @@ func renderCmd() *cli.Command {
 					return err
 				}
 				for _, t := range transcripts {
-					if err := renderToDir(rnd, t, outDir, format); err != nil {
+					// Each session gets its own subdirectory,
+					// matching the install hook layout: $SESSION_ID/index.{ext}
+					dir := outDir
+					if len(transcripts) > 1 && t.SessionID != "" {
+						dir = filepath.Join(outDir, t.SessionID)
+					}
+					if err := renderToDir(rnd, t, dir, format); err != nil {
 						return err
 					}
 				}

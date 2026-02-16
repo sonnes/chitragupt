@@ -18,7 +18,9 @@
       "Bash(git status:*)",
       "Bash(go run:*)",
       "Bash(open:*)",
-      "Bash(./cg render:*)"
+      "Bash(./cg render:*)",
+      "Bash(make build:*)",
+      "Bash(.bin/cg render:*)"
     ]
   }
 }

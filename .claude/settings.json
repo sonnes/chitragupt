@@ -5,6 +5,7 @@
         "hooks": [
           {
             "type": "command",
+            "async": true,
             "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/save-transcript.sh"
           }
         ]

@@ -28,7 +28,7 @@ on a separate branch that does not pollute your main history.`,
 			&cli.StringSliceFlag{
 				Name:    "format",
 				Aliases: []string{"fmt"},
-				Usage:   "Output format(s): html, jsonl, json, markdown (repeatable)",
+				Usage:   "Output format(s): html, json, markdown (repeatable)",
 				Value:   []string{"html"},
 			},
 			&cli.StringFlag{
