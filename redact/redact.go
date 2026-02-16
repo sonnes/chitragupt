@@ -43,6 +43,8 @@ func New(cfg Config) *Redactor {
 }
 
 func (r *Redactor) Transform(t *core.Transcript) error {
+	t.Dir = r.redactString(t.Dir)
+	t.Title = r.redactString(t.Title)
 	for i := range t.Messages {
 		for j := range t.Messages[i].Content {
 			r.redactBlock(&t.Messages[i].Content[j])

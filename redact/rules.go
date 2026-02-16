@@ -4,7 +4,9 @@ package redact
 
 import (
 	"fmt"
+	"os"
 	"regexp"
+	"strings"
 )
 
 // Rule detects sensitive data in a string and provides a replacement.
@@ -44,6 +46,41 @@ func (r *regexRule) Replacement(_ Match) string {
 	return fmt.Sprintf("[REDACTED:%s]", r.name)
 }
 
+// homeDirRule replaces absolute home directory paths with ~/...
+type homeDirRule struct {
+	homeDir string
+	pattern *regexp.Regexp
+}
+
+func newHomeDirRule() *homeDirRule {
+	home, _ := os.UserHomeDir()
+	if home == "" {
+		return nil
+	}
+	// Match the home dir prefix, optionally followed by more path segments.
+	escaped := regexp.QuoteMeta(home)
+	return &homeDirRule{
+		homeDir: home,
+		pattern: regexp.MustCompile(escaped + `(?:/[^\s"'` + "`" + `]*)?`),
+	}
+}
+
+func (r *homeDirRule) Name() string { return "fs_path" }
+func (r *homeDirRule) Kind() string { return "pii" }
+
+func (r *homeDirRule) Detect(s string) []Match {
+	locs := r.pattern.FindAllStringIndex(s, -1)
+	matches := make([]Match, len(locs))
+	for i, loc := range locs {
+		matches[i] = Match{Start: loc[0], End: loc[1], Value: s[loc[0]:loc[1]]}
+	}
+	return matches
+}
+
+func (r *homeDirRule) Replacement(m Match) string {
+	return "~" + strings.TrimPrefix(m.Value, r.homeDir)
+}
+
 // SecretRules returns the built-in secret detection rules.
 func SecretRules() []Rule {
 	return []Rule{
@@ -77,7 +114,7 @@ func SecretRules() []Rule {
 
 // PIIRules returns the built-in PII detection rules.
 func PIIRules() []Rule {
-	return []Rule{
+	rules := []Rule{
 		&regexRule{
 			name:    "email",
 			kind:    "pii",
@@ -94,4 +131,8 @@ func PIIRules() []Rule {
 			pattern: regexp.MustCompile(`(?:\+\d{1,3}[\s\-]?)?\(?\d{3}\)?[\s\-]?\d{3}[\s\-]?\d{4}`),
 		},
 	}
+	if r := newHomeDirRule(); r != nil {
+		rules = append(rules, r)
+	}
+	return rules
 }
