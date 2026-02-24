@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Use absolute timestamps in html. Use js to render relative ts — chitragupt</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style type="text/tailwindcss">
+        @theme {
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+    </style>
+    <style>
+         
+        .prose { font-size: 14px; line-height: 1.7; }
+        .prose p { margin-bottom: 12px; }
+        .prose p:last-child { margin-bottom: 0; }
+        .prose h1 { font-size: 24px; font-weight: 700; margin: 20px 0 12px; }
+        .prose h2 { font-size: 20px; font-weight: 600; margin: 16px 0 10px; }
+        .prose h3 { font-size: 16px; font-weight: 600; margin: 14px 0 8px; }
+        .prose strong { font-weight: 600; }
+        .prose em { font-style: italic; }
+        .prose code { font-family: ui-monospace, monospace; font-size: 12px; padding: 2px 6px; border-radius: 4px; background: #f1f5f9; }
+        .prose pre { margin: 12px 0; border-radius: 8px; overflow-x: auto; }
+        .prose pre code { padding: 0; background: transparent; }
+        .prose ul { list-style: disc; margin: 8px 0; padding-left: 24px; }
+        .prose ol { list-style: decimal; margin: 8px 0; padding-left: 24px; }
+        .prose li { margin-bottom: 4px; }
+        .prose blockquote { border-left: 3px solid #e2e8f0; padding-left: 12px; margin: 12px 0; color: #64748b; }
+        .prose a { color: #2563eb; text-decoration: underline; }
+        .prose table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 13px; }
+        .prose th { text-align: left; padding: 8px 12px; border-bottom: 2px solid #e2e8f0; font-weight: 600; }
+        .prose td { padding: 8px 12px; border-bottom: 1px solid #e2e8f0; }
+        .prose hr { border: none; border-top: 1px solid #e2e8f0; margin: 16px 0; }
+
+         
+        @media (prefers-color-scheme: dark) {
+            .prose code { background: #1e293b; }
+            .prose blockquote { border-color: #334155; color: #94a3b8; }
+            .prose th { border-color: #334155; }
+            .prose td { border-color: #334155; }
+            .prose hr { border-color: #334155; }
+            .prose a { color: #60a5fa; }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-700 dark:text-slate-300 font-sans" style="line-height: 1.65; padding: 48px 24px;">
+    <div class="max-w-6xl mx-auto flex gap-8">
+        
+        <div class="min-w-0 flex-1 max-w-3xl">
+            
+<header class="mb-10">
+  
+  <div class="flex items-baseline gap-4 mb-3">
+    <h1 class="text-3xl font-bold text-slate-900 dark:text-white">
+      Use absolute timestamps in html. Use js to render relative ts
+    </h1>
+    
+    <div class="flex items-center gap-3 text-sm font-mono font-semibold whitespace-nowrap">
+      <span class="text-emerald-600 dark:text-emerald-400">+89</span>
+      <span class="text-amber-600 dark:text-amber-400">~4</span>
+      <span class="text-red-600 dark:text-red-400">-24</span>
+    </div>
+    
+  </div>
+
+  
+  <div class="flex flex-wrap items-center gap-4 text-sm text-slate-500 dark:text-slate-400 mb-6">
+    
+    <span class="flex items-center gap-1.5">
+      <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      <span class="font-medium">@Ravi Atluri</span>
+    </span>
+    
+
+    
+    <span class="flex items-center gap-1.5">
+      <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      1m ago
+    </span>
+    
+
+    
+    <span class="flex items-center gap-1.5">
+      <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+      claude-opus-4-6
+    </span>
+    
+
+    
+    <span class="flex items-center gap-1.5 font-mono text-xs">
+      <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+      ~/work/chitragupt(main)
+    </span>
+    
+  </div>
+
+  
+  <div
+    class="flex flex-wrap gap-6 pt-4 border-t border-slate-200 dark:border-slate-700"
+  >
+    <div class="text-center">
+      <div class="text-lg font-bold text-slate-900 dark:text-white">
+        34
+      </div>
+      <div class="text-xs text-slate-500 uppercase">Input Tokens</div>
+    </div>
+    <div class="text-center">
+      <div class="text-lg font-bold text-slate-900 dark:text-white">
+        119
+      </div>
+      <div class="text-xs text-slate-500 uppercase">Output Tokens</div>
+    </div>
+    
+    <div class="text-center">
+      <div class="text-lg font-bold text-slate-900 dark:text-white">
+        565,711
+      </div>
+      <div class="text-xs text-slate-500 uppercase">Cache Read</div>
+    </div>
+     
+    <div class="text-center">
+      <div class="text-lg font-bold text-slate-900 dark:text-white">
+        15,846
+      </div>
+      <div class="text-xs text-slate-500 uppercase">Cache Write</div>
+    </div>
+    
+  </div>
+  
+</header>
+
+            <div class="flex flex-col gap-8">
+                
+<div id="turn-0" class="flex flex-col gap-4 scroll-mt-6">
+    
+    
+    <div class="ml-auto max-w-[85%]">
+        <div class="bg-blue-50 dark:bg-blue-950 border border-blue-200 dark:border-blue-800 rounded-2xl rounded-br-sm px-5 py-3">
+            <div class="flex flex-col gap-2">
+                <p class="whitespace-pre-wrap text-sm">Use absolute timestamps in html. Use js to render relative ts</p>
+            </div>
+        </div>
+        <div class="text-right text-xs text-slate-400 mt-1">Feb 24, 2026 6:09 AM</div>
+    </div>
+    
+
+    
+    
+    <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden">
+        <details>
+            <summary class="px-5 py-3 flex items-center gap-3 cursor-pointer select-none hover:bg-slate-50 dark:hover:bg-slate-750">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-slate-400 shrink-0"><polyline points="9 18 15 12 9 6"/></svg>
+                <span class="text-sm font-medium text-slate-700 dark:text-slate-300">16 Steps Completed</span>
+                
+            </summary>
+            <div class="px-5 pb-4 flex flex-col gap-3 border-t border-slate-100 dark:border-slate-700 pt-3">
+                <details class="group"><summary class="text-xs font-medium text-slate-400 dark:text-slate-500 cursor-pointer select-none">Thinking…</summary><pre class="mt-2 text-xs text-slate-500 dark:text-slate-400 whitespace-pre-wrap bg-slate-50 dark:bg-slate-900 rounded p-3 max-h-96 overflow-y-auto">The user wants me to modify the HTML template to show absolute timestamps and use JavaScript to render relative timestamps. Let me read the file first.</pre></details><details class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden"><summary class="px-4 py-2 flex items-center gap-2 text-slate-900 dark:text-white cursor-pointer select-none min-w-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg><span class="text-xs font-semibold font-mono shrink-0">Read</span> <span class="text-xs font-mono text-slate-500 dark:text-slate-400 truncate">~/work/chitragupt/render/html/templates/index.html</span></summary><div class="px-4 py-3 text-xs overflow-x-auto"><pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;file_path&#34;</span>: <span style="color:#f1fa8c">&#34;~/work/chitragupt/render/html/templates/index.html&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></details><div class="prose dark:prose-invert max-w-none"><p>Now let me check what <code>relativeTime</code> does and how <code>CreatedAt</code> is formatted.</p>
+</div><details class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden"><summary class="px-4 py-2 flex items-center gap-2 text-slate-900 dark:text-white cursor-pointer select-none min-w-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><span class="text-xs font-semibold font-mono shrink-0">Grep</span> <span class="text-xs font-mono text-slate-500 dark:text-slate-400 truncate">relativeTime</span></summary><div class="px-4 py-3 text-xs overflow-x-auto"><pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;path&#34;</span>: <span style="color:#f1fa8c">&#34;~/work/chitragupt&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;pattern&#34;</span>: <span style="color:#f1fa8c">&#34;relativeTime&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><div class="border-t border-slate-200 dark:border-slate-700"><pre class="px-4 py-3 text-xs font-mono overflow-x-auto max-h-96 overflow-y-auto">Found 3 files
+render/html/templates/index.html
+render/html/templates/header.html
+render/html/funcmap.go</pre></div></details><details class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden"><summary class="px-4 py-2 flex items-center gap-2 text-slate-900 dark:text-white cursor-pointer select-none min-w-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><span class="text-xs font-semibold font-mono shrink-0">Grep</span> <span class="text-xs font-mono text-slate-500 dark:text-slate-400 truncate">CreatedAt</span></summary><div class="px-4 py-3 text-xs overflow-x-auto"><pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;glob&#34;</span>: <span style="color:#f1fa8c">&#34;*.go&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;head_limit&#34;</span>: <span style="color:#bd93f9">10</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;output_mode&#34;</span>: <span style="color:#f1fa8c">&#34;content&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;path&#34;</span>: <span style="color:#f1fa8c">&#34;~/work/chitragupt&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;pattern&#34;</span>: <span style="color:#f1fa8c">&#34;CreatedAt&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><div class="border-t border-slate-200 dark:border-slate-700"><pre class="px-4 py-3 text-xs font-mono overflow-x-auto max-h-96 overflow-y-auto">redact/redact_test.go:281:		CreatedAt: time.Now(),
+redact/redact_test.go:345:		CreatedAt: now,
+redact/redact_test.go:412:		CreatedAt: time.Now(),
+redact/redact_test.go:438:		CreatedAt: time.Now(),
+redact/redact_test.go:468:		CreatedAt: time.Now(),
+render/html/html_test.go:23:		CreatedAt: now,
+render/html/html_test.go:157:		CreatedAt: now,
+render/html/html_test.go:187:		CreatedAt: now,
+render/html/html_test.go:210:		CreatedAt: now,
+render/html/html_test.go:235:		CreatedAt: now,
+
+[Showing results with pagination = limit: 10, offset: 0]</pre></div></details><details class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden"><summary class="px-4 py-2 flex items-center gap-2 text-slate-900 dark:text-white cursor-pointer select-none min-w-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><span class="text-xs font-semibold font-mono shrink-0">Grep</span> <span class="text-xs font-mono text-slate-500 dark:text-slate-400 truncate">relativeTime|&#34;CreatedAt&#34;</span></summary><div class="px-4 py-3 text-xs overflow-x-auto"><pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;-C&#34;</span>: <span style="color:#bd93f9">3</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;output_mode&#34;</span>: <span style="color:#f1fa8c">&#34;content&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;path&#34;</span>: <span style="color:#f1fa8c">&#34;~/work/chitragupt/render/html/funcmap.go&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;pattern&#34;</span>: <span style="color:#f1fa8c">&#34;relativeTime|\&#34;CreatedAt\&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><div class="border-t border-slate-200 dark:border-slate-700"><pre class="px-4 py-3 text-xs font-mono overflow-x-auto max-h-96 overflow-y-auto">12-func funcMap() template.FuncMap {
+13-	return template.FuncMap{
+14-		&#34;formatTime&#34;:     formatTime,
+15:		&#34;relativeTime&#34;:   relativeTime,
+16-		&#34;formatNumber&#34;:   formatNumber,
+17-		&#34;formatDuration&#34;: formatDuration,
+18-		&#34;toolIcon&#34;:       toolIcon,
+--
+92-	return formatNumber(n/1000) + &#34;,&#34; + fmt.Sprintf(&#34;%03d&#34;, n%1000)
+93-}
+94-
+95:func relativeTime(t any) string {
+96-	switch v := t.(type) {
+97-	case time.Time:
+98-		return core.RelativeTime(v)</pre></div></details><div class="prose dark:prose-invert max-w-none"><p>Now I'll update the template to render an absolute timestamp in a <code>&lt;time&gt;</code> element with a <code>datetime</code> attribute, and add JS to compute relative timestamps client-side.</p>
+</div><details class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden"><summary class="px-4 py-2 flex items-center gap-2 text-slate-900 dark:text-white cursor-pointer select-none min-w-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg><span class="text-xs font-semibold font-mono shrink-0">Read</span> <span class="text-xs font-mono text-slate-500 dark:text-slate-400 truncate">~/work/chitragupt/render/html/templates/header.html</span></summary><div class="px-4 py-3 text-xs overflow-x-auto"><pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;file_path&#34;</span>: <span style="color:#f1fa8c">&#34;~/work/chitragupt/render/html/templates/header.html&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></details><div class="prose dark:prose-invert max-w-none"><p>Now let me check <code>formatTime</code> to see how it formats timestamps.</p>
+</div><details class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden"><summary class="px-4 py-2 flex items-center gap-2 text-slate-900 dark:text-white cursor-pointer select-none min-w-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><span class="text-xs font-semibold font-mono shrink-0">Grep</span> <span class="text-xs font-mono text-slate-500 dark:text-slate-400 truncate">func formatTime</span></summary><div class="px-4 py-3 text-xs overflow-x-auto"><pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;-A&#34;</span>: <span style="color:#bd93f9">10</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;output_mode&#34;</span>: <span style="color:#f1fa8c">&#34;content&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;path&#34;</span>: <span style="color:#f1fa8c">&#34;~/work/chitragupt/render/html/funcmap.go&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;pattern&#34;</span>: <span style="color:#f1fa8c">&#34;func formatTime&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><div class="border-t border-slate-200 dark:border-slate-700"><pre class="px-4 py-3 text-xs font-mono overflow-x-auto max-h-96 overflow-y-auto">49:func formatTime(t any) string {
+50-	switch v := t.(type) {
+51-	case time.Time:
+52-		return v.Format(&#34;Jan 2, 2006 3:04 PM&#34;)
+53-	case *time.Time:
+54-		if v == nil {
+55-			return &#34;&#34;
+56-		}
+57-		return v.Format(&#34;Jan 2, 2006 3:04 PM&#34;)
+58-	default:
+59-		return &#34;&#34;</pre></div></details><div class="prose dark:prose-invert max-w-none"><p>I need to add a new template function that outputs an ISO 8601 timestamp for the <code>datetime</code> attribute. Let me also check if there's already one.</p>
+</div><details class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden"><summary class="px-4 py-2 flex items-center gap-2 text-slate-900 dark:text-white cursor-pointer select-none min-w-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg><span class="text-xs font-semibold font-mono shrink-0">Read</span> <span class="text-xs font-mono text-slate-500 dark:text-slate-400 truncate">~/work/chitragupt/render/html/funcmap.go</span></summary><div class="px-4 py-3 text-xs overflow-x-auto"><pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;file_path&#34;</span>: <span style="color:#f1fa8c">&#34;~/work/chitragupt/render/html/funcmap.go&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></details><div class="prose dark:prose-invert max-w-none"><p>I need to add an <code>isoTime</code> template function and update both templates. Let me make the changes.</p>
+</div><details class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden"><summary class="px-4 py-2 flex items-center gap-2 text-slate-900 dark:text-white cursor-pointer select-none min-w-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg><span class="text-xs font-semibold font-mono shrink-0">Edit</span> <span class="text-xs font-mono text-slate-500 dark:text-slate-400 truncate">~/work/chitragupt/render/html/funcmap.go</span></summary><div class="px-4 py-3 text-xs overflow-x-auto"><pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;file_path&#34;</span>: <span style="color:#f1fa8c">&#34;~/work/chitragupt/render/html/funcmap.go&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;new_string&#34;</span>: <span style="color:#f1fa8c">&#34;\treturn template.FuncMap{\n\t\t\&#34;formatTime\&#34;:     formatTime,\n\t\t\&#34;isoTime\&#34;:        isoTime,\n\t\t\&#34;relativeTime\&#34;:   relativeTime,\n\t\t\&#34;formatNumber\&#34;:   formatNumber,\n\t\t\&#34;formatDuration\&#34;: formatDuration,\n\t\t\&#34;toolIcon\&#34;:       toolIcon,\n\t\t\&#34;metaIcon\&#34;:       metaIcon,\n\t}&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;old_string&#34;</span>: <span style="color:#f1fa8c">&#34;\treturn template.FuncMap{\n\t\t\&#34;formatTime\&#34;:     formatTime,\n\t\t\&#34;relativeTime\&#34;:   relativeTime,\n\t\t\&#34;formatNumber\&#34;:   formatNumber,\n\t\t\&#34;formatDuration\&#34;: formatDuration,\n\t\t\&#34;toolIcon\&#34;:       toolIcon,\n\t\t\&#34;metaIcon\&#34;:       metaIcon,\n\t}&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;replace_all&#34;</span>: <span style="color:#ff79c6">false</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><div class="border-t border-slate-200 dark:border-slate-700"><pre class="px-4 py-3 text-xs font-mono overflow-x-auto max-h-96 overflow-y-auto">The file ~/work/chitragupt/render/html/funcmap.go has been updated successfully.</pre></div></details><details class="group"><summary class="text-xs font-medium text-slate-400 dark:text-slate-500 cursor-pointer select-none">Thinking…</summary><pre class="mt-2 text-xs text-slate-500 dark:text-slate-400 whitespace-pre-wrap bg-slate-50 dark:bg-slate-900 rounded p-3 max-h-96 overflow-y-auto">Now I need to add the isoTime function and update both templates.</pre></details><details class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden"><summary class="px-4 py-2 flex items-center gap-2 text-slate-900 dark:text-white cursor-pointer select-none min-w-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg><span class="text-xs font-semibold font-mono shrink-0">Edit</span> <span class="text-xs font-mono text-slate-500 dark:text-slate-400 truncate">~/work/chitragupt/render/html/funcmap.go</span></summary><div class="px-4 py-3 text-xs overflow-x-auto"><pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;file_path&#34;</span>: <span style="color:#f1fa8c">&#34;~/work/chitragupt/render/html/funcmap.go&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;new_string&#34;</span>: <span style="color:#f1fa8c">&#34;func isoTime(t any) string {\n\tswitch v := t.(type) {\n\tcase time.Time:\n\t\treturn v.UTC().Format(time.RFC3339)\n\tcase *time.Time:\n\t\tif v == nil {\n\t\t\treturn \&#34;\&#34;\n\t\t}\n\t\treturn v.UTC().Format(time.RFC3339)\n\tdefault:\n\t\treturn \&#34;\&#34;\n\t}\n}\n\nfunc formatDuration(d time.Duration) string {&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;old_string&#34;</span>: <span style="color:#f1fa8c">&#34;func formatDuration(d time.Duration) string {&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;replace_all&#34;</span>: <span style="color:#ff79c6">false</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><div class="border-t border-slate-200 dark:border-slate-700"><pre class="px-4 py-3 text-xs font-mono overflow-x-auto max-h-96 overflow-y-auto">The file ~/work/chitragupt/render/html/funcmap.go has been updated successfully.</pre></div></details><div class="prose dark:prose-invert max-w-none"><p>Now update both templates to use <code>&lt;time&gt;</code> elements with absolute timestamps and a JS-based relative time.</p>
+</div><details class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden"><summary class="px-4 py-2 flex items-center gap-2 text-slate-900 dark:text-white cursor-pointer select-none min-w-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg><span class="text-xs font-semibold font-mono shrink-0">Edit</span> <span class="text-xs font-mono text-slate-500 dark:text-slate-400 truncate">~/work/chitragupt/render/html/templates/index.html</span></summary><div class="px-4 py-3 text-xs overflow-x-auto"><pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;file_path&#34;</span>: <span style="color:#f1fa8c">&#34;~/work/chitragupt/render/html/templates/index.html&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;new_string&#34;</span>: <span style="color:#f1fa8c">&#34;                        {{if not .CreatedAt.IsZero}}\n                        \u003cspan class=\&#34;flex items-center gap-1\&#34;\u003e\n                            {{metaIcon \&#34;clock\&#34;}}\n                            \u003ctime datetime=\&#34;{{isoTime .CreatedAt}}\&#34;\u003e{{formatTime .CreatedAt}}\u003c/time\u003e\n                        \u003c/span\u003e\n                        {{end}}&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;old_string&#34;</span>: <span style="color:#f1fa8c">&#34;                        {{if not .CreatedAt.IsZero}}\n                        \u003cspan class=\&#34;flex items-center gap-1\&#34;\u003e\n                            {{metaIcon \&#34;clock\&#34;}}\n                            {{relativeTime .CreatedAt}}\n                        \u003c/span\u003e\n                        {{end}}&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;replace_all&#34;</span>: <span style="color:#ff79c6">false</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><div class="border-t border-slate-200 dark:border-slate-700"><pre class="px-4 py-3 text-xs font-mono overflow-x-auto max-h-96 overflow-y-auto">The file ~/work/chitragupt/render/html/templates/index.html has been updated successfully.</pre></div></details><details class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden"><summary class="px-4 py-2 flex items-center gap-2 text-slate-900 dark:text-white cursor-pointer select-none min-w-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg><span class="text-xs font-semibold font-mono shrink-0">Edit</span> <span class="text-xs font-mono text-slate-500 dark:text-slate-400 truncate">~/work/chitragupt/render/html/templates/header.html</span></summary><div class="px-4 py-3 text-xs overflow-x-auto"><pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;file_path&#34;</span>: <span style="color:#f1fa8c">&#34;~/work/chitragupt/render/html/templates/header.html&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;new_string&#34;</span>: <span style="color:#f1fa8c">&#34;    {{if not .Transcript.CreatedAt.IsZero}}\n    \u003cspan class=\&#34;flex items-center gap-1.5\&#34;\u003e\n      {{metaIcon \&#34;clock\&#34;}}\n      \u003ctime datetime=\&#34;{{isoTime .Transcript.CreatedAt}}\&#34;\u003e{{formatTime .Transcript.CreatedAt}}\u003c/time\u003e\n    \u003c/span\u003e\n    {{end}}&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;old_string&#34;</span>: <span style="color:#f1fa8c">&#34;    {{if not .Transcript.CreatedAt.IsZero}}\n    \u003cspan class=\&#34;flex items-center gap-1.5\&#34;\u003e\n      {{metaIcon \&#34;clock\&#34;}}\n      {{relativeTime .Transcript.CreatedAt}}\n    \u003c/span\u003e\n    {{end}}&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;replace_all&#34;</span>: <span style="color:#ff79c6">false</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><div class="border-t border-slate-200 dark:border-slate-700"><pre class="px-4 py-3 text-xs font-mono overflow-x-auto max-h-96 overflow-y-auto">The file ~/work/chitragupt/render/html/templates/header.html has been updated successfully.</pre></div></details><div class="prose dark:prose-invert max-w-none"><p>Now add the JavaScript to both templates. For the index page, I'll add it before <code>&lt;/body&gt;</code>:</p>
+</div><details class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden"><summary class="px-4 py-2 flex items-center gap-2 text-slate-900 dark:text-white cursor-pointer select-none min-w-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg><span class="text-xs font-semibold font-mono shrink-0">Edit</span> <span class="text-xs font-mono text-slate-500 dark:text-slate-400 truncate">~/work/chitragupt/render/html/templates/index.html</span></summary><div class="px-4 py-3 text-xs overflow-x-auto"><pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;file_path&#34;</span>: <span style="color:#f1fa8c">&#34;~/work/chitragupt/render/html/templates/index.html&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;new_string&#34;</span>: <span style="color:#f1fa8c">&#34;    \u003cscript\u003e\n    (function() {\n        function relativeTime(date) {\n            var now = new Date();\n            var seconds = Math.floor((now - date) / 1000);\n            if (seconds \u003c 60) return \&#34;just now\&#34;;\n            var minutes = Math.floor(seconds / 60);\n            if (minutes \u003c 60) return minutes + \&#34;m ago\&#34;;\n            var hours = Math.floor(minutes / 60);\n            if (hours \u003c 24) return hours + \&#34;h ago\&#34;;\n            var days = Math.floor(hours / 24);\n            if (days \u003c 30) return days + \&#34;d ago\&#34;;\n            var months = Math.floor(days / 30);\n            if (months \u003c 12) return months + \&#34;mo ago\&#34;;\n            var years = Math.floor(days / 365);\n            return years + \&#34;y ago\&#34;;\n        }\n        document.querySelectorAll(\&#34;time[datetime]\&#34;).forEach(function(el) {\n            var date = new Date(el.getAttribute(\&#34;datetime\&#34;));\n            if (!isNaN(date)) {\n                el.textContent = relativeTime(date);\n            }\n        });\n    })();\n    \u003c/script\u003e\n\u003c/body\u003e&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;old_string&#34;</span>: <span style="color:#f1fa8c">&#34;\u003c/body\u003e&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;replace_all&#34;</span>: <span style="color:#ff79c6">false</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><div class="border-t border-slate-200 dark:border-slate-700"><pre class="px-4 py-3 text-xs font-mono overflow-x-auto max-h-96 overflow-y-auto">The file ~/work/chitragupt/render/html/templates/index.html has been updated successfully.</pre></div></details><div class="prose dark:prose-invert max-w-none"><p>Now check if the header template is part of a larger page template that has a <code>&lt;/body&gt;</code> tag where I should add the script, or if I need to handle it differently.</p>
+</div><details class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden"><summary class="px-4 py-2 flex items-center gap-2 text-slate-900 dark:text-white cursor-pointer select-none min-w-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><span class="text-xs font-semibold font-mono shrink-0">Glob</span> <span class="text-xs font-mono text-slate-500 dark:text-slate-400 truncate">~/work/chitragupt/render/html/templates/*.html</span></summary><div class="px-4 py-3 text-xs overflow-x-auto"><pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;pattern&#34;</span>: <span style="color:#f1fa8c">&#34;~/work/chitragupt/render/html/templates/*.html&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><div class="border-t border-slate-200 dark:border-slate-700"><pre class="px-4 py-3 text-xs font-mono overflow-x-auto max-h-96 overflow-y-auto">~/work/chitragupt/render/html/templates/message.html
+~/work/chitragupt/render/html/templates/turn.html
+~/work/chitragupt/render/html/templates/page.html
+~/work/chitragupt/render/html/templates/header.html
+~/work/chitragupt/render/html/templates/index.html</pre></div></details><details class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden"><summary class="px-4 py-2 flex items-center gap-2 text-slate-900 dark:text-white cursor-pointer select-none min-w-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg><span class="text-xs font-semibold font-mono shrink-0">Read</span> <span class="text-xs font-mono text-slate-500 dark:text-slate-400 truncate">~/work/chitragupt/render/html/templates/page.html</span></summary><div class="px-4 py-3 text-xs overflow-x-auto"><pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;file_path&#34;</span>: <span style="color:#f1fa8c">&#34;~/work/chitragupt/render/html/templates/page.html&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></details><details class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden"><summary class="px-4 py-2 flex items-center gap-2 text-slate-900 dark:text-white cursor-pointer select-none min-w-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg><span class="text-xs font-semibold font-mono shrink-0">Edit</span> <span class="text-xs font-mono text-slate-500 dark:text-slate-400 truncate">~/work/chitragupt/render/html/templates/page.html</span></summary><div class="px-4 py-3 text-xs overflow-x-auto"><pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;file_path&#34;</span>: <span style="color:#f1fa8c">&#34;~/work/chitragupt/render/html/templates/page.html&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;new_string&#34;</span>: <span style="color:#f1fa8c">&#34;    \u003cscript\u003e\n    (function() {\n        function relativeTime(date) {\n            var now = new Date();\n            var seconds = Math.floor((now - date) / 1000);\n            if (seconds \u003c 60) return \&#34;just now\&#34;;\n            var minutes = Math.floor(seconds / 60);\n            if (minutes \u003c 60) return minutes + \&#34;m ago\&#34;;\n            var hours = Math.floor(minutes / 60);\n            if (hours \u003c 24) return hours + \&#34;h ago\&#34;;\n            var days = Math.floor(hours / 24);\n            if (days \u003c 30) return days + \&#34;d ago\&#34;;\n            var months = Math.floor(days / 30);\n            if (months \u003c 12) return months + \&#34;mo ago\&#34;;\n            var years = Math.floor(days / 365);\n            return years + \&#34;y ago\&#34;;\n        }\n        document.querySelectorAll(\&#34;time[datetime]\&#34;).forEach(function(el) {\n            var date = new Date(el.getAttribute(\&#34;datetime\&#34;));\n            if (!isNaN(date)) {\n                el.textContent = relativeTime(date);\n            }\n        });\n    })();\n    \u003c/script\u003e\n\u003c/body\u003e\n\u003c/html\u003e&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;old_string&#34;</span>: <span style="color:#f1fa8c">&#34;\u003c/body\u003e\n\u003c/html\u003e&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;replace_all&#34;</span>: <span style="color:#ff79c6">false</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><div class="border-t border-slate-200 dark:border-slate-700"><pre class="px-4 py-3 text-xs font-mono overflow-x-auto max-h-96 overflow-y-auto">The file ~/work/chitragupt/render/html/templates/page.html has been updated successfully.</pre></div></details><div class="prose dark:prose-invert max-w-none"><p>Now let me run the tests to make sure nothing is broken.</p>
+</div><details class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden"><summary class="px-4 py-2 flex items-center gap-2 text-slate-900 dark:text-white cursor-pointer select-none min-w-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg><span class="text-xs font-semibold font-mono shrink-0">Bash</span> <span class="text-xs font-mono text-slate-500 dark:text-slate-400 truncate">go test ./render/html/... 2&gt;&amp;1</span></summary><div class="px-4 py-3 text-xs overflow-x-auto"><pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;command&#34;</span>: <span style="color:#f1fa8c">&#34;go test ./render/html/... 2\u003e\u00261&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;description&#34;</span>: <span style="color:#f1fa8c">&#34;Run HTML render tests&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><div class="border-t border-slate-200 dark:border-slate-700"><pre class="px-4 py-3 text-xs font-mono overflow-x-auto max-h-96 overflow-y-auto">ok  	github.com/sonnes/chitragupt/render/html	0.809s</pre></div></details>
+            </div>
+        </details>
+    </div>
+    
+
+    
+    
+    <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-5 border-l-4 border-l-emerald-500">
+        <div class="flex flex-col gap-3">
+            <div class="prose dark:prose-invert max-w-none"><p>Tests pass. Here's a summary of the changes:</p>
+<p><strong><a href="render/html/funcmap.go">funcmap.go</a></strong> — Added <code>isoTime</code> template function that outputs RFC3339 timestamps, registered it in the func map.</p>
+<p><strong><a href="render/html/templates/index.html">index.html</a></strong> and <strong><a href="render/html/templates/header.html">header.html</a></strong> — Replaced <code>{{relativeTime ...}}</code> with <code>&lt;time datetime=&quot;{{isoTime ...}}&quot;&gt;{{formatTime ...}}&lt;/time&gt;</code>, so the server renders absolute timestamps (e.g. &quot;Jan 2, 2006 3:04 PM&quot;) as the default text content.</p>
+<p><strong><a href="render/html/templates/index.html">index.html</a></strong> and <strong><a href="render/html/templates/page.html">page.html</a></strong> — Added an inline <code>&lt;script&gt;</code> that finds all <code>&lt;time&gt;</code> elements and replaces their text with client-side relative timestamps (e.g. &quot;3h ago&quot;). If JS is disabled, users still see the absolute time as a fallback.</p>
+</div>
+        </div>
+    </div>
+    
+</div>
+
+            </div>
+            <footer class="mt-12 pt-6 border-t border-slate-200 dark:border-slate-700 text-center text-xs text-slate-400">
+                Generated by <a href="https://github.com/sonnes/chitragupt" class="text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-300 underline">chitragupt</a>
+            </footer>
+        </div>
+        
+        <nav class="hidden lg:block w-56 shrink-0">
+            <div class="sticky top-8 max-h-[calc(100vh-4rem)] overflow-y-auto">
+                <div class="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-3">Timeline</div>
+                <ol class="list-decimal list-inside flex flex-col gap-1 text-xs marker:text-slate-400 dark:marker:text-slate-500 marker:font-mono">
+                    
+                    <li class="py-1">
+                        <a href="#turn-0" class="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors no-underline">
+                            <span class="truncate">Use absolute timestamps in html. Use js to render relative ts</span>
+                        </a>
+                    </li>
+                    
+                </ol>
+            </div>
+        </nav>
+    </div>
+</body>
+</html>
