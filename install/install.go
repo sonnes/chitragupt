@@ -17,7 +17,8 @@ import (
 type Config struct {
 	Agent   string   // agent name, e.g. "claude"
 	Formats []string // output formats, e.g. ["html", "json"]
-	Branch  string   // orphan branch name, e.g. "transcripts"
+	Branch  string   // orphan branch name; empty means simple directory mode
+	OutDir  string   // output directory name relative to repo root, e.g. ".transcripts"
 	Dir     string   // git repository root (auto-detected if empty)
 }
 
@@ -31,32 +32,39 @@ func Run(cfg Config) error {
 		cfg.Dir = dir
 	}
 
-	worktreeDir := filepath.Join(cfg.Dir, ".transcripts")
-
-	worktreeExists := false
-	if _, err := os.Stat(worktreeDir); err == nil {
-		worktreeExists = true
+	if cfg.OutDir == "" {
+		cfg.OutDir = ".transcripts"
 	}
 
-	steps := []struct {
-		name string
-		fn   func() error
-	}{
-		{"create orphan branch", func() error { return createOrphanBranch(cfg.Dir, cfg.Branch) }},
-		{"add git worktree", func() error {
-			if worktreeExists {
-				return nil
+	outPath := filepath.Join(cfg.Dir, cfg.OutDir)
+	branchMode := cfg.Branch != ""
+
+	if branchMode {
+		if err := createOrphanBranch(cfg.Dir, cfg.Branch); err != nil {
+			return fmt.Errorf("create orphan branch: %w", err)
+		}
+		if _, err := os.Stat(outPath); os.IsNotExist(err) {
+			if err := addWorktree(cfg.Dir, cfg.Branch, outPath); err != nil {
+				return fmt.Errorf("add git worktree: %w", err)
 			}
-			return addWorktree(cfg.Dir, cfg.Branch, worktreeDir)
-		}},
-		{"update .gitignore", func() error { return ensureGitignore(cfg.Dir) }},
-		{"install Claude Code hook", func() error { return installClaudeHook(cfg.Dir, cfg.Agent, cfg.Formats) }},
-		{"install git post-commit hook", func() error { return installPostCommitHook(cfg.Dir) }},
+		}
+	} else {
+		if err := os.MkdirAll(outPath, 0o755); err != nil {
+			return fmt.Errorf("create output directory: %w", err)
+		}
 	}
 
-	for _, s := range steps {
-		if err := s.fn(); err != nil {
-			return fmt.Errorf("%s: %w", s.name, err)
+	if err := ensureGitignore(cfg.Dir, cfg.OutDir); err != nil {
+		return fmt.Errorf("update .gitignore: %w", err)
+	}
+
+	if err := installClaudeHook(cfg.Dir, cfg.Agent, cfg.Formats, cfg.OutDir); err != nil {
+		return fmt.Errorf("install Claude Code hook: %w", err)
+	}
+
+	if branchMode {
+		if err := installPostCommitHook(cfg.Dir, cfg.OutDir); err != nil {
+			return fmt.Errorf("install git post-commit hook: %w", err)
 		}
 	}
 
@@ -119,10 +127,10 @@ func addWorktree(repoDir, branch, worktreeDir string) error {
 	return git(repoDir, "worktree", "add", worktreeDir, branch)
 }
 
-// ensureGitignore adds .transcripts/ to .gitignore if not already present.
-func ensureGitignore(repoDir string) error {
+// ensureGitignore adds the output directory to .gitignore if not already present.
+func ensureGitignore(repoDir, outDir string) error {
 	path := filepath.Join(repoDir, ".gitignore")
-	entry := ".transcripts/"
+	entry := strings.TrimSuffix(outDir, "/") + "/"
 
 	data, err := os.ReadFile(path)
 	if err != nil && !os.IsNotExist(err) {
@@ -168,8 +176,8 @@ type hookHandler struct {
 }
 
 // installClaudeHook adds a SessionEnd hook to .claude/settings.json that renders
-// the session transcript via `cg render` and writes it to .transcripts/<agent>/.
-func installClaudeHook(repoDir, agent string, formats []string) error {
+// the session transcript via `cg render` and writes it to the output directory.
+func installClaudeHook(repoDir, agent string, formats []string, outDir string) error {
 	// Write the hook script
 	hookDir := filepath.Join(repoDir, ".claude", "hooks")
 	if err := os.MkdirAll(hookDir, 0o755); err != nil {
@@ -177,7 +185,7 @@ func installClaudeHook(repoDir, agent string, formats []string) error {
 	}
 
 	scriptPath := filepath.Join(hookDir, "save-transcript.sh")
-	script := buildSaveTranscriptScript(agent, formats)
+	script := buildSaveTranscriptScript(agent, formats, outDir)
 	if err := os.WriteFile(scriptPath, []byte(script), 0o755); err != nil {
 		return err
 	}
@@ -236,7 +244,7 @@ func installClaudeHook(repoDir, agent string, formats []string) error {
 // auto-commit transcript files in the worktree when the user commits.
 // Uses git rev-parse --git-common-dir to find the correct hooks directory,
 // which works in both normal repos and worktrees.
-func installPostCommitHook(repoDir string) error {
+func installPostCommitHook(repoDir, outDir string) error {
 	gitDir, err := gitOutput(repoDir, "rev-parse", "--git-common-dir")
 	if err != nil {
 		return fmt.Errorf("find git dir: %w", err)
@@ -278,7 +286,7 @@ func installPostCommitHook(repoDir string) error {
 		}
 	}
 
-	_, err = f.WriteString(postCommitHookScript)
+	_, err = f.WriteString(buildPostCommitHookScript(outDir))
 	return err
 }
 
@@ -319,7 +327,7 @@ func formatExtension(format string) string {
 // buildSaveTranscriptScript generates the hook script with the agent and formats
 // baked in so the SessionEnd hook calls `cg render` with the right flags,
 // then updates the manifest.
-func buildSaveTranscriptScript(agent string, formats []string) string {
+func buildSaveTranscriptScript(agent string, formats []string, outDir string) string {
 	// Build --format flags for cg render.
 	var formatFlags string
 	for _, f := range formats {
@@ -351,25 +359,26 @@ if [ ! -f "$TRANSCRIPT_PATH" ]; then
   exit 0
 fi
 
-DEST_DIR="$CLAUDE_PROJECT_DIR/.transcripts"
+DEST_DIR="$CLAUDE_PROJECT_DIR/%s"
 if [ ! -d "$DEST_DIR" ]; then
-  exit 0
+  mkdir -p "$DEST_DIR"
 fi
 
 cg render --agent %s --file "$TRANSCRIPT_PATH"%s --out "$DEST_DIR/$SESSION_ID"
 
 cg manifest upsert --agent %s --file "$TRANSCRIPT_PATH" \
-  --manifest "$CLAUDE_PROJECT_DIR/.transcripts/manifest.json" \
+  --manifest "$CLAUDE_PROJECT_DIR/%s/manifest.json" \
   --href "$SESSION_ID/index%s"
-`, agent, formatFlags, agent, hrefExt)
+`, outDir, agent, formatFlags, agent, outDir, hrefExt)
 }
 
-const postCommitHookScript = `
+func buildPostCommitHookScript(outDir string) string {
+	return fmt.Sprintf(`
 # cg-transcripts-start
 # Auto-commit transcripts to the transcripts worktree.
 # Installed by cg install.
 REPO_ROOT="$(git rev-parse --show-toplevel)"
-WORKTREE="$REPO_ROOT/.transcripts"
+WORKTREE="$REPO_ROOT/%s"
 if [ -d "$WORKTREE/.git" ] || [ -f "$WORKTREE/.git" ]; then
   # Regenerate index from manifest.
   cg index --dir "$WORKTREE" 2>/dev/null || true
@@ -383,4 +392,5 @@ if [ -d "$WORKTREE/.git" ] || [ -f "$WORKTREE/.git" ]; then
     git -C "$WORKTREE" commit -m "transcripts @ $MAIN_SHA" --quiet 2>/dev/null || true
 fi
 # cg-transcripts-end
-`
+`, outDir)
+}

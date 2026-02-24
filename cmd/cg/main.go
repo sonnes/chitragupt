@@ -39,6 +39,7 @@ func main() {
 			renderCmd(),
 			serveCmd(),
 			installCmd(),
+			uninstallCmd(),
 			indexCmd(),
 			manifestCmd(),
 		},

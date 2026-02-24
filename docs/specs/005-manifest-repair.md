@@ -23,10 +23,10 @@ The SessionEnd hook calls `cg manifest upsert` after each render to incrementall
 cg manifest repair --dir .transcripts/ --agent claude
 ```
 
-| Flag      | Alias | Required | Default   | Description                                    |
-| --------- | ----- | -------- | --------- | ---------------------------------------------- |
-| `--dir`   | `-d`  | yes      |           | Path to the `.transcripts/` directory          |
-| `--agent` | `-a`  | no       | `claude`  | Agent name, selects the reader for raw sources |
+| Flag      | Alias | Required | Default  | Description                                    |
+| --------- | ----- | -------- | -------- | ---------------------------------------------- |
+| `--dir`   | `-d`  | yes      |          | Path to the `.transcripts/` directory          |
+| `--agent` | `-a`  | no       | `claude` | Agent name, selects the reader for raw sources |
 
 Output: summary line to stdout (e.g. `Repaired manifest: 12 entries (2 skipped)`).
 
@@ -58,11 +58,11 @@ Session directories live directly under `.transcripts/` (flat, no agent subdirec
 1. **Scan** `--dir` for entries, keeping only directories. Skip non-session entries: `.git`, `.gitkeep`, files (`manifest.json`, `index.html`).
 
 2. **For each session directory:**
-   a. **Detect href** — check for `index.*` files in priority order: `.html` → `.jsonl` → `.json` → `.md`. If no index file exists, skip the directory.
-   b. **Parse raw source** — call `reader.ReadSession(sessionID)` to locate and parse the raw JSONL from the agent's session store (e.g. `~/.claude/projects/`).
+   a. **Detect href** — check for `index.*` files in priority order: `.html` → `.json`→`.md`. If no index file exists, skip the directory.
+   b. **Parse raw source** — call `reader.ReadSession(sessionID)`to locate and parse the raw JSONL from the agent's session store (e.g.`~/.claude/projects/`).
    c. If the raw source is not found, log a warning to stderr and skip.
-   d. **Compute diff stats** — call `computeDiffStatsTree(t)` on the parsed transcript.
-   e. **Build entry** — `core.NewManifestEntry(t, href)` with href as `{sessionID}/index.{ext}`.
+   d. **Compute diff stats** — call `computeDiffStatsTree(t)`on the parsed transcript.
+   e. **Build entry** —`core.NewManifestEntry(t, href)`with href as`{sessionID}/index.{ext}`.
    f. **Upsert** into the manifest.
 
 3. **Write** the rebuilt `manifest.json` atomically via `Manifest.WriteFile`.
@@ -99,14 +99,14 @@ Both functions live in `cmd/cg/manifest.go` alongside the existing `manifestUpse
 
 ## Error Handling
 
-| Condition                        | Behavior                                      |
-| -------------------------------- | --------------------------------------------- |
-| `--dir` doesn't exist           | Fatal error                                   |
-| Session dir has no index file    | Skip, count as skipped                        |
-| `ReadSession` fails (not found) | Warn to stderr, skip, count as skipped        |
-| `ReadSession` fails (parse err) | Warn to stderr, skip, count as skipped        |
-| No sessions found at all         | Write empty manifest, print "0 entries"       |
-| `WriteFile` fails                | Fatal error                                   |
+| Condition                       | Behavior                                |
+| ------------------------------- | --------------------------------------- |
+| `--dir` doesn't exist           | Fatal error                             |
+| Session dir has no index file   | Skip, count as skipped                  |
+| `ReadSession` fails (not found) | Warn to stderr, skip, count as skipped  |
+| `ReadSession` fails (parse err) | Warn to stderr, skip, count as skipped  |
+| No sessions found at all        | Write empty manifest, print "0 entries" |
+| `WriteFile` fails               | Fatal error                             |
 
 Repair is best-effort: it rebuilds what it can and reports what it skipped. A non-zero skip count is not an error.
 
@@ -127,14 +127,14 @@ Repair is best-effort: it rebuilds what it can and reports what it skipped. A no
 
 Uses testdata JSONL fixtures and `t.TempDir()` for filesystem setup.
 
-| Test case                     | Setup                                                                 | Assertion                                           |
-| ----------------------------- | --------------------------------------------------------------------- | --------------------------------------------------- |
-| Basic repair                  | Two session dirs with `index.html`, raw JSONL files in mock claude dir | Manifest has 2 entries, sorted newest-first         |
-| Missing raw source            | Session dir exists but no corresponding raw file                       | Skipped count is 1, manifest has remaining entries  |
-| Mixed formats                 | Session dir with only `index.jsonl`                                   | Href uses `.jsonl` extension                        |
-| No session dirs               | Empty `.transcripts/` (only `.gitkeep`)                               | Empty manifest written                              |
-| Skips non-session entries     | Dir contains `manifest.json`, `index.html`, `.git`                    | None of these treated as sessions                   |
-| Href priority                 | Session dir with both `index.html` and `index.jsonl`                  | Href uses `.html`                                   |
+| Test case                 | Setup                                                                  | Assertion                                          |
+| ------------------------- | ---------------------------------------------------------------------- | -------------------------------------------------- |
+| Basic repair              | Two session dirs with `index.html`, raw JSONL files in mock claude dir | Manifest has 2 entries, sorted newest-first        |
+| Missing raw source        | Session dir exists but no corresponding raw file                       | Skipped count is 1, manifest has remaining entries |
+| Mixed formats             | Session dir with only `index.jsonl`                                    | Href uses `.jsonl` extension                       |
+| No session dirs           | Empty `.transcripts/` (only `.gitkeep`)                                | Empty manifest written                             |
+| Skips non-session entries | Dir contains `manifest.json`, `index.html`, `.git`                     | None of these treated as sessions                  |
+| Href priority             | Session dir with both `index.html` and `index.jsonl`                   | Href uses `.html`                                  |
 
 Tests use `claude.Reader{Dir: tempDir}` to override the session directory, pointing to a temp dir with testdata fixtures.
 

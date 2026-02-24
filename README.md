@@ -49,7 +49,7 @@ cg render --agent claude --all
 Write output to a directory (generates `index.html` + per-agent files):
 
 ```sh
-cg render --agent claude --project <project-name> --format html --out .transcripts
+cg render --agent claude --project ./ --format html --out .transcripts
 ```
 
 ### Output formats
@@ -102,18 +102,41 @@ cg serve --agent claude --port 3000
 
 ### Git integration
 
-Set up automatic transcript capture on every commit:
+Set up automatic transcript capture when a session ends:
 
 ```sh
-cg install --agent claude --format html
+cg install --agent claude --format html --out transcripts
 ```
 
-This creates an orphan branch and git worktree in the`.transcripts/` directory and installs hooks to automatically render and commit transcripts when you commit code.
+This creates a `transcripts/` directory, installs a `SessionEnd` hook that renders transcripts on session end, and adds `transcripts/` to `.gitignore`.
 
-Publish to GitHub/GitLab/etc. pages by passing the `--branch <branch-name>` flag.
+To also version transcripts on an orphan branch (creates a git worktree and auto-commits when you run `git commit`):
 
 ```sh
-cg install --agent claude --format html --branch gh-pages
+cg install --agent claude --format html --out .transcripts --branch gh-pages
+```
+
+To remove hooks and configuration:
+
+```sh
+cg uninstall            # keeps transcript data
+cg uninstall --purge    # also deletes data and orphan branch
+```
+
+### Manifest
+
+The manifest (`manifest.json`) tracks metadata for all rendered sessions. It is updated automatically by the SessionEnd hook.
+
+Rebuild the manifest from scratch if it gets out of sync:
+
+```sh
+cg manifest repair --dir transcripts --agent claude
+```
+
+Regenerate the index page from the manifest:
+
+```sh
+cg index --dir transcripts
 ```
 
 ## Architecture

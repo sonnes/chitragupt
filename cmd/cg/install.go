@@ -11,13 +11,12 @@ import (
 func installCmd() *cli.Command {
 	return &cli.Command{
 		Name:  "install",
-		Usage: "Set up git infrastructure for storing agent session transcripts",
-		Description: `Creates an orphan branch and git worktree to store agent session
-transcripts alongside your repository. Installs hooks to automatically
-capture sessions and commit them when you commit code.
+		Usage: "Set up hooks for storing agent session transcripts",
+		Description: `Installs hooks to automatically capture agent session transcripts.
 
-After install, session transcripts are saved to .transcripts/<agent>/
-on a separate branch that does not pollute your main history.`,
+Without --branch, transcripts are saved to a plain directory (default .transcripts/).
+With --branch, an orphan branch and git worktree are created, and a post-commit
+hook auto-commits transcripts when you commit code.`,
 		Flags: []cli.Flag{
 			&cli.StringFlag{
 				Name:    "agent",
@@ -32,15 +31,20 @@ on a separate branch that does not pollute your main history.`,
 				Value:   []string{"html"},
 			},
 			&cli.StringFlag{
+				Name:  "out",
+				Usage: "Output directory name (relative to repo root)",
+				Value: ".transcripts",
+			},
+			&cli.StringFlag{
 				Name:  "branch",
-				Usage: "Branch name for transcripts",
-				Value: "transcripts",
+				Usage: "Git branch for transcripts (enables orphan branch + worktree mode)",
 			},
 		},
 		Action: func(ctx context.Context, cmd *cli.Command) error {
 			cfg := install.Config{
 				Agent:   cmd.String("agent"),
 				Formats: cmd.StringSlice("format"),
+				OutDir:  cmd.String("out"),
 				Branch:  cmd.String("branch"),
 			}
 
@@ -54,12 +58,18 @@ on a separate branch that does not pollute your main history.`,
 
 			fmt.Println("Installed successfully.")
 			fmt.Println()
-			fmt.Printf("  Branch:    %s (orphan)\n", cfg.Branch)
-			fmt.Printf("  Worktree:  .transcripts/\n")
+			if cfg.Branch != "" {
+				fmt.Printf("  Branch:    %s (orphan)\n", cfg.Branch)
+				fmt.Printf("  Worktree:  %s/\n", cfg.OutDir)
+			} else {
+				fmt.Printf("  Output:    %s/\n", cfg.OutDir)
+			}
 			fmt.Printf("  Agent:     %s\n", cfg.Agent)
 			fmt.Println()
-			fmt.Println("Sessions will be saved to .transcripts/claude/ when a session ends.")
-			fmt.Println("Transcripts are auto-committed when you run git commit.")
+			fmt.Printf("Sessions will be saved to %s/ when a session ends.\n", cfg.OutDir)
+			if cfg.Branch != "" {
+				fmt.Println("Transcripts are auto-committed when you run git commit.")
+			}
 			return nil
 		},
 	}

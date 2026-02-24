@@ -16,7 +16,7 @@ fi
 
 DEST_DIR="$CLAUDE_PROJECT_DIR/.transcripts"
 if [ ! -d "$DEST_DIR" ]; then
-  exit 0
+  mkdir -p "$DEST_DIR"
 fi
 
 cg render --agent claude --file "$TRANSCRIPT_PATH" --format html --out "$DEST_DIR/$SESSION_ID"

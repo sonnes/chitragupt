@@ -37,6 +37,7 @@ func TestRun(t *testing.T) {
 		Agent:   "claude",
 		Formats: []string{"html"},
 		Branch:  "transcripts",
+		OutDir:  ".transcripts",
 		Dir:     dir,
 	}
 
@@ -115,6 +116,7 @@ func TestRunIdempotent(t *testing.T) {
 		Agent:   "claude",
 		Formats: []string{"html"},
 		Branch:  "transcripts",
+		OutDir:  ".transcripts",
 		Dir:     dir,
 	}
 
@@ -124,10 +126,72 @@ func TestRunIdempotent(t *testing.T) {
 	require.NoError(t, Run(cfg))
 }
 
+func TestRunSimpleDirectoryMode(t *testing.T) {
+	dir := initRepo(t)
+
+	cfg := Config{
+		Agent:   "claude",
+		Formats: []string{"html"},
+		OutDir:  ".transcripts",
+		Dir:     dir,
+	}
+
+	require.NoError(t, Run(cfg))
+
+	t.Run("output directory created", func(t *testing.T) {
+		info, err := os.Stat(filepath.Join(dir, ".transcripts"))
+		require.NoError(t, err)
+		assert.True(t, info.IsDir())
+	})
+
+	t.Run("no orphan branch", func(t *testing.T) {
+		cmd := exec.Command("git", "rev-parse", "--verify", "transcripts")
+		cmd.Dir = dir
+		assert.Error(t, cmd.Run(), "orphan branch should not exist")
+	})
+
+	t.Run("not a worktree", func(t *testing.T) {
+		_, err := os.Stat(filepath.Join(dir, ".transcripts", ".git"))
+		assert.True(t, os.IsNotExist(err), ".git pointer should not exist in simple mode")
+	})
+
+	t.Run("gitignore updated", func(t *testing.T) {
+		data, err := os.ReadFile(filepath.Join(dir, ".gitignore"))
+		require.NoError(t, err)
+		assert.Contains(t, string(data), ".transcripts/")
+	})
+
+	t.Run("claude hook installed", func(t *testing.T) {
+		scriptPath := filepath.Join(dir, ".claude", "hooks", "save-transcript.sh")
+		_, err := os.Stat(scriptPath)
+		assert.NoError(t, err)
+	})
+
+	t.Run("no post-commit hook", func(t *testing.T) {
+		hookPath := filepath.Join(dir, ".git", "hooks", "post-commit")
+		_, err := os.Stat(hookPath)
+		assert.True(t, os.IsNotExist(err), "post-commit hook should not be installed in simple mode")
+	})
+}
+
+func TestRunSimpleDirectoryModeIdempotent(t *testing.T) {
+	dir := initRepo(t)
+
+	cfg := Config{
+		Agent:   "claude",
+		Formats: []string{"html"},
+		OutDir:  ".transcripts",
+		Dir:     dir,
+	}
+
+	require.NoError(t, Run(cfg))
+	require.NoError(t, Run(cfg))
+}
+
 func TestEnsureGitignore(t *testing.T) {
 	t.Run("creates .gitignore if missing", func(t *testing.T) {
 		dir := t.TempDir()
-		require.NoError(t, ensureGitignore(dir))
+		require.NoError(t, ensureGitignore(dir, ".transcripts"))
 
 		data, err := os.ReadFile(filepath.Join(dir, ".gitignore"))
 		require.NoError(t, err)
@@ -142,7 +206,7 @@ func TestEnsureGitignore(t *testing.T) {
 			0o644,
 		))
 
-		require.NoError(t, ensureGitignore(dir))
+		require.NoError(t, ensureGitignore(dir, ".transcripts"))
 
 		data, err := os.ReadFile(filepath.Join(dir, ".gitignore"))
 		require.NoError(t, err)
@@ -158,7 +222,7 @@ func TestEnsureGitignore(t *testing.T) {
 			0o644,
 		))
 
-		require.NoError(t, ensureGitignore(dir))
+		require.NoError(t, ensureGitignore(dir, ".transcripts"))
 
 		data, err := os.ReadFile(filepath.Join(dir, ".gitignore"))
 		require.NoError(t, err)
@@ -173,11 +237,20 @@ func TestEnsureGitignore(t *testing.T) {
 			0o644,
 		))
 
-		require.NoError(t, ensureGitignore(dir))
+		require.NoError(t, ensureGitignore(dir, ".transcripts"))
 
 		data, err := os.ReadFile(filepath.Join(dir, ".gitignore"))
 		require.NoError(t, err)
 		assert.Equal(t, "node_modules/\n.transcripts/\n", string(data))
+	})
+
+	t.Run("custom directory name", func(t *testing.T) {
+		dir := t.TempDir()
+		require.NoError(t, ensureGitignore(dir, "my-output"))
+
+		data, err := os.ReadFile(filepath.Join(dir, ".gitignore"))
+		require.NoError(t, err)
+		assert.Equal(t, "my-output/\n", string(data))
 	})
 }
 
@@ -186,7 +259,7 @@ func TestInstallClaudeHook(t *testing.T) {
 		dir := t.TempDir()
 		require.NoError(t, os.MkdirAll(filepath.Join(dir, ".claude"), 0o755))
 
-		require.NoError(t, installClaudeHook(dir, "claude", []string{"jsonl"}))
+		require.NoError(t, installClaudeHook(dir, "claude", []string{"jsonl"}, ".transcripts"))
 
 		data, err := os.ReadFile(filepath.Join(dir, ".claude", "settings.json"))
 		require.NoError(t, err)
@@ -208,7 +281,7 @@ func TestInstallClaudeHook(t *testing.T) {
 			0o644,
 		))
 
-		require.NoError(t, installClaudeHook(dir, "claude", []string{"html"}))
+		require.NoError(t, installClaudeHook(dir, "claude", []string{"html"}, ".transcripts"))
 
 		data, err := os.ReadFile(filepath.Join(claudeDir, "settings.json"))
 		require.NoError(t, err)
@@ -223,8 +296,8 @@ func TestInstallClaudeHook(t *testing.T) {
 		dir := t.TempDir()
 		require.NoError(t, os.MkdirAll(filepath.Join(dir, ".claude"), 0o755))
 
-		require.NoError(t, installClaudeHook(dir, "claude", []string{"jsonl"}))
-		require.NoError(t, installClaudeHook(dir, "claude", []string{"jsonl"}))
+		require.NoError(t, installClaudeHook(dir, "claude", []string{"jsonl"}, ".transcripts"))
+		require.NoError(t, installClaudeHook(dir, "claude", []string{"jsonl"}, ".transcripts"))
 
 		data, err := os.ReadFile(filepath.Join(dir, ".claude", "settings.json"))
 		require.NoError(t, err)
@@ -238,7 +311,7 @@ func TestInstallClaudeHook(t *testing.T) {
 		dir := t.TempDir()
 		require.NoError(t, os.MkdirAll(filepath.Join(dir, ".claude"), 0o755))
 
-		require.NoError(t, installClaudeHook(dir, "claude", []string{"html", "jsonl"}))
+		require.NoError(t, installClaudeHook(dir, "claude", []string{"html", "jsonl"}, ".transcripts"))
 
 		script, err := os.ReadFile(filepath.Join(dir, ".claude", "hooks", "save-transcript.sh"))
 		require.NoError(t, err)
@@ -252,7 +325,7 @@ func TestInstallClaudeHook(t *testing.T) {
 
 func TestBuildSaveTranscriptScript(t *testing.T) {
 	t.Run("single format", func(t *testing.T) {
-		script := buildSaveTranscriptScript("claude", []string{"jsonl"})
+		script := buildSaveTranscriptScript("claude", []string{"jsonl"}, ".transcripts")
 		assert.Contains(t, script, "cg render --agent claude --file")
 		assert.Contains(t, script, "--format jsonl")
 		assert.Contains(t, script, "--out")
@@ -262,27 +335,33 @@ func TestBuildSaveTranscriptScript(t *testing.T) {
 	})
 
 	t.Run("multiple formats", func(t *testing.T) {
-		script := buildSaveTranscriptScript("claude", []string{"html", "jsonl"})
+		script := buildSaveTranscriptScript("claude", []string{"html", "jsonl"}, ".transcripts")
 		assert.Contains(t, script, "--format html")
 		assert.Contains(t, script, "--format jsonl")
 		assert.Contains(t, script, "--out")
 	})
 
 	t.Run("html preferred for href", func(t *testing.T) {
-		script := buildSaveTranscriptScript("claude", []string{"jsonl", "html"})
+		script := buildSaveTranscriptScript("claude", []string{"jsonl", "html"}, ".transcripts")
 		assert.Contains(t, script, "index.html", "href should prefer html even if not first")
 	})
 
 	t.Run("non-html href uses first format", func(t *testing.T) {
-		script := buildSaveTranscriptScript("claude", []string{"jsonl"})
+		script := buildSaveTranscriptScript("claude", []string{"jsonl"}, ".transcripts")
 		assert.Contains(t, script, "index.jsonl")
+	})
+
+	t.Run("custom output directory", func(t *testing.T) {
+		script := buildSaveTranscriptScript("claude", []string{"html"}, "my-docs")
+		assert.Contains(t, script, `DEST_DIR="$CLAUDE_PROJECT_DIR/my-docs"`)
+		assert.Contains(t, script, `"$CLAUDE_PROJECT_DIR/my-docs/manifest.json"`)
 	})
 }
 
 func TestInstallPostCommitHook(t *testing.T) {
 	t.Run("creates new hook file", func(t *testing.T) {
 		dir := initRepo(t)
-		require.NoError(t, installPostCommitHook(dir))
+		require.NoError(t, installPostCommitHook(dir, ".transcripts"))
 
 		data, err := os.ReadFile(filepath.Join(dir, ".git", "hooks", "post-commit"))
 		require.NoError(t, err)
@@ -297,7 +376,7 @@ func TestInstallPostCommitHook(t *testing.T) {
 		require.NoError(t, os.MkdirAll(filepath.Dir(hookPath), 0o755))
 		require.NoError(t, os.WriteFile(hookPath, []byte("#!/bin/bash\necho 'existing'\n"), 0o755))
 
-		require.NoError(t, installPostCommitHook(dir))
+		require.NoError(t, installPostCommitHook(dir, ".transcripts"))
 
 		data, err := os.ReadFile(hookPath)
 		require.NoError(t, err)
@@ -307,13 +386,22 @@ func TestInstallPostCommitHook(t *testing.T) {
 
 	t.Run("idempotent", func(t *testing.T) {
 		dir := initRepo(t)
-		require.NoError(t, installPostCommitHook(dir))
-		require.NoError(t, installPostCommitHook(dir))
+		require.NoError(t, installPostCommitHook(dir, ".transcripts"))
+		require.NoError(t, installPostCommitHook(dir, ".transcripts"))
 
 		data, err := os.ReadFile(filepath.Join(dir, ".git", "hooks", "post-commit"))
 		require.NoError(t, err)
 		count := strings.Count(string(data), "cg-transcripts-start")
 		assert.Equal(t, 1, count)
+	})
+
+	t.Run("custom output directory", func(t *testing.T) {
+		dir := initRepo(t)
+		require.NoError(t, installPostCommitHook(dir, "my-docs"))
+
+		data, err := os.ReadFile(filepath.Join(dir, ".git", "hooks", "post-commit"))
+		require.NoError(t, err)
+		assert.Contains(t, string(data), `WORKTREE="$REPO_ROOT/my-docs"`)
 	})
 }
 
@@ -324,6 +412,7 @@ func TestPostCommitHookAutoCommits(t *testing.T) {
 		Agent:   "claude",
 		Formats: []string{"html"},
 		Branch:  "transcripts",
+		OutDir:  ".transcripts",
 		Dir:     dir,
 	}
 	require.NoError(t, Run(cfg))
