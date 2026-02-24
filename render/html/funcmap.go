@@ -12,6 +12,7 @@ import (
 func funcMap() template.FuncMap {
 	return template.FuncMap{
 		"formatTime":     formatTime,
+		"isoTime":        isoTime,
 		"relativeTime":   relativeTime,
 		"formatNumber":   formatNumber,
 		"formatDuration": formatDuration,
@@ -55,6 +56,20 @@ func formatTime(t any) string {
 			return ""
 		}
 		return v.Format("Jan 2, 2006 3:04 PM")
+	default:
+		return ""
+	}
+}
+
+func isoTime(t any) string {
+	switch v := t.(type) {
+	case time.Time:
+		return v.UTC().Format(time.RFC3339)
+	case *time.Time:
+		if v == nil {
+			return ""
+		}
+		return v.UTC().Format(time.RFC3339)
 	default:
 		return ""
 	}
