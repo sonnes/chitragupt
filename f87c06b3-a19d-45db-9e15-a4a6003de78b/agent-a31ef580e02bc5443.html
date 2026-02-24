@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>chitragupt</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style type="text/tailwindcss">
+        @theme {
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+    </style>
+    <style>
+         
+        .prose { font-size: 14px; line-height: 1.7; }
+        .prose p { margin-bottom: 12px; }
+        .prose p:last-child { margin-bottom: 0; }
+        .prose h1 { font-size: 24px; font-weight: 700; margin: 20px 0 12px; }
+        .prose h2 { font-size: 20px; font-weight: 600; margin: 16px 0 10px; }
+        .prose h3 { font-size: 16px; font-weight: 600; margin: 14px 0 8px; }
+        .prose strong { font-weight: 600; }
+        .prose em { font-style: italic; }
+        .prose code { font-family: ui-monospace, monospace; font-size: 12px; padding: 2px 6px; border-radius: 4px; background: #f1f5f9; }
+        .prose pre { margin: 12px 0; border-radius: 8px; overflow-x: auto; }
+        .prose pre code { padding: 0; background: transparent; }
+        .prose ul { list-style: disc; margin: 8px 0; padding-left: 24px; }
+        .prose ol { list-style: decimal; margin: 8px 0; padding-left: 24px; }
+        .prose li { margin-bottom: 4px; }
+        .prose blockquote { border-left: 3px solid #e2e8f0; padding-left: 12px; margin: 12px 0; color: #64748b; }
+        .prose a { color: #2563eb; text-decoration: underline; }
+        .prose table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 13px; }
+        .prose th { text-align: left; padding: 8px 12px; border-bottom: 2px solid #e2e8f0; font-weight: 600; }
+        .prose td { padding: 8px 12px; border-bottom: 1px solid #e2e8f0; }
+        .prose hr { border: none; border-top: 1px solid #e2e8f0; margin: 16px 0; }
+
+         
+        @media (prefers-color-scheme: dark) {
+            .prose code { background: #1e293b; }
+            .prose blockquote { border-color: #334155; color: #94a3b8; }
+            .prose th { border-color: #334155; }
+            .prose td { border-color: #334155; }
+            .prose hr { border-color: #334155; }
+            .prose a { color: #60a5fa; }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-700 dark:text-slate-300 font-sans" style="line-height: 1.65; padding: 48px 24px;">
+    <div class="max-w-6xl mx-auto flex gap-8">
+        
+        <div class="min-w-0 flex-1 max-w-3xl">
+            
+<header class="mb-10">
+  
+  <div class="flex items-baseline gap-4 mb-3">
+    <h1 class="text-3xl font-bold text-slate-900 dark:text-white">
+      Session a31ef580e02bc5443
+    </h1>
+    
+  </div>
+
+  
+  <div class="flex flex-wrap items-center gap-4 text-sm text-slate-500 dark:text-slate-400 mb-6">
+    
+    <span class="flex items-center gap-1.5">
+      <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      <span class="font-medium">@claude</span>
+    </span>
+    
+
+    
+    <span class="flex items-center gap-1.5">
+      <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      47m ago
+    </span>
+    
+
+    
+    <span class="flex items-center gap-1.5">
+      <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+      claude-opus-4-6
+    </span>
+    
+
+    
+  </div>
+
+  
+  <div
+    class="flex flex-wrap gap-6 pt-4 border-t border-slate-200 dark:border-slate-700"
+  >
+    <div class="text-center">
+      <div class="text-lg font-bold text-slate-900 dark:text-white">
+        6
+      </div>
+      <div class="text-xs text-slate-500 uppercase">Input Tokens</div>
+    </div>
+    <div class="text-center">
+      <div class="text-lg font-bold text-slate-900 dark:text-white">
+        5
+      </div>
+      <div class="text-xs text-slate-500 uppercase">Output Tokens</div>
+    </div>
+    
+    <div class="text-center">
+      <div class="text-lg font-bold text-slate-900 dark:text-white">
+        71,347
+      </div>
+      <div class="text-xs text-slate-500 uppercase">Cache Read</div>
+    </div>
+     
+    <div class="text-center">
+      <div class="text-lg font-bold text-slate-900 dark:text-white">
+        28,380
+      </div>
+      <div class="text-xs text-slate-500 uppercase">Cache Write</div>
+    </div>
+    
+  </div>
+  
+</header>
+
+            <div class="flex flex-col gap-8">
+                
+<div id="turn-0" class="flex flex-col gap-4 scroll-mt-6">
+    
+    
+
+    
+    
+    <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden">
+        <details>
+            <summary class="px-5 py-3 flex items-center gap-3 cursor-pointer select-none hover:bg-slate-50 dark:hover:bg-slate-750">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-slate-400 shrink-0"><polyline points="9 18 15 12 9 6"/></svg>
+                <span class="text-sm font-medium text-slate-700 dark:text-slate-300">6 Steps Completed</span>
+                
+            </summary>
+            <div class="px-5 pb-4 flex flex-col gap-3 border-t border-slate-100 dark:border-slate-700 pt-3">
+                <div class="prose dark:prose-invert max-w-none"><p>I'll explore the codebase thoroughly to understand the current implementation before designing the plan.</p>
+</div><details class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden"><summary class="px-4 py-2 flex items-center gap-2 text-slate-900 dark:text-white cursor-pointer select-none min-w-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg><span class="text-xs font-semibold font-mono shrink-0">Read</span> <span class="text-xs font-mono text-slate-500 dark:text-slate-400 truncate">~/work/chitragupt/install/install.go</span></summary><div class="px-4 py-3 text-xs overflow-x-auto"><pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;file_path&#34;</span>: <span style="color:#f1fa8c">&#34;~/work/chitragupt/install/install.go&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></details><details class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden"><summary class="px-4 py-2 flex items-center gap-2 text-slate-900 dark:text-white cursor-pointer select-none min-w-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg><span class="text-xs font-semibold font-mono shrink-0">Read</span> <span class="text-xs font-mono text-slate-500 dark:text-slate-400 truncate">~/work/chitragupt/cmd/cg/install.go</span></summary><div class="px-4 py-3 text-xs overflow-x-auto"><pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;file_path&#34;</span>: <span style="color:#f1fa8c">&#34;~/work/chitragupt/cmd/cg/install.go&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></details><details class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden"><summary class="px-4 py-2 flex items-center gap-2 text-slate-900 dark:text-white cursor-pointer select-none min-w-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg><span class="text-xs font-semibold font-mono shrink-0">Read</span> <span class="text-xs font-mono text-slate-500 dark:text-slate-400 truncate">~/work/chitragupt/install/install_test.go</span></summary><div class="px-4 py-3 text-xs overflow-x-auto"><pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;file_path&#34;</span>: <span style="color:#f1fa8c">&#34;~/work/chitragupt/install/install_test.go&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></details><div class="prose dark:prose-invert max-w-none"><p>Now let me check how the CLI v3 library handles optional string flags (to understand how to detect &quot;flag not provided&quot; vs &quot;flag provided with empty value&quot;).</p>
+</div><details class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden"><summary class="px-4 py-2 flex items-center gap-2 text-slate-900 dark:text-white cursor-pointer select-none min-w-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg><span class="text-xs font-semibold font-mono shrink-0">Bash</span> <span class="text-xs font-mono text-slate-500 dark:text-slate-400 truncate">grep -r &#34;IsSet\|Changed\|Count&#34; --include=&#34;*.go&#34; -l 2&gt;/dev/null | head -5</span></summary><div class="px-4 py-3 text-xs overflow-x-auto"><pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;command&#34;</span>: <span style="color:#f1fa8c">&#34;grep -r \&#34;IsSet\\|Changed\\|Count\&#34; --include=\&#34;*.go\&#34; -l 2\u003e/dev/null | head -5&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><div class="border-t border-slate-200 dark:border-slate-700"><pre class="px-4 py-3 text-xs font-mono overflow-x-auto max-h-96 overflow-y-auto">./reader/claude/claude_test.go
+./compact/compact_test.go
+./compact/compact.go
+./install/install_test.go
+./core/manifest.go</pre></div></details><details class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden"><summary class="px-4 py-2 flex items-center gap-2 text-slate-900 dark:text-white cursor-pointer select-none min-w-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg><span class="text-xs font-semibold font-mono shrink-0">Bash</span> <span class="text-xs font-mono text-slate-500 dark:text-slate-400 truncate">go doc github.com/urfave/cli/v3 Command.IsSet 2&gt;/dev/null || true</span></summary><div class="px-4 py-3 text-xs overflow-x-auto"><pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;command&#34;</span>: <span style="color:#f1fa8c">&#34;go doc github.com/urfave/cli/v3 Command.IsSet 2\u003e/dev/null || true&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><div class="border-t border-slate-200 dark:border-slate-700"><pre class="px-4 py-3 text-xs font-mono overflow-x-auto max-h-96 overflow-y-auto">package cli // import &#34;github.com/urfave/cli/v3&#34;
+
+func (cmd *Command) IsSet(name string) bool
+    IsSet determines if the flag was actually set</pre></div></details><div class="prose dark:prose-invert max-w-none"><p><code>cmd.IsSet(&quot;branch&quot;)</code> is available in urfave/cli/v3. Now let me also check the <code>Makefile</code> and the existing <code>--out</code> flag usage pattern elsewhere.</p>
+</div><details class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg overflow-hidden"><summary class="px-4 py-2 flex items-center gap-2 text-slate-900 dark:text-white cursor-pointer select-none min-w-0"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><span class="text-xs font-semibold font-mono shrink-0">Grep</span> <span class="text-xs font-mono text-slate-500 dark:text-slate-400 truncate">--out|&#34;out&#34;</span></summary><div class="px-4 py-3 text-xs overflow-x-auto"><pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;glob&#34;</span>: <span style="color:#f1fa8c">&#34;cmd/cg/*.go&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;output_mode&#34;</span>: <span style="color:#f1fa8c">&#34;content&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#ff79c6">&#34;pattern&#34;</span>: <span style="color:#f1fa8c">&#34;--out|\&#34;out\&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><div class="border-t border-slate-200 dark:border-slate-700"><pre class="px-4 py-3 text-xs font-mono overflow-x-auto max-h-96 overflow-y-auto">cmd/cg/render.go:65:				Name:    &#34;out&#34;,
+cmd/cg/render.go:119:			outDir := cmd.String(&#34;out&#34;)
+cmd/cg/render.go:122:				return fmt.Errorf(&#34;--out is required when specifying multiple formats&#34;)</pre></div></details>
+            </div>
+        </details>
+    </div>
+    
+
+    
+    
+    <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-5 border-l-4 border-l-emerald-500">
+        <div class="flex flex-col gap-3">
+            <div class="prose dark:prose-invert max-w-none"><p>Good, I have a clear picture. Here is the implementation plan.</p>
+<hr>
+<h2>Implementation Plan: Make <code>--branch</code> Optional in <code>cg install</code></h2>
+<h3>Overview</h3>
+<p>When <code>--branch</code> is omitted, <code>cg install</code> should operate in &quot;simple directory mode&quot;: create a plain output directory, install the SessionEnd hook, and update <code>.gitignore</code>. No orphan branch, no worktree, no post-commit hook. When <code>--branch</code> is explicitly provided, the existing behavior is preserved.</p>
+<p>A new <code>--out</code> flag (default <code>&quot;.transcripts&quot;</code>) controls the output directory name.</p>
+<hr>
+<h3>1. Config Struct Changes (<code>~/work/chitragupt/install/install.go</code>)</h3>
+<p>Update the <code>Config</code> struct:</p>
+<pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">type</span> Config <span style="color:#8be9fd;font-style:italic">struct</span> {
+</span></span><span style="display:flex;"><span>    Agent   <span style="color:#8be9fd">string</span>   <span style="color:#6272a4">// agent name, e.g. &#34;claude&#34;</span>
+</span></span><span style="display:flex;"><span>    Formats []<span style="color:#8be9fd">string</span> <span style="color:#6272a4">// output formats, e.g. [&#34;html&#34;, &#34;json&#34;]</span>
+</span></span><span style="display:flex;"><span>    Branch  <span style="color:#8be9fd">string</span>   <span style="color:#6272a4">// orphan branch name; empty means simple directory mode</span>
+</span></span><span style="display:flex;"><span>    OutDir  <span style="color:#8be9fd">string</span>   <span style="color:#6272a4">// output directory name relative to repo root, e.g. &#34;.transcripts&#34;</span>
+</span></span><span style="display:flex;"><span>    Dir     <span style="color:#8be9fd">string</span>   <span style="color:#6272a4">// git repository root (auto-detected if empty)</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre><ul>
+<li><code>Branch</code> changes from always-set to optional. Empty string means &quot;no branch mode&quot;.</li>
+<li><code>OutDir</code> is new. Default <code>&quot;.transcripts&quot;</code>. This is the directory name (not path) relative to repo root. The code will use <code>filepath.Join(cfg.Dir, cfg.OutDir)</code> as the absolute path.</li>
+</ul>
+<h3>2. <code>Run()</code> Function Changes (<code>~/work/chitragupt/install/install.go</code>)</h3>
+<p>Replace the fixed step list with conditional logic:</p>
+<pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">Run</span>(cfg Config) <span style="color:#8be9fd">error</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">if</span> cfg.Dir <span style="color:#ff79c6">==</span> <span style="color:#f1fa8c">&#34;&#34;</span> {
+</span></span><span style="display:flex;"><span>        dir, err <span style="color:#ff79c6">:=</span> <span style="color:#50fa7b">gitRoot</span>()
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">if</span> err <span style="color:#ff79c6">!=</span> <span style="color:#ff79c6">nil</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#ff79c6">return</span> fmt.<span style="color:#50fa7b">Errorf</span>(<span style="color:#f1fa8c">&#34;not a git repository (run from inside a repo): %w&#34;</span>, err)
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        cfg.Dir = dir
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">if</span> cfg.OutDir <span style="color:#ff79c6">==</span> <span style="color:#f1fa8c">&#34;&#34;</span> {
+</span></span><span style="display:flex;"><span>        cfg.OutDir = <span style="color:#f1fa8c">&#34;.transcripts&#34;</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    outPath <span style="color:#ff79c6">:=</span> filepath.<span style="color:#50fa7b">Join</span>(cfg.Dir, cfg.OutDir)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    branchMode <span style="color:#ff79c6">:=</span> cfg.Branch <span style="color:#ff79c6">!=</span> <span style="color:#f1fa8c">&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">if</span> branchMode {
+</span></span><span style="display:flex;"><span>        <span style="color:#6272a4">// Branch mode: orphan branch + worktree</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">if</span> err <span style="color:#ff79c6">:=</span> <span style="color:#50fa7b">createOrphanBranch</span>(cfg.Dir, cfg.Branch); err <span style="color:#ff79c6">!=</span> <span style="color:#ff79c6">nil</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#ff79c6">return</span> fmt.<span style="color:#50fa7b">Errorf</span>(<span style="color:#f1fa8c">&#34;create orphan branch: %w&#34;</span>, err)
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">if</span> _, err <span style="color:#ff79c6">:=</span> os.<span style="color:#50fa7b">Stat</span>(outPath); os.<span style="color:#50fa7b">IsNotExist</span>(err) {
+</span></span><span style="display:flex;"><span>            <span style="color:#ff79c6">if</span> err <span style="color:#ff79c6">:=</span> <span style="color:#50fa7b">addWorktree</span>(cfg.Dir, cfg.Branch, outPath); err <span style="color:#ff79c6">!=</span> <span style="color:#ff79c6">nil</span> {
+</span></span><span style="display:flex;"><span>                <span style="color:#ff79c6">return</span> fmt.<span style="color:#50fa7b">Errorf</span>(<span style="color:#f1fa8c">&#34;add git worktree: %w&#34;</span>, err)
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    } <span style="color:#ff79c6">else</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#6272a4">// Simple directory mode: just create the directory</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">if</span> err <span style="color:#ff79c6">:=</span> os.<span style="color:#50fa7b">MkdirAll</span>(outPath, <span style="color:#bd93f9">0</span>o755); err <span style="color:#ff79c6">!=</span> <span style="color:#ff79c6">nil</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#ff79c6">return</span> fmt.<span style="color:#50fa7b">Errorf</span>(<span style="color:#f1fa8c">&#34;create output directory: %w&#34;</span>, err)
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">if</span> err <span style="color:#ff79c6">:=</span> <span style="color:#50fa7b">ensureGitignore</span>(cfg.Dir, cfg.OutDir); err <span style="color:#ff79c6">!=</span> <span style="color:#ff79c6">nil</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">return</span> fmt.<span style="color:#50fa7b">Errorf</span>(<span style="color:#f1fa8c">&#34;update .gitignore: %w&#34;</span>, err)
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">if</span> err <span style="color:#ff79c6">:=</span> <span style="color:#50fa7b">installClaudeHook</span>(cfg.Dir, cfg.Agent, cfg.Formats, cfg.OutDir); err <span style="color:#ff79c6">!=</span> <span style="color:#ff79c6">nil</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">return</span> fmt.<span style="color:#50fa7b">Errorf</span>(<span style="color:#f1fa8c">&#34;install Claude Code hook: %w&#34;</span>, err)
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">if</span> branchMode {
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">if</span> err <span style="color:#ff79c6">:=</span> <span style="color:#50fa7b">installPostCommitHook</span>(cfg.Dir, cfg.OutDir); err <span style="color:#ff79c6">!=</span> <span style="color:#ff79c6">nil</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#ff79c6">return</span> fmt.<span style="color:#50fa7b">Errorf</span>(<span style="color:#f1fa8c">&#34;install git post-commit hook: %w&#34;</span>, err)
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">return</span> <span style="color:#ff79c6">nil</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre><h3>3. Function Signature Changes</h3>
+<p>Several helper functions currently hardcode <code>.transcripts</code>. They need to accept the output directory name as a parameter.</p>
+<p><strong><code>ensureGitignore(repoDir, outDir string)</code></strong> -- line 123 of install.go</p>
+<p>Change <code>entry := &quot;.transcripts/&quot;</code> to <code>entry := outDir + &quot;/&quot;</code>. If <code>outDir</code> already ends with <code>/</code>, handle that. The simplest approach:</p>
+<pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">ensureGitignore</span>(repoDir, outDir <span style="color:#8be9fd">string</span>) <span style="color:#8be9fd">error</span> {
+</span></span><span style="display:flex;"><span>    path <span style="color:#ff79c6">:=</span> filepath.<span style="color:#50fa7b">Join</span>(repoDir, <span style="color:#f1fa8c">&#34;.gitignore&#34;</span>)
+</span></span><span style="display:flex;"><span>    entry <span style="color:#ff79c6">:=</span> strings.<span style="color:#50fa7b">TrimSuffix</span>(outDir, <span style="color:#f1fa8c">&#34;/&#34;</span>) <span style="color:#ff79c6">+</span> <span style="color:#f1fa8c">&#34;/&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// ... rest unchanged</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre><p><strong><code>installClaudeHook(repoDir, agent string, formats []string, outDir string)</code></strong> -- line 172</p>
+<p>Pass <code>outDir</code> through to <code>buildSaveTranscriptScript</code>.</p>
+<p><strong><code>buildSaveTranscriptScript(agent string, formats []string, outDir string)</code></strong> -- line 322</p>
+<p>Replace the hardcoded <code>DEST_DIR=&quot;$CLAUDE_PROJECT_DIR/.transcripts&quot;</code> with:</p>
+<pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>DEST_DIR=<span style="color:#f1fa8c">&#34;$CLAUDE_PROJECT_DIR/%s&#34;</span>
+</span></span></code></pre><p>using <code>outDir</code> in the format string. The <code>mkdir -p</code> guard (<code>if [ ! -d &quot;$DEST_DIR&quot; ]</code>) should change: in simple directory mode the directory always exists, but the check is still fine as a safety guard. Actually, change the <code>exit 0</code> on missing dir to <code>mkdir -p &quot;$DEST_DIR&quot;</code> so the hook is self-healing:</p>
+<pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span><span style="color:#ff79c6">if</span> [ ! <span style="color:#ff79c6">-</span>d <span style="color:#f1fa8c">&#34;$DEST_DIR&#34;</span> ]; then
+</span></span><span style="display:flex;"><span>  mkdir <span style="color:#ff79c6">-</span>p <span style="color:#f1fa8c">&#34;$DEST_DIR&#34;</span>
+</span></span><span style="display:flex;"><span>fi
+</span></span></code></pre><p>This is a minor improvement that helps both modes.</p>
+<p><strong><code>installPostCommitHook(repoDir, outDir string)</code></strong> -- line 239</p>
+<p>Pass <code>outDir</code> so the post-commit hook script references the correct directory.</p>
+<p><strong><code>postCommitHookScript</code></strong> -- line 367</p>
+<p>Change from a <code>const</code> to a function that returns the script with the directory baked in:</p>
+<pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">buildPostCommitHookScript</span>(outDir <span style="color:#8be9fd">string</span>) <span style="color:#8be9fd">string</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">return</span> fmt.<span style="color:#50fa7b">Sprintf</span>(<span style="color:#f1fa8c">`
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c"># cg-transcripts-start
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c"># Auto-commit transcripts to the transcripts worktree.
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c"># Installed by cg install.
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">REPO_ROOT=&#34;$(git rev-parse --show-toplevel)&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">WORKTREE=&#34;$REPO_ROOT/%s&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">if [ -d &#34;$WORKTREE/.git&#34; ] || [ -f &#34;$WORKTREE/.git&#34; ]; then
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">  cg index --dir &#34;$WORKTREE&#34; 2&gt;/dev/null || true
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">  MAIN_SHA=&#34;$(git rev-parse --short HEAD)&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">  unset GIT_DIR GIT_INDEX_FILE GIT_WORK_TREE
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">  git -C &#34;$WORKTREE&#34; add -A 2&gt;/dev/null
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">  git -C &#34;$WORKTREE&#34; diff --cached --quiet 2&gt;/dev/null || \
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">    git -C &#34;$WORKTREE&#34; commit -m &#34;transcripts @ $MAIN_SHA&#34; --quiet 2&gt;/dev/null || true
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">fi
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c"># cg-transcripts-end
+</span></span></span><span style="display:flex;"><span><span style="color:#f1fa8c">`</span>, outDir)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre><p>Update <code>installPostCommitHook</code> to call <code>buildPostCommitHookScript(outDir)</code> instead of using the const.</p>
+<h3>4. CLI Flag Changes (<code>~/work/chitragupt/cmd/cg/install.go</code>)</h3>
+<pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>Flags: []cli.Flag{
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">&amp;</span>cli.StringFlag{
+</span></span><span style="display:flex;"><span>        Name:    <span style="color:#f1fa8c">&#34;agent&#34;</span>,
+</span></span><span style="display:flex;"><span>        Usage:   <span style="color:#f1fa8c">&#34;Agent name (claude)&#34;</span>,
+</span></span><span style="display:flex;"><span>        Value:   <span style="color:#f1fa8c">&#34;claude&#34;</span>,
+</span></span><span style="display:flex;"><span>        Aliases: []<span style="color:#8be9fd">string</span>{<span style="color:#f1fa8c">&#34;a&#34;</span>},
+</span></span><span style="display:flex;"><span>    },
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">&amp;</span>cli.StringSliceFlag{
+</span></span><span style="display:flex;"><span>        Name:    <span style="color:#f1fa8c">&#34;format&#34;</span>,
+</span></span><span style="display:flex;"><span>        Aliases: []<span style="color:#8be9fd">string</span>{<span style="color:#f1fa8c">&#34;fmt&#34;</span>},
+</span></span><span style="display:flex;"><span>        Usage:   <span style="color:#f1fa8c">&#34;Output format(s): html, json, markdown (repeatable)&#34;</span>,
+</span></span><span style="display:flex;"><span>        Value:   []<span style="color:#8be9fd">string</span>{<span style="color:#f1fa8c">&#34;html&#34;</span>},
+</span></span><span style="display:flex;"><span>    },
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">&amp;</span>cli.StringFlag{
+</span></span><span style="display:flex;"><span>        Name:  <span style="color:#f1fa8c">&#34;branch&#34;</span>,
+</span></span><span style="display:flex;"><span>        Usage: <span style="color:#f1fa8c">&#34;Git branch for transcripts (enables orphan branch + worktree mode)&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#6272a4">// No Value -- empty by default</span>
+</span></span><span style="display:flex;"><span>    },
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">&amp;</span>cli.StringFlag{
+</span></span><span style="display:flex;"><span>        Name:  <span style="color:#f1fa8c">&#34;out&#34;</span>,
+</span></span><span style="display:flex;"><span>        Usage: <span style="color:#f1fa8c">&#34;Output directory name (relative to repo root)&#34;</span>,
+</span></span><span style="display:flex;"><span>        Value: <span style="color:#f1fa8c">&#34;.transcripts&#34;</span>,
+</span></span><span style="display:flex;"><span>    },
+</span></span><span style="display:flex;"><span>},
+</span></span></code></pre><p>Key change: <code>--branch</code> no longer has <code>Value: &quot;transcripts&quot;</code>. It defaults to empty string.</p>
+<p>In the <code>Action</code> function:</p>
+<pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>Action: <span style="color:#8be9fd;font-style:italic">func</span>(ctx context.Context, cmd <span style="color:#ff79c6">*</span>cli.Command) <span style="color:#8be9fd">error</span> {
+</span></span><span style="display:flex;"><span>    cfg <span style="color:#ff79c6">:=</span> install.Config{
+</span></span><span style="display:flex;"><span>        Agent:   cmd.<span style="color:#50fa7b">String</span>(<span style="color:#f1fa8c">&#34;agent&#34;</span>),
+</span></span><span style="display:flex;"><span>        Formats: cmd.<span style="color:#50fa7b">StringSlice</span>(<span style="color:#f1fa8c">&#34;format&#34;</span>),
+</span></span><span style="display:flex;"><span>        Branch:  cmd.<span style="color:#50fa7b">String</span>(<span style="color:#f1fa8c">&#34;branch&#34;</span>),
+</span></span><span style="display:flex;"><span>        OutDir:  cmd.<span style="color:#50fa7b">String</span>(<span style="color:#f1fa8c">&#34;out&#34;</span>),
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">if</span> cfg.Agent <span style="color:#ff79c6">!=</span> <span style="color:#f1fa8c">&#34;claude&#34;</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">return</span> fmt.<span style="color:#50fa7b">Errorf</span>(<span style="color:#f1fa8c">&#34;unsupported agent %q; currently only &#39;claude&#39; is supported&#34;</span>, cfg.Agent)
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">if</span> err <span style="color:#ff79c6">:=</span> install.<span style="color:#50fa7b">Run</span>(cfg); err <span style="color:#ff79c6">!=</span> <span style="color:#ff79c6">nil</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">return</span> err
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">// Updated summary output</span>
+</span></span><span style="display:flex;"><span>    fmt.<span style="color:#50fa7b">Println</span>(<span style="color:#f1fa8c">&#34;Installed successfully.&#34;</span>)
+</span></span><span style="display:flex;"><span>    fmt.<span style="color:#50fa7b">Println</span>()
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">if</span> cfg.Branch <span style="color:#ff79c6">!=</span> <span style="color:#f1fa8c">&#34;&#34;</span> {
+</span></span><span style="display:flex;"><span>        fmt.<span style="color:#50fa7b">Printf</span>(<span style="color:#f1fa8c">&#34;  Branch:    %s (orphan)\n&#34;</span>, cfg.Branch)
+</span></span><span style="display:flex;"><span>        fmt.<span style="color:#50fa7b">Printf</span>(<span style="color:#f1fa8c">&#34;  Worktree:  %s/\n&#34;</span>, cfg.OutDir)
+</span></span><span style="display:flex;"><span>    } <span style="color:#ff79c6">else</span> {
+</span></span><span style="display:flex;"><span>        fmt.<span style="color:#50fa7b">Printf</span>(<span style="color:#f1fa8c">&#34;  Output:    %s/\n&#34;</span>, cfg.OutDir)
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    fmt.<span style="color:#50fa7b">Printf</span>(<span style="color:#f1fa8c">&#34;  Agent:     %s\n&#34;</span>, cfg.Agent)
+</span></span><span style="display:flex;"><span>    fmt.<span style="color:#50fa7b">Println</span>()
+</span></span><span style="display:flex;"><span>    fmt.<span style="color:#50fa7b">Println</span>(<span style="color:#f1fa8c">&#34;Sessions will be saved to &#34;</span> <span style="color:#ff79c6">+</span> cfg.OutDir <span style="color:#ff79c6">+</span> <span style="color:#f1fa8c">&#34;/claude/ when a session ends.&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">if</span> cfg.Branch <span style="color:#ff79c6">!=</span> <span style="color:#f1fa8c">&#34;&#34;</span> {
+</span></span><span style="display:flex;"><span>        fmt.<span style="color:#50fa7b">Println</span>(<span style="color:#f1fa8c">&#34;Transcripts are auto-committed when you run git commit.&#34;</span>)
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">return</span> <span style="color:#ff79c6">nil</span>
+</span></span><span style="display:flex;"><span>},
+</span></span></code></pre><p>Also update the command <code>Description</code> to reflect both modes.</p>
+<h3>5. Test Changes (<code>~/work/chitragupt/install/install_test.go</code>)</h3>
+<p><strong>Existing tests to update:</strong></p>
+<ul>
+<li>
+<p><code>TestRun</code> -- this tests the full branch-mode flow. Update the <code>Config</code> to include <code>OutDir: &quot;.transcripts&quot;</code> explicitly. All existing sub-assertions remain valid.</p>
+</li>
+<li>
+<p><code>TestRunIdempotent</code> -- same: add <code>OutDir: &quot;.transcripts&quot;</code>.</p>
+</li>
+<li>
+<p><code>TestEnsureGitignore</code> -- update all calls to <code>ensureGitignore(dir)</code> to <code>ensureGitignore(dir, &quot;.transcripts&quot;)</code>. Add a subtest with a custom directory name:</p>
+<pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span>t.<span style="color:#50fa7b">Run</span>(<span style="color:#f1fa8c">&#34;uses custom directory name&#34;</span>, <span style="color:#8be9fd;font-style:italic">func</span>(t <span style="color:#ff79c6">*</span>testing.T) {
+</span></span><span style="display:flex;"><span>    dir <span style="color:#ff79c6">:=</span> t.<span style="color:#50fa7b">TempDir</span>()
+</span></span><span style="display:flex;"><span>    require.<span style="color:#50fa7b">NoError</span>(t, <span style="color:#50fa7b">ensureGitignore</span>(dir, <span style="color:#f1fa8c">&#34;my-output&#34;</span>))
+</span></span><span style="display:flex;"><span>    data, _ <span style="color:#ff79c6">:=</span> os.<span style="color:#50fa7b">ReadFile</span>(filepath.<span style="color:#50fa7b">Join</span>(dir, <span style="color:#f1fa8c">&#34;.gitignore&#34;</span>))
+</span></span><span style="display:flex;"><span>    assert.<span style="color:#50fa7b">Equal</span>(t, <span style="color:#f1fa8c">&#34;my-output/\n&#34;</span>, <span style="color:#8be9fd;font-style:italic">string</span>(data))
+</span></span><span style="display:flex;"><span>})
+</span></span></code></pre></li>
+<li>
+<p><code>TestInstallClaudeHook</code> -- update all calls to <code>installClaudeHook(dir, agent, formats)</code> to include the <code>outDir</code> parameter. Add a subtest verifying the custom directory appears in the script.</p>
+</li>
+<li>
+<p><code>TestBuildSaveTranscriptScript</code> -- update calls to include <code>outDir</code>. Add assertions that the directory name appears in the <code>DEST_DIR</code> line. Add a subtest with a custom directory name.</p>
+</li>
+<li>
+<p><code>TestInstallPostCommitHook</code> -- update calls to <code>installPostCommitHook(dir)</code> to <code>installPostCommitHook(dir, &quot;.transcripts&quot;)</code>. Add a test with custom directory name verifying the script contains the right path.</p>
+</li>
+<li>
+<p><code>TestPostCommitHookAutoCommits</code> -- update <code>Config</code> to include <code>OutDir</code>.</p>
+</li>
+</ul>
+<p><strong>New tests to add:</strong></p>
+<ul>
+<li>
+<p><code>TestRunSimpleDirectoryMode</code> -- the core new test:</p>
+<pre style="color:#f8f8f2;background-color:#282a36;-webkit-text-size-adjust:none;"><code><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">TestRunSimpleDirectoryMode</span>(t <span style="color:#ff79c6">*</span>testing.T) {
+</span></span><span style="display:flex;"><span>    dir <span style="color:#ff79c6">:=</span> <span style="color:#50fa7b">initRepo</span>(t)
+</span></span><span style="display:flex;"><span>    cfg <span style="color:#ff79c6">:=</span> Config{
+</span></span><span style="display:flex;"><span>        Agent:   <span style="color:#f1fa8c">&#34;claude&#34;</span>,
+</span></span><span style="display:flex;"><span>        Formats: []<span style="color:#8be9fd">string</span>{<span style="color:#f1fa8c">&#34;html&#34;</span>},
+</span></span><span style="display:flex;"><span>        Branch:  <span style="color:#f1fa8c">&#34;&#34;</span>,  <span style="color:#6272a4">// no branch = simple mode</span>
+</span></span><span style="display:flex;"><span>        OutDir:  <span style="color:#f1fa8c">&#34;.transcripts&#34;</span>,
+</span></span><span style="display:flex;"><span>        Dir:     dir,
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    require.<span style="color:#50fa7b">NoError</span>(t, <span style="color:#50fa7b">Run</span>(cfg))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    t.<span style="color:#50fa7b">Run</span>(<span style="color:#f1fa8c">&#34;output directory created&#34;</span>, <span style="color:#8be9fd;font-style:italic">func</span>(t <span style="color:#ff79c6">*</span>testing.T) {
+</span></span><span style="display:flex;"><span>        info, err <span style="color:#ff79c6">:=</span> os.<span style="color:#50fa7b">Stat</span>(filepath.<span style="color:#50fa7b">Join</span>(dir, <span style="color:#f1fa8c">&#34;.transcripts&#34;</span>))
+</span></span><span style="display:flex;"><span>        require.<span style="color:#50fa7b">NoError</span>(t, err)
+</span></span><span style="display:flex;"><span>        assert.<span style="color:#50fa7b">True</span>(t, info.<span style="color:#50fa7b">IsDir</span>())
+</span></span><span style="display:flex;"><span>    })
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    t.<span style="color:#50fa7b">Run</span>(<span style="color:#f1fa8c">&#34;no orphan branch&#34;</span>, <span style="color:#8be9fd;font-style:italic">func</span>(t <span style="color:#ff79c6">*</span>testing.T) {
+</span></span><span style="display:flex;"><span>        cmd <span style="color:#ff79c6">:=</span> exec.<span style="color:#50fa7b">Command</span>(<span style="color:#f1fa8c">&#34;git&#34;</span>, <span style="color:#f1fa8c">&#34;rev-parse&#34;</span>, <span style="color:#f1fa8c">&#34;--verify&#34;</span>, <span style="color:#f1fa8c">&#34;transcripts&#34;</span>)
+</span></span><span style="display:flex;"><span>        cmd.Dir = dir
+</span></span><span style="display:flex;"><span>        assert.<span style="color:#50fa7b">Error</span>(t, cmd.<span style="color:#50fa7b">Run</span>(), <span style="color:#f1fa8c">&#34;orphan branch should not exist&#34;</span>)
+</span></span><span style="display:flex;"><span>    })
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    t.<span style="color:#50fa7b">Run</span>(<span style="color:#f1fa8c">&#34;not a worktree&#34;</span>, <span style="color:#8be9fd;font-style:italic">func</span>(t <span style="color:#ff79c6">*</span>testing.T) {
+</span></span><span style="display:flex;"><span>        <span style="color:#6272a4">// .git file should NOT exist in the output dir (it would if it were a worktree)</span>
+</span></span><span style="display:flex;"><span>        _, err <span style="color:#ff79c6">:=</span> os.<span style="color:#50fa7b">Stat</span>(filepath.<span style="color:#50fa7b">Join</span>(dir, <span style="color:#f1fa8c">&#34;.transcripts&#34;</span>, <span style="color:#f1fa8c">&#34;.git&#34;</span>))
+</span></span><span style="display:flex;"><span>        assert.<span style="color:#50fa7b">True</span>(t, os.<span style="color:#50fa7b">IsNotExist</span>(err))
+</span></span><span style="display:flex;"><span>    })
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    t.<span style="color:#50fa7b">Run</span>(<span style="color:#f1fa8c">&#34;gitignore updated&#34;</span>, <span style="color:#8be9fd;font-style:italic">func</span>(t <span style="color:#ff79c6">*</span>testing.T) {
+</span></span><span style="display:flex;"><span>        data, err <span style="color:#ff79c6">:=</span> os.<span style="color:#50fa7b">ReadFile</span>(filepath.<span style="color:#50fa7b">Join</span>(dir, <span style="color:#f1fa8c">&#34;.gitignore&#34;</span>))
+</span></span><span style="display:flex;"><span>        require.<span style="color:#50fa7b">NoError</span>(t, err)
+</span></span><span style="display:flex;"><span>        assert.<span style="color:#50fa7b">Contains</span>(t, <span style="color:#8be9fd;font-style:italic">string</span>(data), <span style="color:#f1fa8c">&#34;.transcripts/&#34;</span>)
+</span></span><span style="display:flex;"><span>    })
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    t.<span style="color:#50fa7b">Run</span>(<span style="color:#f1fa8c">&#34;claude hook installed&#34;</span>, <span style="color:#8be9fd;font-style:italic">func</span>(t <span style="color:#ff79c6">*</span>testing.T) {
+</span></span><span style="display:flex;"><span>        scriptPath <span style="color:#ff79c6">:=</span> filepath.<span style="color:#50fa7b">Join</span>(dir, <span style="color:#f1fa8c">&#34;.claude&#34;</span>, <span style="color:#f1fa8c">&#34;hooks&#34;</span>, <span style="color:#f1fa8c">&#34;save-transcript.sh&#34;</span>)
+</span></span><span style="display:flex;"><span>        _, err <span style="color:#ff79c6">:=</span> os.<span style="color:#50fa7b">Stat</span>(scriptPath)
+</span></span><span style="display:flex;"><span>        assert.<span style="color:#50fa7b">NoError</span>(t, err)
+</span></span><span style="display:flex;"><span>    })
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    t.<span style="color:#50fa7b">Run</span>(<span style="color:#f1fa8c">&#34;no post-commit hook&#34;</span>, <span style="color:#8be9fd;font-style:italic">func</span>(t <span style="color:#ff79c6">*</span>testing.T) {
+</span></span><span style="display:flex;"><span>        hookPath <span style="color:#ff79c6">:=</span> filepath.<span style="color:#50fa7b">Join</span>(dir, <span style="color:#f1fa8c">&#34;.git&#34;</span>, <span style="color:#f1fa8c">&#34;hooks&#34;</span>, <span style="color:#f1fa8c">&#34;post-commit&#34;</span>)
+</span></span><span style="display:flex;"><span>        _, err <span style="color:#ff79c6">:=</span> os.<span style="color:#50fa7b">Stat</span>(hookPath)
+</span></span><span style="display:flex;"><span>        assert.<span style="color:#50fa7b">True</span>(t, os.<span style="color:#50fa7b">IsNotExist</span>(err), <span style="color:#f1fa8c">&#34;post-commit hook should not be installed in simple mode&#34;</span>)
+</span></span><span style="display:flex;"><span>    })
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></li>
+<li>
+<p><code>TestRunSimpleDirectoryModeIdempotent</code> -- run twice in simple mode, confirm no error.</p>
+</li>
+<li>
+<p><code>TestRunCustomOutDir</code> -- test with <code>OutDir: &quot;my-docs&quot;</code> in both modes, verifying the directory name propagates correctly.</p>
+</li>
+<li>
+<p><code>TestBuildPostCommitHookScript</code> -- test the new function (replaces the const).</p>
+</li>
+</ul>
+<h3>6. Sequencing and Dependencies</h3>
+<p>The implementation order should be:</p>
+<ol>
+<li><strong>Config struct</strong> -- add <code>OutDir</code> field. This is the foundation.</li>
+<li><strong>Helper function signatures</strong> -- update <code>ensureGitignore</code>, <code>installClaudeHook</code>, <code>buildSaveTranscriptScript</code>, <code>installPostCommitHook</code> to accept <code>outDir</code>. Convert <code>postCommitHookScript</code> const to <code>buildPostCommitHookScript</code> function.</li>
+<li><strong><code>Run()</code> function</strong> -- restructure with conditional branch/simple logic.</li>
+<li><strong>CLI definition</strong> -- add <code>--out</code> flag, remove default from <code>--branch</code>, update summary output.</li>
+<li><strong>Tests</strong> -- update all existing tests, add new tests for simple directory mode.</li>
+</ol>
+<h3>7. Potential Challenges</h3>
+<ul>
+<li>
+<p><strong>Backward compatibility</strong>: Users who previously ran <code>cg install</code> without <code>--branch</code> got branch mode (default was <code>&quot;transcripts&quot;</code>). After this change, running <code>cg install</code> without <code>--branch</code> gives simple mode. This is the intended behavioral change, but the command description should make the two modes clear.</p>
+</li>
+<li>
+<p><strong>Re-running install in a different mode</strong>: If a user first installed with <code>--branch</code> and then re-runs without it, or vice versa, the directory may already exist as a worktree or plain directory. The <code>Run()</code> function should handle this gracefully. For now, if the output directory already exists, skip creation in both modes (the current worktree check does <code>if worktreeExists</code> and skips). This is acceptable for an initial implementation.</p>
+</li>
+<li>
+<p><strong>The save-transcript.sh <code>exit 0</code> on missing dir</strong>: Currently the hook exits silently if <code>.transcripts/</code> does not exist. In simple directory mode the directory is a plain dir that could be deleted. Changing to <code>mkdir -p</code> is a small improvement. However, this changes behavior for existing branch-mode installs too. An alternative is to keep <code>exit 0</code> -- the user can re-run <code>cg install</code> to recreate the directory. I'd recommend changing to <code>mkdir -p</code> since it makes the hook self-healing in both modes.</p>
+</li>
+</ul>
+<hr>
+<h3>Critical Files for Implementation</h3>
+<ul>
+<li><code>~/work/chitragupt/install/install.go</code> - Core implementation: Config struct, Run() logic, all helper functions to modify</li>
+<li><code>~/work/chitragupt/cmd/cg/install.go</code> - CLI flag definitions and summary output to update</li>
+<li><code>~/work/chitragupt/install/install_test.go</code> - All existing tests need signature updates, plus new tests for simple directory mode</li>
+</ul>
+</div>
+        </div>
+    </div>
+    
+</div>
+
+            </div>
+            <footer class="mt-12 pt-6 border-t border-slate-200 dark:border-slate-700 text-center text-xs text-slate-400">
+                Generated by <a href="https://github.com/sonnes/chitragupt" class="text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-300 underline">chitragupt</a>
+            </footer>
+        </div>
+        
+        <nav class="hidden lg:block w-56 shrink-0">
+            <div class="sticky top-8 max-h-[calc(100vh-4rem)] overflow-y-auto">
+                <div class="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-3">Timeline</div>
+                <ol class="list-decimal list-inside flex flex-col gap-1 text-xs marker:text-slate-400 dark:marker:text-slate-500 marker:font-mono">
+                    
+                </ol>
+            </div>
+        </nav>
+    </div>
+</body>
+</html>
