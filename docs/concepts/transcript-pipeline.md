@@ -26,12 +26,9 @@ Readers parse raw session files and return `core.Transcript` values. Agent
 quirks stay inside the matching reader package:
 
 - `reader/claude` parses Claude Code JSONL sessions.
-- `reader/codex` parses Codex sessions.
-- `reader/cursor` parses Cursor sessions.
-- `reader/opencode` parses OpenCode sessions.
 
 Readers should not know whether the transcript will be rendered as HTML,
-Markdown, JSON, or terminal output.
+Markdown, or terminal output.
 
 ## Core Model
 
@@ -64,7 +61,6 @@ Renderers consume `core.Transcript` values and write output:
 
 - `render/html` writes static HTML.
 - `render/markdown` writes Markdown.
-- `render/json` writes standardized transcript JSON.
 - `render/terminal` writes ANSI terminal output.
 
 Renderers should not parse raw agent logs or duplicate transform behavior.
@@ -75,4 +71,3 @@ Renderers should not parse raw agent logs or duplicate transform behavior.
 - [Readers](readers.md)
 - [Transforms](transforms.md)
 - [Rendering](rendering.md)
-

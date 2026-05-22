@@ -9,9 +9,9 @@ read_when:
 
 # Capabilities
 
-This folder documents Chitragupt's user-facing capabilities. Concept docs in
-[`../concepts`](../concepts) explain the underlying architecture; capability
-docs explain what the CLI can do today and where each feature lives.
+This folder documents Chitragupt's current user-facing capabilities. Concept
+docs in [`../concepts`](../concepts) explain the underlying architecture;
+capability docs explain what the CLI can do today and where each feature lives.
 
 ## Pages
 
@@ -22,15 +22,10 @@ docs explain what the CLI can do today and where each feature lives.
 
 ### Output
 
-- [Output Formats](output-formats.md) — terminal, HTML, Markdown, and JSON output
-- [Local Server](local-server.md) — browsing rendered sessions locally
+- [Output Formats](output-formats.md) — terminal, HTML, and Markdown output
+- [Local Server](local-server.md) — browsing sessions locally
 
 ### Transcript Safety and Size
 
 - [Redaction](redaction.md) — secrets and PII sanitization
 - [Compact Mode](compact-mode.md) — shorter transcripts by removing noisy output
-
-### Transcript Management
-
-- [Manifest Repair](manifest-repair.md) — rebuilding `manifest.json`
-

@@ -9,15 +9,12 @@ read_when:
 
 # Agent Readers
 
-Chitragupt reads session logs from multiple CLI agents and normalizes them into
+Chitragupt reads CLI agent session logs and normalizes them into
 `core.Transcript`.
 
 | Agent | Reader package | Status | Notes |
 | --- | --- | --- | --- |
 | Claude Code | `reader/claude` | Supported | Includes sub-agent parsing |
-| Codex | `reader/codex` | Supported | Parses Codex session logs |
-| Cursor | `reader/cursor` | Supported | Parses Cursor session logs |
-| OpenCode | `reader/opencode` | Supported | Parses OpenCode session logs |
 
 Use the `--agent` flag to select a reader:
 
@@ -29,4 +26,3 @@ cg render --agent claude --file session.jsonl
 
 - [Readers](../concepts/readers.md)
 - [Sub-Agent Transcripts](subagents.md)
-

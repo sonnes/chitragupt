@@ -21,7 +21,7 @@ cg render --agent claude --file session.jsonl --compact
 Also strip thinking blocks:
 
 ```sh
-cg render --agent claude --file session.jsonl --compact=no-thinking
+cg render --agent claude --file session.jsonl --compact --strip-thinking
 ```
 
 ## Pipeline Position
@@ -45,4 +45,3 @@ Use `compact/testdata/*.jsonl` fixtures when changing behavior.
 
 - [Transforms](../concepts/transforms.md)
 - [Redaction](redaction.md)
-

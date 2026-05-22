@@ -1,26 +1,27 @@
 ---
 title: "Local Server"
-summary: "Browse rendered transcript sessions from a local HTTP server"
+summary: "Browse transcript sessions from a local HTTP server"
 read_when:
   - Using cg serve
-  - Changing local browsing behavior
-  - Debugging transcript index or static file serving
+  - Browsing sessions without writing output files
+  - Debugging local transcript browsing behavior
 ---
 
 # Local Server
 
-`cg serve` starts a local HTTP server for browsing session transcripts.
-
-Serve all known sessions:
-
-```sh
-cg serve --agent claude --all
-```
+`cg serve` starts a local HTTP server that reads sessions through the configured
+reader and renders them on demand as HTML.
 
 Serve sessions for a project:
 
 ```sh
 cg serve --agent claude --project <project-name>
+```
+
+Serve every discoverable session:
+
+```sh
+cg serve --agent claude --all
 ```
 
 Choose a port:
@@ -29,12 +30,10 @@ Choose a port:
 cg serve --agent claude --port 3000
 ```
 
-## Implementation
-
-Server behavior lives in `server/`. CLI wiring lives in `cmd/cg/serve.go`.
+Serving is intentionally local and ephemeral. It does not install hooks, write a
+manifest, manage transcript storage, or publish files.
 
 ## Related
 
 - [Output Formats](output-formats.md)
-- [Manifest](../concepts/manifest.md)
-
+- [Agent Readers](agent-readers.md)

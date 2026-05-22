@@ -9,7 +9,7 @@ import "time"
 type Transcript struct {
 	SessionID       string        `json:"session_id"`
 	ParentSessionID string        `json:"parent_session_id,omitempty"`
-	Agent           string        `json:"agent"`                // "claude", "codex", "opencode", "cursor"
+	Agent           string        `json:"agent"`                // "claude"
 	Author          string        `json:"author,omitempty"`     // git user.name from working directory
 	Model           string        `json:"model,omitempty"`      // primary model used
 	Dir             string        `json:"dir,omitempty"`        // working directory

@@ -35,9 +35,6 @@ A reader should not:
 | Package | Agent | Notes |
 | --- | --- | --- |
 | `reader/claude` | Claude Code | Handles main sessions and sub-agent files |
-| `reader/codex` | Codex | Parses Codex session logs |
-| `reader/cursor` | Cursor | Parses Cursor session logs |
-| `reader/opencode` | OpenCode | Parses OpenCode session logs |
 
 ## Test Fixtures
 
@@ -49,4 +46,3 @@ into `t.TempDir()` and build the directory shape the reader expects.
 
 - [Standard Transcript Format](standard-transcript-format.md)
 - [Agent Readers](../capabilities/agent-readers.md)
-

@@ -14,8 +14,8 @@ import (
 	"github.com/yuin/goldmark/extension"
 	gmhtml "github.com/yuin/goldmark/renderer/html"
 
-	highlighting "github.com/yuin/goldmark-highlighting/v2"
 	chromahtml "github.com/alecthomas/chroma/v2/formatters/html"
+	highlighting "github.com/yuin/goldmark-highlighting/v2"
 )
 
 // Renderer renders a transcript to a standalone HTML page.
@@ -24,8 +24,7 @@ type Renderer struct {
 	tmpl *template.Template
 
 	// SubAgentHref, when non-nil, overrides the default agent-{id}.html link
-	// pattern for sub-agent references. Used by the serve command to generate
-	// server-routed URLs instead of static file links.
+	// pattern for sub-agent references.
 	SubAgentHref func(agentID string) string
 }
 
@@ -76,11 +75,11 @@ type turnData struct {
 
 // indexData is the template data passed to index.html.
 type indexData struct {
-	Entries []core.ManifestEntry
+	Entries []core.SessionEntry
 }
 
-// RenderIndex writes an HTML index page listing the given manifest entries to w.
-func (r *Renderer) RenderIndex(w io.Writer, entries []core.ManifestEntry) error {
+// RenderIndex writes an HTML index page listing sessions to w.
+func (r *Renderer) RenderIndex(w io.Writer, entries []core.SessionEntry) error {
 	return r.tmpl.ExecuteTemplate(w, "index.html", indexData{Entries: entries})
 }
 
@@ -206,4 +205,3 @@ func userTextSummary(msg core.Message) string {
 	}
 	return ""
 }
-

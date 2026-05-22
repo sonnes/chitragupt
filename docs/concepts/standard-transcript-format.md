@@ -4,7 +4,7 @@ summary: "The normalized transcript model shared by every reader and renderer"
 read_when:
   - Changing core transcript structs
   - Adding renderer support for new content blocks
-  - Validating JSON transcript output
+  - Validating normalized transcript fields
 ---
 
 # Standard Transcript Format

@@ -2,10 +2,8 @@ package core
 
 import "time"
 
-// ManifestEntry holds lightweight metadata for a single session, used by the
-// manifest file and the index template. It mirrors the fields of Transcript
-// that the index page needs, without carrying the full message list.
-type ManifestEntry struct {
+// SessionEntry holds lightweight metadata for a transcript listing.
+type SessionEntry struct {
 	SessionID    string        `json:"session_id"`
 	Title        string        `json:"title,omitempty"`
 	Agent        string        `json:"agent"`
@@ -20,15 +18,14 @@ type ManifestEntry struct {
 	Href         string        `json:"href"`
 }
 
-// NewManifestEntry extracts metadata from a Transcript and pairs it with the
-// given href (relative link to the rendered page).
-func NewManifestEntry(t *Transcript, href string) ManifestEntry {
+// NewSessionEntry extracts listing metadata from a transcript.
+func NewSessionEntry(t *Transcript, href string) SessionEntry {
 	stats := t.Stats
 	if stats == nil {
 		stats = ComputeSessionStats(t)
 	}
 
-	return ManifestEntry{
+	return SessionEntry{
 		SessionID:    t.SessionID,
 		Title:        t.Title,
 		Agent:        t.Agent,

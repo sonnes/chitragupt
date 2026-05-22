@@ -6,7 +6,7 @@ Named after [Chitragupta](https://en.wikipedia.org/wiki/Chitragupta), an Indian 
 
 ## What it does
 
-`cg` reads Claude Code session logs (JSONL/JSON) and produces clean, shareable transcripts in multiple formats — static HTML, Markdown, or pretty-printed terminal output.
+`cg` reads Claude Code session logs (JSONL/JSON) and produces clean, shareable transcripts. It does not install hooks, manage storage, or decide where transcripts belong. Generate or browse the transcript; use it however you want.
 
 ## Install
 
@@ -46,19 +46,28 @@ Render all sessions across all projects:
 cg render --agent claude --all
 ```
 
-Write output to a directory (generates `index.html` + per-agent files):
+Write output to a directory:
 
 ```sh
-cg render --agent claude --project ./ --format html --out .transcripts
+cg render --agent claude --project ./ --format html --out transcripts
 ```
 
-### Output formats
+### Output Formats
 
 ```sh
 cg render --agent claude --file session.jsonl --format terminal   # default
 cg render --agent claude --file session.jsonl --format html
 cg render --agent claude --file session.jsonl --format markdown
-cg render --agent claude --file session.jsonl --format json
+```
+
+### Serve
+
+Browse sessions locally without creating files:
+
+```sh
+cg serve --agent claude --project <project-name>
+cg serve --agent claude --all
+cg serve --agent claude --port 3000
 ```
 
 ### Redaction
@@ -76,7 +85,7 @@ cg render --agent claude --file session.jsonl --redact secrets
 cg render --agent claude --file session.jsonl --redact pii
 ```
 
-### Compact mode
+### Compact Mode
 
 Strip tool results for a shorter transcript:
 
@@ -87,66 +96,21 @@ cg render --agent claude --file session.jsonl --compact
 Also strip thinking blocks:
 
 ```sh
-cg render --agent claude --file session.jsonl --compact=no-thinking
+cg render --agent claude --file session.jsonl --compact --strip-thinking
 ```
 
-### Serve
+## Philosophy
 
-Browse sessions in a local web UI:
-
-```sh
-cg serve --agent claude --project <project-name>
-cg serve --agent claude --all
-cg serve --agent claude --port 3000
-```
-
-### Git integration
-
-Set up automatic transcript capture when a session ends:
-
-```sh
-cg install --agent claude --format html --out transcripts
-```
-
-This creates a `transcripts/` directory, installs a `SessionEnd` hook that renders transcripts on session end, and adds `transcripts/` to `.gitignore`.
-
-To also version transcripts on an orphan branch (creates a git worktree and auto-commits when you run `git commit`):
-
-```sh
-cg install --agent claude --format html --out .transcripts --branch gh-pages
-```
-
-To remove hooks and configuration:
-
-```sh
-cg uninstall            # keeps transcript data
-cg uninstall --purge    # also deletes data and orphan branch
-```
-
-### Manifest
-
-The manifest (`manifest.json`) tracks metadata for all rendered sessions. It is updated automatically by the SessionEnd hook.
-
-Rebuild the manifest from scratch if it gets out of sync:
-
-```sh
-cg manifest repair --dir transcripts --agent claude
-```
-
-Regenerate the index page from the manifest:
-
-```sh
-cg index --dir transcripts
-```
+`cg` converts agent logs into readable artifacts, with an optional local browser
+for inspection, and leaves capture, storage, publishing, indexing, versioning,
+and hosting to shell scripts, git, CI, static hosts, or whatever workflow the
+user prefers.
 
 ## Architecture
 
 ```
 reader/       Parse agent-specific logs → core.Transcript
   claude/       Claude Code JSONL sessions
-  codex/        Codex sessions
-  cursor/       Cursor sessions
-  opencode/     OpenCode sessions
 
 core/         Standardized transcript format + transformer pipeline
 
@@ -157,18 +121,15 @@ render/       Render transcripts to output formats
   terminal/     ANSI terminal with tree view
   html/         Tailwind v4 + syntax highlighting
   markdown/     Markdown
-  json/         JSON
 
-server/       Local HTTP server for browsing sessions
 cmd/cg/       CLI entrypoint
 ```
 
 ## Documentation
 
-- [Capabilities](docs/capabilities/README.md) — feature-oriented docs for readers, output formats, redaction, compact mode, sub-agents, serving, and manifest repair
+- [Capabilities](docs/capabilities/README.md) — feature-oriented docs for readers, output formats, local serving, redaction, compact mode, and sub-agents
 - [Concepts](docs/concepts/transcript-pipeline.md) — architecture docs for the transcript pipeline and core boundaries
-- [Plans](docs/plans/2026-05-22-docs-modernization.md) — implementation plans and archived design specs
-- [Research](docs/research/git-session-log-storage.md) — background research on storing agent sessions in git
+- [Research](docs/research/git-session-log-storage.md) — archived background research on storing agent sessions in git
 
 ## License
 

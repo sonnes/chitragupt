@@ -3,16 +3,16 @@
 ## Overview
 
 Chitragupt (`cg`) is a Go CLI that converts CLI agent session logs into
-shareable transcripts. It reads session files from Claude Code, Codex,
-OpenCode, and Cursor, normalizes them into a standard transcript model, then
-renders them as HTML, Markdown, JSON, or terminal output.
+shareable transcripts. It reads Claude Code session files, normalizes them into
+a standard transcript model, then renders them as HTML, Markdown, or terminal
+output.
 
 ## Tech Stack
 
 - Go
 - Makefile-driven build and test workflow
 - JSONL/JSON session readers
-- Static HTML, Markdown, JSON, and ANSI terminal renderers
+- Static HTML, Markdown, and ANSI terminal renderers
 
 ## Code Quality Expectations
 
@@ -85,19 +85,12 @@ cmd/cg/        CLI entrypoint and command wiring
 core/          Standard transcript model, schema, turns, transforms
 reader/        Agent-specific session readers
   claude/      Claude Code JSONL sessions
-  codex/       Codex sessions
-  cursor/      Cursor sessions
-  opencode/    OpenCode sessions
 redact/        Secrets and PII redaction transformer
 compact/       Compact transcript transformer
 render/        Output renderers
   html/        Static HTML renderer
-  json/        Standard transcript JSON renderer
   markdown/    Markdown renderer
   terminal/    ANSI terminal renderer
-server/        Local transcript browsing server
-manifest/      Manifest read/write and repair logic
-install/       Hook installation and removal
 docs/          Research, concepts, capabilities, and implementation plans
 examples/      Example session inputs and rendered outputs
 ```
@@ -131,6 +124,6 @@ Transform ordering matters:
 - Do not add inline JSONL fixture builders when a `testdata/*.jsonl` fixture
   can express the case.
 - Update docs when changing user-facing CLI behavior, transcript schema,
-  install hooks, manifest behavior, redaction, compaction, or rendering output.
+  redaction, compaction, or rendering output.
 - Run `make test` before committing behavior changes.
 - Run `make build` before handing off CLI changes.

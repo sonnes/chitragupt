@@ -6,6 +6,7 @@ import (
 	"log/slog"
 	"net/http"
 	"os"
+	"path/filepath"
 	"sort"
 	"strings"
 
@@ -16,28 +17,56 @@ import (
 
 func serveCmd() *cli.Command {
 	return &cli.Command{
-		Name:  "serve",
-		Usage: "Serve sessions for browsing in a local web UI",
+		Name:      "serve",
+		Usage:     "Browse sessions in a local web UI",
+		UsageText: "cg serve --agent claude [--project PATH | --all] [--port PORT]",
+		Description: `Read saved sessions and render them on demand in a local browser.
+
+Input:
+  no input flag     Serve sessions for the current working directory.
+  --project PATH    Serve sessions for a project directory.
+  --all             Serve every discoverable session.
+
+Examples:
+  cg serve --agent claude
+  cg serve --agent claude --project .
+  cg serve --agent claude --all --port 3000`,
 		Flags: []cli.Flag{
 			&cli.StringFlag{
 				Name:     "agent",
 				Aliases:  []string{"a"},
-				Usage:    "Agent name (claude, codex, opencode, cursor)",
+				Usage:    "Reader to use. Valid value: claude",
 				Required: true,
+				Category: "Required",
 			},
 			&cli.StringFlag{
-				Name:    "project",
-				Aliases: []string{"p"},
-				Usage:   "Project name (serve all sessions in the project)",
+				Name:     "project",
+				Aliases:  []string{"p"},
+				Usage:    "Serve sessions for project directory `PATH`",
+				Category: "Input: choose at most one",
 			},
 			&cli.BoolFlag{
-				Name:  "all",
-				Usage: "Serve all sessions",
+				Name:     "all",
+				Usage:    "Serve every discoverable session",
+				Category: "Input: choose at most one",
 			},
 			&cli.IntFlag{
-				Name:  "port",
-				Usage: "Port to listen on",
-				Value: 8080,
+				Name:        "port",
+				Usage:       "HTTP port to listen on",
+				Value:       8080,
+				DefaultText: "8080",
+				Category:    "Server",
+			},
+			&cli.BoolFlag{
+				Name:     "no-redact",
+				Usage:    "Disable default redaction of secrets and PII",
+				Category: "Privacy",
+			},
+			&cli.StringSliceFlag{
+				Name:     "redact",
+				Aliases:  []string{"r"},
+				Usage:    "Redact only these `RULES`: secrets, pii. Repeat or comma-separate",
+				Category: "Privacy",
 			},
 		},
 		Action: func(ctx context.Context, cmd *cli.Command) error {
@@ -48,13 +77,18 @@ func serveCmd() *cli.Command {
 				return fmt.Errorf("--project and --all are mutually exclusive")
 			}
 
-			// Default to cwd-based project when neither flag is set.
 			if project == "" && !all {
 				cwd, err := os.Getwd()
 				if err != nil {
 					return fmt.Errorf("get working directory: %w", err)
 				}
 				project = cwdToProject(cwd)
+			} else if project != "" {
+				projectPath, err := filepath.Abs(project)
+				if err != nil {
+					return fmt.Errorf("resolve project path: %w", err)
+				}
+				project = cwdToProject(projectPath)
 			}
 
 			a := newApp()
@@ -94,7 +128,6 @@ func serveCmd() *cli.Command {
 				return transcripts[i].CreatedAt.After(transcripts[j].CreatedAt)
 			})
 
-			// Build lookup map for all transcripts (including sub-agents).
 			byID := make(map[string]*core.Transcript)
 			var indexAll func(t *core.Transcript)
 			indexAll = func(t *core.Transcript) {
@@ -112,12 +145,12 @@ func serveCmd() *cli.Command {
 				return "/session/" + agentID
 			}
 
-			mux := http.NewServeMux()
-
-			entries := make([]core.ManifestEntry, len(transcripts))
+			entries := make([]core.SessionEntry, len(transcripts))
 			for i, t := range transcripts {
-				entries[i] = core.NewManifestEntry(t, "/session/"+t.SessionID)
+				entries[i] = core.NewSessionEntry(t, "/session/"+t.SessionID)
 			}
+
+			mux := http.NewServeMux()
 
 			mux.HandleFunc("GET /", func(w http.ResponseWriter, req *http.Request) {
 				w.Header().Set("Content-Type", "text/html; charset=utf-8")
@@ -149,7 +182,6 @@ func serveCmd() *cli.Command {
 }
 
 // cwdToProject converts an absolute path to Claude's project directory name.
-// Claude uses the path with "/" replaced by "-", e.g. "/Users/foo/bar" → "-Users-foo-bar".
 func cwdToProject(cwd string) string {
 	return strings.ReplaceAll(cwd, "/", "-")
 }
