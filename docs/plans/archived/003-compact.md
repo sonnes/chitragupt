@@ -1,3 +1,11 @@
+---
+title: "Compact Mode Design Specification"
+summary: "Archived design for compact transcript output"
+read_when:
+  - Looking for historical context on compact mode
+  - Changing compaction internals
+---
+
 # Compact Mode — Design Specification
 
 ## Overview

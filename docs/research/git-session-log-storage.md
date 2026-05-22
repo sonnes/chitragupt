@@ -1,3 +1,12 @@
+---
+title: "Storing Agent Session Logs in Git Repositories"
+summary: "Research on preserving CLI agent sessions in git through hooks, branches, and worktrees"
+read_when:
+  - Changing transcript branch behavior
+  - Evaluating automatic session capture approaches
+  - Understanding why cg install uses hooks and git integration
+---
+
 # Research: Storing Agent Session Logs in Git Repositories
 
 ## Executive Summary

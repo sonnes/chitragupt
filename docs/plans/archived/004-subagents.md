@@ -1,3 +1,11 @@
+---
+title: "Sub-Agent Transcripts Design Specification"
+summary: "Archived design for parsing and rendering Claude Code sub-agent transcripts"
+read_when:
+  - Looking for historical context on sub-agent support
+  - Changing Claude Code sub-agent parsing
+---
+
 # Sub-Agent Transcripts — Design Specification
 
 ## Overview

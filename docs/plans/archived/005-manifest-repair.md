@@ -1,3 +1,11 @@
+---
+title: "Manifest Repair Design Specification"
+summary: "Archived design for rebuilding manifest.json from rendered transcript directories"
+read_when:
+  - Looking for historical context on manifest repair
+  - Changing manifest repair behavior
+---
+
 # Manifest Repair — Design Specification
 
 ## Overview

@@ -1,3 +1,11 @@
+---
+title: "Initial Design Specification"
+summary: "Archived initial design for the cg CLI, transcript format, readers, and renderers"
+read_when:
+  - Looking for historical context on the original CLI design
+  - Comparing current concepts with the first implementation plan
+---
+
 # chitragupt — Design Specification
 
 ## Overview

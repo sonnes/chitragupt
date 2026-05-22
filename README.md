@@ -163,6 +163,13 @@ server/       Local HTTP server for browsing sessions
 cmd/cg/       CLI entrypoint
 ```
 
+## Documentation
+
+- [Capabilities](docs/capabilities/README.md) — feature-oriented docs for readers, output formats, redaction, compact mode, sub-agents, serving, and manifest repair
+- [Concepts](docs/concepts/transcript-pipeline.md) — architecture docs for the transcript pipeline and core boundaries
+- [Plans](docs/plans/2026-05-22-docs-modernization.md) — implementation plans and archived design specs
+- [Research](docs/research/git-session-log-storage.md) — background research on storing agent sessions in git
+
 ## License
 
 Apache 2.0 — see [LICENSE](LICENSE).

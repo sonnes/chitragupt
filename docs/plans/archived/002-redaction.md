@@ -1,3 +1,11 @@
+---
+title: "Redaction Design Specification"
+summary: "Archived design for transcript redaction rules and pipeline position"
+read_when:
+  - Looking for historical context on redaction design
+  - Changing redaction internals
+---
+
 # Redaction — Design Specification
 
 ## Overview
