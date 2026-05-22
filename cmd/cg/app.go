@@ -8,6 +8,7 @@ import (
 	"github.com/sonnes/chitragupt/core"
 	"github.com/sonnes/chitragupt/reader"
 	"github.com/sonnes/chitragupt/reader/claude"
+	"github.com/sonnes/chitragupt/reader/codex"
 	"github.com/sonnes/chitragupt/redact"
 	"github.com/sonnes/chitragupt/render"
 	htmlrender "github.com/sonnes/chitragupt/render/html"
@@ -27,6 +28,7 @@ func newApp() *app {
 	return &app{
 		readers: map[string]func() reader.Reader{
 			"claude": func() reader.Reader { return &claude.Reader{} },
+			"codex":  func() reader.Reader { return &codex.Reader{} },
 		},
 		renderers: map[string]func() render.Renderer{
 			"terminal": func() render.Renderer { return terminal.New() },
@@ -101,7 +103,9 @@ func readTranscripts(r reader.Reader, cmd *cli.Command) ([]*core.Transcript, err
 			return nil, err
 		}
 
-		project = strings.ReplaceAll(project, "/", "-")
+		if cmd.String("agent") == "claude" {
+			project = strings.ReplaceAll(project, "/", "-")
+		}
 		return r.ReadProject(project)
 	default:
 		return r.ReadAll()

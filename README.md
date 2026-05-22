@@ -6,7 +6,7 @@ Named after [Chitragupta](https://en.wikipedia.org/wiki/Chitragupta), an Indian 
 
 ## What it does
 
-`cg` reads Claude Code session logs (JSONL/JSON) and produces clean, shareable transcripts. It does not install hooks, manage storage, or decide where transcripts belong. Generate or browse the transcript; use it however you want.
+`cg` reads CLI agent session logs (JSONL/JSON) and produces clean, shareable transcripts. It currently supports Claude Code and OpenAI Codex. It does not install hooks, manage storage, or decide where transcripts belong. Generate or browse the transcript; use it however you want.
 
 ## Install
 
@@ -26,18 +26,21 @@ Render a single session file to the terminal:
 
 ```sh
 cg render --agent claude --file ~/.claude/projects/.../session.jsonl
+cg render --agent codex --file ~/.codex/sessions/.../rollout-....jsonl
 ```
 
 Render by session ID:
 
 ```sh
 cg render --agent claude --session <session-id>
+cg render --agent codex --session <session-id>
 ```
 
 Render all sessions in a project:
 
 ```sh
 cg render --agent claude --project <project-name>
+cg render --agent codex --project .
 ```
 
 Render all sessions across all projects:
@@ -59,6 +62,7 @@ cg render --agent claude --file session.jsonl --format terminal   # default
 cg render --agent claude --file session.jsonl --format html
 cg render --agent claude --file session.jsonl --format markdown
 cg render --agent claude --file session.jsonl --format json
+cg render --agent codex --file rollout.jsonl --format html
 ```
 
 ### Serve
@@ -112,6 +116,7 @@ user prefers.
 ```
 reader/       Parse agent-specific logs → core.Transcript
   claude/       Claude Code JSONL sessions
+  codex/        OpenAI Codex rollout JSONL sessions
 
 core/         Standardized transcript format + transformer pipeline
 

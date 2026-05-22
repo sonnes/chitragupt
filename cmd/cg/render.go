@@ -16,8 +16,8 @@ func renderCmd() *cli.Command {
 	return &cli.Command{
 		Name:      "render",
 		Usage:     "Generate transcript output",
-		UsageText: "cg render --agent claude (--file PATH | --session ID | --project PATH | --all) [--format FORMAT] [--out DIR]",
-		Description: `Generate transcripts from Claude Code session logs.
+		UsageText: "cg render --agent AGENT (--file PATH | --session ID | --project PATH | --all) [--format FORMAT] [--out DIR]",
+		Description: `Generate transcripts from CLI agent session logs.
 
 Pick exactly one input:
   --file PATH       Render one raw session file.
@@ -33,16 +33,18 @@ Pick output:
 
 Examples:
   cg render -a claude -f session.jsonl
+  cg render -a codex -f ~/.codex/sessions/2026/05/22/rollout-....jsonl
   cg render -a claude -f session.jsonl --format markdown
   cg render -a claude -f session.jsonl --format json
   cg render -a claude -f session.jsonl --format html --out transcript
+  cg render -a codex --project . --format html --out transcripts
   cg render -a claude --project . --format html --out transcripts
   cg render -a claude --all --format html --format markdown --format json --out transcripts`,
 		Flags: []cli.Flag{
 			&cli.StringFlag{
 				Name:     "agent",
 				Aliases:  []string{"a"},
-				Usage:    "Reader to use. Valid value: claude",
+				Usage:    "Reader to use. Valid values: claude, codex",
 				Required: true,
 				Category: "Required",
 			},

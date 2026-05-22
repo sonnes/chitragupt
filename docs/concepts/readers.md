@@ -35,6 +35,7 @@ A reader should not:
 | Package | Agent | Notes |
 | --- | --- | --- |
 | `reader/claude` | Claude Code | Handles main sessions and sub-agent files |
+| `reader/codex` | OpenAI Codex | Handles rollout JSONL sessions |
 
 ## Test Fixtures
 

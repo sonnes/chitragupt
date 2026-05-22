@@ -26,6 +26,7 @@ Readers parse raw session files and return `core.Transcript` values. Agent
 quirks stay inside the matching reader package:
 
 - `reader/claude` parses Claude Code JSONL sessions.
+- `reader/codex` parses OpenAI Codex rollout JSONL sessions.
 
 Readers should not know whether the transcript will be rendered as HTML,
 Markdown, JSON, or terminal output.

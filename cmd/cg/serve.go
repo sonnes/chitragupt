@@ -19,7 +19,7 @@ func serveCmd() *cli.Command {
 	return &cli.Command{
 		Name:      "serve",
 		Usage:     "Browse sessions in a local web UI",
-		UsageText: "cg serve --agent claude [--project PATH | --all] [--port PORT]",
+		UsageText: "cg serve --agent AGENT [--project PATH | --all] [--port PORT]",
 		Description: `Read saved sessions and render them on demand in a local browser.
 
 Input:
@@ -29,13 +29,14 @@ Input:
 
 Examples:
   cg serve --agent claude
+  cg serve --agent codex
   cg serve --agent claude --project .
   cg serve --agent claude --all --port 3000`,
 		Flags: []cli.Flag{
 			&cli.StringFlag{
 				Name:     "agent",
 				Aliases:  []string{"a"},
-				Usage:    "Reader to use. Valid value: claude",
+				Usage:    "Reader to use. Valid values: claude, codex",
 				Required: true,
 				Category: "Required",
 			},
@@ -70,6 +71,7 @@ Examples:
 			},
 		},
 		Action: func(ctx context.Context, cmd *cli.Command) error {
+			agentName := cmd.String("agent")
 			project := cmd.String("project")
 			all := cmd.Bool("all")
 
@@ -82,18 +84,18 @@ Examples:
 				if err != nil {
 					return fmt.Errorf("get working directory: %w", err)
 				}
-				project = cwdToProject(cwd)
+				project = projectForAgent(agentName, cwd)
 			} else if project != "" {
 				projectPath, err := filepath.Abs(project)
 				if err != nil {
 					return fmt.Errorf("resolve project path: %w", err)
 				}
-				project = cwdToProject(projectPath)
+				project = projectForAgent(agentName, projectPath)
 			}
 
 			a := newApp()
 
-			r, err := a.reader(cmd.String("agent"))
+			r, err := a.reader(agentName)
 			if err != nil {
 				return err
 			}
@@ -184,4 +186,11 @@ Examples:
 // cwdToProject converts an absolute path to Claude's project directory name.
 func cwdToProject(cwd string) string {
 	return strings.ReplaceAll(cwd, "/", "-")
+}
+
+func projectForAgent(agent, cwd string) string {
+	if agent == "claude" {
+		return cwdToProject(cwd)
+	}
+	return cwd
 }
