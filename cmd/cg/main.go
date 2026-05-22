@@ -24,7 +24,7 @@ func main() {
    cg render --agent claude --file session.jsonl
 
  More detail:
-   cg render --help   Generate terminal, HTML, or Markdown output.
+   cg render --help   Generate terminal, HTML, Markdown, or JSON output.
    cg serve --help    Browse sessions locally without writing files.`,
 		Flags: []cli.Flag{
 			&cli.StringFlag{

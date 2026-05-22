@@ -28,7 +28,7 @@ quirks stay inside the matching reader package:
 - `reader/claude` parses Claude Code JSONL sessions.
 
 Readers should not know whether the transcript will be rendered as HTML,
-Markdown, or terminal output.
+Markdown, JSON, or terminal output.
 
 ## Core Model
 
@@ -61,6 +61,7 @@ Renderers consume `core.Transcript` values and write output:
 
 - `render/html` writes static HTML.
 - `render/markdown` writes Markdown.
+- `render/json` writes standardized transcript JSON.
 - `render/terminal` writes ANSI terminal output.
 
 Renderers should not parse raw agent logs or duplicate transform behavior.

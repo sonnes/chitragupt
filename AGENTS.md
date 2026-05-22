@@ -4,15 +4,15 @@
 
 Chitragupt (`cg`) is a Go CLI that converts CLI agent session logs into
 shareable transcripts. It reads Claude Code session files, normalizes them into
-a standard transcript model, then renders them as HTML, Markdown, or terminal
-output.
+a standard transcript model, then renders them as HTML, Markdown, JSON, or
+terminal output.
 
 ## Tech Stack
 
 - Go
 - Makefile-driven build and test workflow
 - JSONL/JSON session readers
-- Static HTML, Markdown, and ANSI terminal renderers
+- Static HTML, Markdown, JSON, and ANSI terminal renderers
 
 ## Code Quality Expectations
 
@@ -90,6 +90,7 @@ compact/       Compact transcript transformer
 render/        Output renderers
   html/        Static HTML renderer
   markdown/    Markdown renderer
+  json/        Standard transcript JSON renderer
   terminal/    ANSI terminal renderer
 docs/          Research, concepts, capabilities, and implementation plans
 examples/      Example session inputs and rendered outputs

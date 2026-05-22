@@ -11,6 +11,7 @@ import (
 	"github.com/sonnes/chitragupt/redact"
 	"github.com/sonnes/chitragupt/render"
 	htmlrender "github.com/sonnes/chitragupt/render/html"
+	jsonrender "github.com/sonnes/chitragupt/render/json"
 	markdownrender "github.com/sonnes/chitragupt/render/markdown"
 	"github.com/sonnes/chitragupt/render/terminal"
 	"github.com/urfave/cli/v3"
@@ -30,6 +31,7 @@ func newApp() *app {
 		renderers: map[string]func() render.Renderer{
 			"terminal": func() render.Renderer { return terminal.New() },
 			"html":     func() render.Renderer { return htmlrender.New() },
+			"json":     func() render.Renderer { return jsonrender.New() },
 			"markdown": func() render.Renderer { return markdownrender.New() },
 		},
 	}

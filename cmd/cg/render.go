@@ -27,16 +27,17 @@ Pick exactly one input:
 
 Pick output:
   no --format       Terminal output to stdout.
-  --format FORMAT   terminal, html, or markdown.
+  --format FORMAT   terminal, html, markdown, or json.
   --out DIR         Write index.{ext} and agent-{id}.{ext} files.
   --compact         Summarize verbose tool content.
 
 Examples:
   cg render -a claude -f session.jsonl
   cg render -a claude -f session.jsonl --format markdown
+  cg render -a claude -f session.jsonl --format json
   cg render -a claude -f session.jsonl --format html --out transcript
   cg render -a claude --project . --format html --out transcripts
-  cg render -a claude --all --format html --format markdown --out transcripts`,
+  cg render -a claude --all --format html --format markdown --format json --out transcripts`,
 		Flags: []cli.Flag{
 			&cli.StringFlag{
 				Name:     "agent",
@@ -72,7 +73,7 @@ Examples:
 			&cli.StringSliceFlag{
 				Name:     "format",
 				Aliases:  []string{"fmt"},
-				Usage:    "Output `FORMAT`: terminal, html, markdown. Repeat for multiple formats",
+				Usage:    "Output `FORMAT`: terminal, html, markdown, json. Repeat for multiple formats",
 				Category: "Output",
 			},
 			&cli.BoolFlag{
@@ -245,6 +246,8 @@ func formatExtension(format string) string {
 		return ".txt"
 	case "markdown":
 		return ".md"
+	case "json":
+		return ".json"
 	default:
 		return "." + format
 	}

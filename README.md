@@ -58,6 +58,7 @@ cg render --agent claude --project ./ --format html --out transcripts
 cg render --agent claude --file session.jsonl --format terminal   # default
 cg render --agent claude --file session.jsonl --format html
 cg render --agent claude --file session.jsonl --format markdown
+cg render --agent claude --file session.jsonl --format json
 ```
 
 ### Serve
@@ -121,6 +122,7 @@ render/       Render transcripts to output formats
   terminal/     ANSI terminal with tree view
   html/         Tailwind v4 + syntax highlighting
   markdown/     Markdown
+  json/         Standard transcript JSON
 
 cmd/cg/       CLI entrypoint
 ```

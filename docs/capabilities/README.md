@@ -22,7 +22,7 @@ capability docs explain what the CLI can do today and where each feature lives.
 
 ### Output
 
-- [Output Formats](output-formats.md) — terminal, HTML, and Markdown output
+- [Output Formats](output-formats.md) — terminal, HTML, Markdown, and JSON output
 - [Local Server](local-server.md) — browsing sessions locally
 
 ### Transcript Safety and Size

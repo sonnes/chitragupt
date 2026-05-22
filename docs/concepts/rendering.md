@@ -1,6 +1,6 @@
 ---
 title: "Rendering"
-summary: "How normalized transcripts become HTML, Markdown, and terminal output"
+summary: "How normalized transcripts become HTML, Markdown, JSON, and terminal output"
 read_when:
   - Adding or changing an output format
   - Debugging rendered transcript output
@@ -18,6 +18,7 @@ consume `core.Transcript` values and should not parse raw agent logs.
 | --- | --- | --- |
 | `render/html` | HTML | Static, shareable transcript pages |
 | `render/markdown` | Markdown | Plain text documentation-friendly output |
+| `render/json` | JSON | Standard transcript JSON |
 | `render/terminal` | Terminal | ANSI output for direct CLI viewing |
 
 ## Output Directories
