@@ -22,9 +22,9 @@ type Reader struct {
 	Dir string
 }
 
-// maxLineSize is the maximum JSONL line size (1 MB). Claude Code tool results
+// maxLineSize is the maximum JSONL line size (10 MB). Claude Code tool results
 // can exceed the default 64 KB bufio.Scanner buffer.
-const maxLineSize = 1 << 20
+const maxLineSize = 10 << 20
 
 // Raw JSON deserialization types. These mirror the JSONL structure on disk.
 
@@ -38,6 +38,7 @@ type rawEntry struct {
 	GitBranch   string     `json:"gitBranch"`
 	IsSidechain bool       `json:"isSidechain"`
 	AgentID     string     `json:"agentId"`
+	Summary     string     `json:"summary"`
 	Message     rawMessage `json:"message"`
 }
 
@@ -171,7 +172,7 @@ func (r *Reader) dir() string {
 	return filepath.Join(home, ".claude", "projects")
 }
 
-// scanEntries reads JSONL lines, keeping only user and assistant message entries.
+// scanEntries reads JSONL lines, keeping transcript and title-bearing entries.
 func scanEntries(r io.Reader) ([]rawEntry, error) {
 	scanner := bufio.NewScanner(r)
 	scanner.Buffer(make([]byte, maxLineSize), maxLineSize)
@@ -185,7 +186,7 @@ func scanEntries(r io.Reader) ([]rawEntry, error) {
 		if entry.IsSidechain {
 			continue
 		}
-		if entry.Type != "user" && entry.Type != "assistant" {
+		if entry.Type != "summary" && entry.Type != "user" && entry.Type != "assistant" {
 			continue
 		}
 		entries = append(entries, entry)
@@ -199,9 +200,14 @@ func buildTranscript(entries []rawEntry) (*core.Transcript, error) {
 		return nil, fmt.Errorf("no messages found in session")
 	}
 
-	messages := groupAndMapMessages(entries)
-	first := entries[0]
-	last := entries[len(entries)-1]
+	messageEntries := filterMessageEntries(entries)
+	if len(messageEntries) == 0 {
+		return nil, fmt.Errorf("no messages found in session")
+	}
+
+	messages := groupAndMapMessages(messageEntries)
+	first := messageEntries[0]
+	last := messageEntries[len(messageEntries)-1]
 
 	createdAt := parseTime(first.Timestamp)
 	var updatedAt *time.Time
@@ -217,12 +223,22 @@ func buildTranscript(entries []rawEntry) (*core.Transcript, error) {
 		Model:     findPrimaryModel(entries),
 		Dir:       first.CWD,
 		GitBranch: first.GitBranch,
-		Title:     deriveTitle(messages),
+		Title:     deriveTitle(entries, messages),
 		CreatedAt: createdAt,
 		UpdatedAt: updatedAt,
 		Usage:     aggregateUsage(messages),
 		Messages:  messages,
 	}, nil
+}
+
+func filterMessageEntries(entries []rawEntry) []rawEntry {
+	var filtered []rawEntry
+	for _, entry := range entries {
+		if entry.Type == "user" || entry.Type == "assistant" {
+			filtered = append(filtered, entry)
+		}
+	}
+	return filtered
 }
 
 // gitAuthor returns the git user.name configured in dir, or "" on any error.
@@ -457,7 +473,13 @@ func isReadToolResult(msg *core.Message, toolUseID string) bool {
 
 // deriveTitle extracts a title from the first user text block, skipping
 // IDE metadata tags. Truncated to 80 characters on a word boundary.
-func deriveTitle(messages []core.Message) string {
+func deriveTitle(entries []rawEntry, messages []core.Message) string {
+	for _, entry := range entries {
+		if entry.Type == "summary" && strings.TrimSpace(entry.Summary) != "" {
+			return truncate(strings.TrimSpace(entry.Summary), 80)
+		}
+	}
+
 	for _, m := range messages {
 		if m.Role != core.RoleUser {
 			continue
@@ -617,7 +639,7 @@ func buildSubagentTranscript(path, parentSessionID string) (*core.Transcript, er
 		ParentSessionID: parentSessionID,
 		Agent:           "claude",
 		Model:           findPrimaryModel(entries),
-		Title:           deriveTitle(messages),
+		Title:           deriveTitle(entries, messages),
 		CreatedAt:       createdAt,
 		UpdatedAt:       updatedAt,
 		Usage:           aggregateUsage(messages),

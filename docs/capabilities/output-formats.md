@@ -11,6 +11,11 @@ read_when:
 
 Chitragupt renders normalized transcripts in four formats.
 
+Transcript metadata may include derived `stats` such as tool usage, file
+operation categories, command names, skills, work-mode counts, and sub-agent
+count. JSON output preserves these fields directly, while human-facing renderers
+can use them for summaries and indexes.
+
 | Format | Flag | Renderer | Use case |
 | --- | --- | --- | --- |
 | Terminal | `--format terminal` | `render/terminal` | Inspect a transcript in the CLI |
@@ -34,4 +39,3 @@ cg render --agent claude --file session.jsonl --format json
 - [Rendering](../concepts/rendering.md)
 - [Compact Mode](compact-mode.md)
 - [Redaction](redaction.md)
-

@@ -157,9 +157,10 @@ func renderCmd() *cli.Command {
 	}
 }
 
-// computeDiffStatsTree computes DiffStats for a transcript and all its sub-agents.
+// computeDiffStatsTree computes derived stats for a transcript and all its sub-agents.
 func computeDiffStatsTree(t *core.Transcript) {
 	t.DiffStats = core.ComputeDiffStats(t)
+	t.Stats = core.ComputeSessionStats(t)
 	for _, sub := range t.SubAgents {
 		computeDiffStatsTree(sub)
 	}

@@ -3,6 +3,7 @@ package claude
 import (
 	"os"
 	"path/filepath"
+	"strings"
 	"testing"
 
 	"github.com/sonnes/chitragupt/core"
@@ -46,6 +47,11 @@ func TestScanEntries(t *testing.T) {
 			name:      "filters non-message types and sidechain",
 			file:      "mixed_entries.jsonl",
 			wantCount: 2,
+		},
+		{
+			name:      "keeps summary entries for title extraction",
+			file:      "summary_title.jsonl",
+			wantCount: 3,
 		},
 		{
 			name:      "simple pair",
@@ -225,6 +231,7 @@ func TestDeriveTitle(t *testing.T) {
 	}{
 		{"simple text", "simple.jsonl", "fix the bug"},
 		{"skips ide metadata", "ide_title.jsonl", "real title here"},
+		{"prefers summary entry", "summary_title.jsonl", "Fix login redirects"},
 	}
 
 	for _, tt := range tests {
@@ -233,6 +240,22 @@ func TestDeriveTitle(t *testing.T) {
 			assert.Equal(t, tt.want, tr.Title)
 		})
 	}
+}
+
+func TestReadFileLargeLine(t *testing.T) {
+	dir := t.TempDir()
+	path := filepath.Join(dir, "large.jsonl")
+
+	largeText := strings.Repeat("x", (1<<20)+1)
+	content := `{"type":"user","uuid":"u1","parentUuid":null,"sessionId":"large","timestamp":"2026-01-01T09:00:00Z","cwd":"/work","gitBranch":"main","message":{"role":"user","content":[{"type":"text","text":"large line"}]}}` + "\n" +
+		`{"type":"assistant","uuid":"a1","parentUuid":"u1","sessionId":"large","timestamp":"2026-01-01T09:00:05Z","cwd":"/work","gitBranch":"main","message":{"id":"msg-1","role":"assistant","model":"claude-opus-4-6","content":[{"type":"text","text":"` + largeText + `"}],"usage":{"input_tokens":1,"output_tokens":1}}}` + "\n"
+	require.NoError(t, os.WriteFile(path, []byte(content), 0o644))
+
+	r := &Reader{}
+	tr, err := r.ReadFile(path)
+	require.NoError(t, err)
+	require.Len(t, tr.Messages, 2)
+	assert.Equal(t, largeText, tr.Messages[1].Content[0].Text)
 }
 
 func TestToolResultError(t *testing.T) {

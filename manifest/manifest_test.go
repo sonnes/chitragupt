@@ -141,7 +141,20 @@ func TestNewManifestEntry(t *testing.T) {
 		UpdatedAt: &later,
 		Usage:     &core.Usage{InputTokens: 1000, OutputTokens: 500},
 		DiffStats: &core.DiffStats{Added: 5, Removed: 2, Changed: 1},
-		Messages:  make([]core.Message, 3),
+		Messages: []core.Message{
+			{},
+			{},
+			{
+				Role: core.RoleAssistant,
+				Content: []core.ContentBlock{
+					{
+						Type:  core.BlockToolUse,
+						Name:  "Bash",
+						Input: map[string]any{"command": "make test"},
+					},
+				},
+			},
+		},
 	}
 
 	e := core.NewManifestEntry(tr, "claude/sess-1/index.html")
@@ -154,6 +167,9 @@ func TestNewManifestEntry(t *testing.T) {
 	assert.Equal(t, &later, e.UpdatedAt)
 	assert.Equal(t, 1000, e.Usage.InputTokens)
 	assert.Equal(t, 5, e.DiffStats.Added)
+	require.NotNil(t, e.Stats)
+	assert.Equal(t, 1, e.Stats.ToolUsage["Bash"])
+	assert.Equal(t, 1, e.Stats.CommandsUsed["make"])
 	assert.Equal(t, 3, e.MessageCount)
 	assert.Equal(t, "claude/sess-1/index.html", e.Href)
 }

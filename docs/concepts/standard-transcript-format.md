@@ -24,7 +24,14 @@ A transcript represents one agent session. It carries session metadata,
 messages, and optional sub-agent transcripts.
 
 Important metadata includes the session ID, agent name, working directory,
-project, title, timestamps, and git branch when available.
+project, title, timestamps, git branch, aggregate usage, edit stats, and
+derived session stats when available.
+
+`stats` contains counts derived from normalized message blocks, including model
+usage, tool usage, file operation categories, skills, shell command names, work
+mode counts, and sub-agent count. Command stats intentionally store command
+names rather than full command lines so lightweight metadata does not expose
+details that belong in redacted transcript content.
 
 ## Messages
 
@@ -58,4 +65,3 @@ When changing the format:
 
 - [Transcript Pipeline](transcript-pipeline.md)
 - [Sub-Agent Transcripts](../capabilities/subagents.md)
-

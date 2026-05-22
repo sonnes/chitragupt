@@ -7,18 +7,19 @@ import "time"
 
 // Transcript is the top-level container for a single session.
 type Transcript struct {
-	SessionID       string     `json:"session_id"`
-	ParentSessionID string     `json:"parent_session_id,omitempty"`
-	Agent           string     `json:"agent"`                // "claude", "codex", "opencode", "cursor"
-	Author          string     `json:"author,omitempty"`     // git user.name from working directory
-	Model           string     `json:"model,omitempty"`      // primary model used
-	Dir             string     `json:"dir,omitempty"`        // working directory
-	GitBranch       string     `json:"git_branch,omitempty"` // branch at session start
-	Title           string     `json:"title,omitempty"`
-	CreatedAt       time.Time  `json:"created_at"`
-	UpdatedAt       *time.Time `json:"updated_at,omitempty"`
-	Usage           *Usage     `json:"usage,omitempty"`      // aggregate session usage
+	SessionID       string        `json:"session_id"`
+	ParentSessionID string        `json:"parent_session_id,omitempty"`
+	Agent           string        `json:"agent"`                // "claude", "codex", "opencode", "cursor"
+	Author          string        `json:"author,omitempty"`     // git user.name from working directory
+	Model           string        `json:"model,omitempty"`      // primary model used
+	Dir             string        `json:"dir,omitempty"`        // working directory
+	GitBranch       string        `json:"git_branch,omitempty"` // branch at session start
+	Title           string        `json:"title,omitempty"`
+	CreatedAt       time.Time     `json:"created_at"`
+	UpdatedAt       *time.Time    `json:"updated_at,omitempty"`
+	Usage           *Usage        `json:"usage,omitempty"`      // aggregate session usage
 	DiffStats       *DiffStats    `json:"diff_stats,omitempty"` // aggregate edit statistics
+	Stats           *SessionStats `json:"stats,omitempty"`      // aggregate session metadata
 	Messages        []Message     `json:"messages"`
 	SubAgents       []*Transcript `json:"sub_agents,omitempty"`
 }
@@ -37,6 +38,24 @@ type DiffStats struct {
 	Added   int `json:"added,omitempty"`   // lines added (Write content + Edit new_string)
 	Removed int `json:"removed,omitempty"` // lines removed (Edit old_string)
 	Changed int `json:"changed,omitempty"` // unique files touched
+}
+
+// WorkModeStats groups tool calls into broad work modes.
+type WorkModeStats struct {
+	Explore int `json:"explore,omitempty"`
+	Build   int `json:"build,omitempty"`
+	Test    int `json:"test,omitempty"`
+}
+
+// SessionStats holds derived counts useful for browsing and analytics.
+type SessionStats struct {
+	ModelUsage    map[string]int `json:"model_usage,omitempty"`
+	ToolUsage     map[string]int `json:"tool_usage,omitempty"`
+	FileOps       map[string]int `json:"file_ops,omitempty"`
+	SkillsUsed    map[string]int `json:"skills_used,omitempty"`
+	CommandsUsed  map[string]int `json:"commands_used,omitempty"`
+	WorkMode      *WorkModeStats `json:"work_mode,omitempty"`
+	SubAgentCount int            `json:"sub_agent_count,omitempty"`
 }
 
 // Add accumulates the counts from other into u.

@@ -19,6 +19,10 @@
       "description": "Agent that produced this session.",
       "enum": ["claude", "codex", "opencode", "cursor"]
     },
+    "author": {
+      "type": "string",
+      "description": "Git author or local user associated with the session, when available."
+    },
     "model": {
       "type": "string",
       "description": "Primary model used in this session (e.g. claude-opus-4-5-20251101)."
@@ -49,6 +53,14 @@
       "$ref": "#/$defs/Usage",
       "description": "Aggregate token usage across the entire session."
     },
+    "diff_stats": {
+      "$ref": "#/$defs/DiffStats",
+      "description": "Aggregate line-level edit statistics across the session."
+    },
+    "stats": {
+      "$ref": "#/$defs/SessionStats",
+      "description": "Derived session metadata useful for browsing and analytics."
+    },
     "messages": {
       "type": "array",
       "items": { "$ref": "#/$defs/Message" },
@@ -69,6 +81,56 @@
         "output_tokens": { "type": "integer" },
         "cache_read_tokens": { "type": "integer" },
         "cache_creation_tokens": { "type": "integer" }
+      },
+      "additionalProperties": false
+    },
+    "DiffStats": {
+      "type": "object",
+      "description": "Line-level edit counters.",
+      "properties": {
+        "added": { "type": "integer" },
+        "removed": { "type": "integer" },
+        "changed": { "type": "integer" }
+      },
+      "additionalProperties": false
+    },
+    "WorkModeStats": {
+      "type": "object",
+      "description": "Broad tool-call categories.",
+      "properties": {
+        "explore": { "type": "integer" },
+        "build": { "type": "integer" },
+        "test": { "type": "integer" }
+      },
+      "additionalProperties": false
+    },
+    "SessionStats": {
+      "type": "object",
+      "description": "Derived counts computed from normalized transcript blocks.",
+      "properties": {
+        "model_usage": {
+          "type": "object",
+          "additionalProperties": { "type": "integer" }
+        },
+        "tool_usage": {
+          "type": "object",
+          "additionalProperties": { "type": "integer" }
+        },
+        "file_ops": {
+          "type": "object",
+          "additionalProperties": { "type": "integer" }
+        },
+        "skills_used": {
+          "type": "object",
+          "additionalProperties": { "type": "integer" }
+        },
+        "commands_used": {
+          "type": "object",
+          "description": "Shell command names, not full command lines.",
+          "additionalProperties": { "type": "integer" }
+        },
+        "work_mode": { "$ref": "#/$defs/WorkModeStats" },
+        "sub_agent_count": { "type": "integer" }
       },
       "additionalProperties": false
     },

@@ -64,6 +64,18 @@
                         <span class="text-slate-400 dark:text-slate-500">
                             {{.MessageCount}} messages
                         </span>
+                        {{if .Stats}}
+                        {{if .Stats.ToolUsage}}
+                        <span class="text-slate-400 dark:text-slate-500">
+                            {{len .Stats.ToolUsage}} tools
+                        </span>
+                        {{end}}
+                        {{if .Stats.SubAgentCount}}
+                        <span class="text-slate-400 dark:text-slate-500">
+                            {{.Stats.SubAgentCount}} sub-agents
+                        </span>
+                        {{end}}
+                        {{end}}
                     </div>
                 </div>
             </a>

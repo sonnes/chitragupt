@@ -20,7 +20,8 @@
       "Bash(open:*)",
       "Bash(./cg render:*)",
       "Bash(make build:*)",
-      "Bash(.bin/cg render:*)"
+      "Bash(.bin/cg render:*)",
+      "Bash(.bin/cg:*)"
     ]
   }
 }
