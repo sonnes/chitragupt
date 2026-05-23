@@ -7,21 +7,40 @@ import "time"
 
 // Transcript is the top-level container for a single session.
 type Transcript struct {
-	SessionID       string        `json:"session_id"`
-	ParentSessionID string        `json:"parent_session_id,omitempty"`
-	Agent           string        `json:"agent"`                // "claude"
-	Author          string        `json:"author,omitempty"`     // git user.name from working directory
-	Model           string        `json:"model,omitempty"`      // primary model used
-	Dir             string        `json:"dir,omitempty"`        // working directory
-	GitBranch       string        `json:"git_branch,omitempty"` // branch at session start
-	Title           string        `json:"title,omitempty"`
-	CreatedAt       time.Time     `json:"created_at"`
-	UpdatedAt       *time.Time    `json:"updated_at,omitempty"`
-	Usage           *Usage        `json:"usage,omitempty"`      // aggregate session usage
-	DiffStats       *DiffStats    `json:"diff_stats,omitempty"` // aggregate edit statistics
-	Stats           *SessionStats `json:"stats,omitempty"`      // aggregate session metadata
-	Messages        []Message     `json:"messages"`
-	SubAgents       []*Transcript `json:"sub_agents,omitempty"`
+	SessionID       string          `json:"session_id"`
+	ParentSessionID string          `json:"parent_session_id,omitempty"`
+	Relation        SessionRelation `json:"relation,omitempty"`
+	ForkedFrom      *ForkInfo       `json:"forked_from,omitempty"`
+	Agent           string          `json:"agent"`                // "claude"
+	Author          string          `json:"author,omitempty"`     // git user.name from working directory
+	Model           string          `json:"model,omitempty"`      // primary model used
+	Dir             string          `json:"dir,omitempty"`        // working directory
+	GitBranch       string          `json:"git_branch,omitempty"` // branch at session start
+	Title           string          `json:"title,omitempty"`
+	CreatedAt       time.Time       `json:"created_at"`
+	UpdatedAt       *time.Time      `json:"updated_at,omitempty"`
+	Usage           *Usage          `json:"usage,omitempty"`      // aggregate session usage
+	DiffStats       *DiffStats      `json:"diff_stats,omitempty"` // aggregate edit statistics
+	Stats           *SessionStats   `json:"stats,omitempty"`      // aggregate session metadata
+	Messages        []Message       `json:"messages"`
+	SubAgents       []*Transcript   `json:"sub_agents,omitempty"`
+}
+
+// SessionRelation identifies how a session relates to other sessions.
+type SessionRelation string
+
+const (
+	RelationRoot         SessionRelation = "root"
+	RelationSubagent     SessionRelation = "subagent"
+	RelationContinuation SessionRelation = "continuation"
+	RelationFork         SessionRelation = "fork"
+	RelationUnknown      SessionRelation = "unknown"
+)
+
+// ForkInfo records the source session and message for forked sessions.
+type ForkInfo struct {
+	SessionID   string `json:"session_id"`
+	MessageUUID string `json:"message_uuid,omitempty"`
 }
 
 // Usage holds token counters. Used both at session level (aggregate) and per

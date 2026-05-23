@@ -31,14 +31,15 @@ type rawLine struct {
 }
 
 type sessionMeta struct {
-	ID            string   `json:"id"`
-	Timestamp     string   `json:"timestamp"`
-	CWD           string   `json:"cwd"`
-	Source        string   `json:"source"`
-	Originator    string   `json:"originator"`
-	CLIVersion    string   `json:"cli_version"`
-	ModelProvider string   `json:"model_provider"`
-	Git           *gitMeta `json:"git"`
+	ID            string          `json:"id"`
+	Timestamp     string          `json:"timestamp"`
+	CWD           string          `json:"cwd"`
+	Source        json.RawMessage `json:"source"`
+	ThreadSource  string          `json:"thread_source"`
+	Originator    string          `json:"originator"`
+	CLIVersion    string          `json:"cli_version"`
+	ModelProvider string          `json:"model_provider"`
+	Git           *gitMeta        `json:"git"`
 }
 
 type gitMeta struct {
@@ -314,6 +315,7 @@ func buildTranscript(lines []rawLine) (*core.Transcript, error) {
 
 	t := &core.Transcript{
 		Agent:     "codex",
+		Relation:  core.RelationRoot,
 		CreatedAt: first,
 		UpdatedAt: updatedAt,
 		Usage:     state.totalUsage,
@@ -325,6 +327,7 @@ func buildTranscript(lines []rawLine) (*core.Transcript, error) {
 	if meta != nil {
 		t.SessionID = meta.ID
 		t.Dir = meta.CWD
+		t.Relation = codexRelation(meta)
 		if meta.Git != nil {
 			t.GitBranch = meta.Git.Branch
 		}
@@ -337,6 +340,39 @@ func buildTranscript(lines []rawLine) (*core.Transcript, error) {
 	}
 
 	return t, nil
+}
+
+func codexRelation(meta *sessionMeta) core.SessionRelation {
+	if meta == nil {
+		return core.RelationRoot
+	}
+	if meta.ThreadSource == "subagent" || codexSourceKind(meta.Source) == "subagent" {
+		return core.RelationSubagent
+	}
+	if meta.ThreadSource == "unknown" {
+		return core.RelationUnknown
+	}
+	return core.RelationRoot
+}
+
+func codexSourceKind(raw json.RawMessage) string {
+	if len(raw) == 0 {
+		return ""
+	}
+
+	var source string
+	if err := json.Unmarshal(raw, &source); err == nil {
+		return source
+	}
+
+	var sourceObject map[string]json.RawMessage
+	if err := json.Unmarshal(raw, &sourceObject); err != nil {
+		return ""
+	}
+	for key := range sourceObject {
+		return key
+	}
+	return ""
 }
 
 type transcriptState struct {

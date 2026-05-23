@@ -1,0 +1,4 @@
+{"timestamp":"2026-05-22T10:00:00Z","type":"session_meta","payload":{"id":"codex-subagent","timestamp":"2026-05-22T10:00:00Z","cwd":"/work/chitragupt","source":{"subagent":{"other":"guardian"}},"thread_source":"subagent","model_provider":"openai","git":{"branch":"feature"}}}
+{"timestamp":"2026-05-22T10:00:01Z","type":"turn_context","payload":{"turn_id":"turn-1","cwd":"/work/chitragupt","model":"gpt-5.3-codex"}}
+{"timestamp":"2026-05-22T10:00:02Z","type":"event_msg","payload":{"type":"user_message","message":"Check the patch"}}
+{"timestamp":"2026-05-22T10:00:03Z","type":"response_item","payload":{"type":"message","role":"assistant","content":[{"type":"output_text","text":"Patch checked."}]}}

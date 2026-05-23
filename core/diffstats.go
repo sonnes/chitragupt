@@ -18,12 +18,24 @@ func ComputeDiffStats(t *Transcript) *DiffStats {
 			if b.Type != BlockToolUse {
 				continue
 			}
+
+			toolName := strings.ToLower(b.Name)
+			if toolName == "apply_patch" {
+				patchAdded, patchRemoved, patchFiles := applyPatchStats(b.Input)
+				added += patchAdded
+				removed += patchRemoved
+				for _, fp := range patchFiles {
+					files[fp] = true
+				}
+				continue
+			}
+
 			m, ok := b.Input.(map[string]any)
 			if !ok || m == nil {
 				continue
 			}
 
-			switch strings.ToLower(b.Name) {
+			switch toolName {
 			case "write":
 				if fp := stringVal(m, "file_path"); fp != "" {
 					files[fp] = true
@@ -87,6 +99,66 @@ func stringVal(m map[string]any, key string) string {
 		return ""
 	}
 	return s
+}
+
+func applyPatchStats(input any) (int, int, []string) {
+	patch := patchText(input)
+	if patch == "" {
+		return 0, 0, nil
+	}
+
+	files := make(map[string]bool)
+	var added, removed int
+	var currentFile string
+
+	for _, line := range strings.Split(patch, "\n") {
+		switch {
+		case strings.HasPrefix(line, "*** Add File: "):
+			currentFile = strings.TrimSpace(strings.TrimPrefix(line, "*** Add File: "))
+			if currentFile != "" {
+				files[currentFile] = true
+			}
+		case strings.HasPrefix(line, "*** Update File: "):
+			currentFile = strings.TrimSpace(strings.TrimPrefix(line, "*** Update File: "))
+			if currentFile != "" {
+				files[currentFile] = true
+			}
+		case strings.HasPrefix(line, "*** Delete File: "):
+			currentFile = strings.TrimSpace(strings.TrimPrefix(line, "*** Delete File: "))
+			if currentFile != "" {
+				files[currentFile] = true
+			}
+		case strings.HasPrefix(line, "*** Move to: "):
+			target := strings.TrimSpace(strings.TrimPrefix(line, "*** Move to: "))
+			if target != "" {
+				files[target] = true
+			}
+		case currentFile != "" && strings.HasPrefix(line, "+") && !strings.HasPrefix(line, "+++"):
+			added++
+		case currentFile != "" && strings.HasPrefix(line, "-") && !strings.HasPrefix(line, "---"):
+			removed++
+		}
+	}
+
+	paths := make([]string, 0, len(files))
+	for fp := range files {
+		paths = append(paths, fp)
+	}
+	return added, removed, paths
+}
+
+func patchText(input any) string {
+	switch v := input.(type) {
+	case string:
+		return v
+	case map[string]any:
+		for _, key := range []string{"patch", "input"} {
+			if text := stringVal(v, key); text != "" {
+				return text
+			}
+		}
+	}
+	return ""
 }
 
 // countLines returns the number of lines in s.

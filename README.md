@@ -70,10 +70,19 @@ cg render --agent codex --file rollout.jsonl --format html
 Browse sessions locally without creating files:
 
 ```sh
-cg serve --agent claude --project <project-name>
-cg serve --agent claude --all
-cg serve --agent claude --port 3000
+cg serve
+cg serve --project .
+cg serve --all
+cg serve --port 3000
+cg serve --agent claude --project .
 ```
+
+The local server rereads supported agent session stores on each request, so
+newly written Claude Code and Codex sessions appear after a browser refresh.
+By default, `cg serve` lists current-project sessions from every supported
+agent; use `--project`, `--all`, or `--agent` to adjust the scope. The HTML
+index marks root sessions, subagents, continuations, and forks with distinct
+badges and color rails when the source logs expose that lineage.
 
 ### Redaction
 

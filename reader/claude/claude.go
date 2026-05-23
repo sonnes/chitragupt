@@ -29,17 +29,24 @@ const maxLineSize = 10 << 20
 // Raw JSON deserialization types. These mirror the JSONL structure on disk.
 
 type rawEntry struct {
-	Type        string     `json:"type"`
-	UUID        string     `json:"uuid"`
-	ParentUUID  *string    `json:"parentUuid"`
-	SessionID   string     `json:"sessionId"`
-	Timestamp   string     `json:"timestamp"`
-	CWD         string     `json:"cwd"`
-	GitBranch   string     `json:"gitBranch"`
-	IsSidechain bool       `json:"isSidechain"`
-	AgentID     string     `json:"agentId"`
-	Summary     string     `json:"summary"`
-	Message     rawMessage `json:"message"`
+	Type            string       `json:"type"`
+	UUID            string       `json:"uuid"`
+	ParentUUID      *string      `json:"parentUuid"`
+	SessionID       string       `json:"sessionId"`
+	ParentSessionID string       `json:"parentSessionId"`
+	Timestamp       string       `json:"timestamp"`
+	CWD             string       `json:"cwd"`
+	GitBranch       string       `json:"gitBranch"`
+	IsSidechain     bool         `json:"isSidechain"`
+	AgentID         string       `json:"agentId"`
+	ForkedFrom      *rawForkInfo `json:"forkedFrom"`
+	Summary         string       `json:"summary"`
+	Message         rawMessage   `json:"message"`
+}
+
+type rawForkInfo struct {
+	SessionID   string `json:"sessionId"`
+	MessageUUID string `json:"messageUuid"`
 }
 
 type rawMessage struct {
@@ -216,19 +223,54 @@ func buildTranscript(entries []rawEntry) (*core.Transcript, error) {
 		updatedAt = &t
 	}
 
+	relation := core.RelationRoot
+	parentSessionID := findParentSessionID(messageEntries)
+	forkedFrom := findForkInfo(messageEntries)
+	if forkedFrom != nil {
+		relation = core.RelationFork
+	} else if parentSessionID != "" {
+		relation = core.RelationContinuation
+	}
+
 	return &core.Transcript{
-		SessionID: first.SessionID,
-		Agent:     "claude",
-		Author:    gitAuthor(first.CWD),
-		Model:     findPrimaryModel(entries),
-		Dir:       first.CWD,
-		GitBranch: first.GitBranch,
-		Title:     deriveTitle(entries, messages),
-		CreatedAt: createdAt,
-		UpdatedAt: updatedAt,
-		Usage:     aggregateUsage(messages),
-		Messages:  messages,
+		SessionID:       first.SessionID,
+		ParentSessionID: parentSessionID,
+		Relation:        relation,
+		ForkedFrom:      forkedFrom,
+		Agent:           "claude",
+		Author:          gitAuthor(first.CWD),
+		Model:           findPrimaryModel(entries),
+		Dir:             first.CWD,
+		GitBranch:       first.GitBranch,
+		Title:           deriveTitle(entries, messages),
+		CreatedAt:       createdAt,
+		UpdatedAt:       updatedAt,
+		Usage:           aggregateUsage(messages),
+		Messages:        messages,
 	}, nil
+}
+
+func findParentSessionID(entries []rawEntry) string {
+	for _, entry := range entries {
+		if entry.ParentSessionID != "" {
+			return entry.ParentSessionID
+		}
+	}
+	return ""
+}
+
+func findForkInfo(entries []rawEntry) *core.ForkInfo {
+	var fork *core.ForkInfo
+	for _, entry := range entries {
+		if entry.ForkedFrom == nil || entry.ForkedFrom.SessionID == "" {
+			continue
+		}
+		fork = &core.ForkInfo{
+			SessionID:   entry.ForkedFrom.SessionID,
+			MessageUUID: entry.ForkedFrom.MessageUUID,
+		}
+	}
+	return fork
 }
 
 func filterMessageEntries(entries []rawEntry) []rawEntry {
@@ -637,6 +679,7 @@ func buildSubagentTranscript(path, parentSessionID string) (*core.Transcript, er
 	return &core.Transcript{
 		SessionID:       agentID,
 		ParentSessionID: parentSessionID,
+		Relation:        core.RelationSubagent,
 		Agent:           "claude",
 		Model:           findPrimaryModel(entries),
 		Title:           deriveTitle(entries, messages),

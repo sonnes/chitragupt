@@ -12,7 +12,16 @@
     },
     "parent_session_id": {
       "type": "string",
-      "description": "ID of the parent session, if this is a sub-agent session."
+      "description": "ID of the parent session when the source format records direct lineage."
+    },
+    "relation": {
+      "type": "string",
+      "enum": ["root", "subagent", "continuation", "fork", "unknown"],
+      "description": "How this session relates to other sessions."
+    },
+    "forked_from": {
+      "$ref": "#/$defs/ForkInfo",
+      "description": "Source session and message for branched sessions."
     },
     "agent": {
       "type": "string",
@@ -73,6 +82,21 @@
     }
   },
   "$defs": {
+    "ForkInfo": {
+      "type": "object",
+      "required": ["session_id"],
+      "properties": {
+        "session_id": {
+          "type": "string",
+          "description": "Session ID this session was forked from."
+        },
+        "message_uuid": {
+          "type": "string",
+          "description": "Message UUID at the fork point, when available."
+        }
+      },
+      "additionalProperties": false
+    },
     "Usage": {
       "type": "object",
       "description": "Token usage counters.",

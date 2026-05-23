@@ -210,6 +210,7 @@ func TestBuildTranscript(t *testing.T) {
 
 	assert.Equal(t, "sess-1", tr.SessionID)
 	assert.Equal(t, "claude", tr.Agent)
+	assert.Equal(t, core.RelationRoot, tr.Relation)
 	assert.Equal(t, "claude-opus-4-6", tr.Model)
 	assert.Equal(t, "/work", tr.Dir)
 	assert.Equal(t, "main", tr.GitBranch)
@@ -221,6 +222,26 @@ func TestBuildTranscript(t *testing.T) {
 	assert.Equal(t, 50, tr.Usage.OutputTokens)
 	assert.Equal(t, 5, tr.Usage.CacheReadTokens)
 	assert.Equal(t, 10, tr.Usage.CacheCreationTokens)
+}
+
+func TestBuildTranscriptRelations(t *testing.T) {
+	t.Run("fork", func(t *testing.T) {
+		tr := readTestdata(t, "forked_session.jsonl")
+
+		assert.Equal(t, core.RelationFork, tr.Relation)
+		require.NotNil(t, tr.ForkedFrom)
+		assert.Equal(t, "source-session", tr.ForkedFrom.SessionID)
+		assert.Equal(t, "source-a1", tr.ForkedFrom.MessageUUID)
+		assert.Empty(t, tr.ParentSessionID)
+	})
+
+	t.Run("continuation", func(t *testing.T) {
+		tr := readTestdata(t, "continued_session.jsonl")
+
+		assert.Equal(t, core.RelationContinuation, tr.Relation)
+		assert.Equal(t, "parent-session", tr.ParentSessionID)
+		assert.Nil(t, tr.ForkedFrom)
+	})
 }
 
 func TestDeriveTitle(t *testing.T) {
@@ -388,6 +409,7 @@ func TestBuildSubagentTranscript(t *testing.T) {
 
 	assert.Equal(t, "ae267a1", sub.SessionID)
 	assert.Equal(t, "sess-main-1", sub.ParentSessionID)
+	assert.Equal(t, core.RelationSubagent, sub.Relation)
 	assert.Equal(t, "claude", sub.Agent)
 	assert.Equal(t, "claude-sonnet-4-5-20250929", sub.Model)
 	assert.Equal(t, "Find all Go files", sub.Title)

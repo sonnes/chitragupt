@@ -40,7 +40,7 @@ func (r *Renderer) renderTextBlock(b core.ContentBlock) (template.HTML, error) {
 		return "", nil
 	}
 	escaped := template.HTMLEscapeString(text)
-	return template.HTML(`<p class="whitespace-pre-wrap text-sm">` + escaped + `</p>`), nil
+	return template.HTML(`<p class="plain-text whitespace-pre-wrap text-sm">` + escaped + `</p>`), nil
 }
 
 func renderThinkingBlock(b core.ContentBlock) (template.HTML, error) {

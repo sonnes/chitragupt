@@ -28,6 +28,7 @@ func TestReadFileSimple(t *testing.T) {
 
 	assert.Equal(t, "codex-simple", tr.SessionID)
 	assert.Equal(t, "codex", tr.Agent)
+	assert.Equal(t, core.RelationRoot, tr.Relation)
 	assert.Equal(t, "/work/chitragupt", tr.Dir)
 	assert.Equal(t, "main", tr.GitBranch)
 	assert.Equal(t, "gpt-5.3-codex", tr.Model)
@@ -44,6 +45,15 @@ func TestReadFileSimple(t *testing.T) {
 	assert.Equal(t, "Implement codex reader", tr.Messages[0].Content[0].Text)
 	assert.Equal(t, core.RoleAssistant, tr.Messages[1].Role)
 	assert.Equal(t, "Implemented the reader.", tr.Messages[1].Content[0].Text)
+}
+
+func TestSessionMetaRelation(t *testing.T) {
+	tr := readTestdata(t, "subagent_meta.jsonl")
+
+	assert.Equal(t, "codex-subagent", tr.SessionID)
+	assert.Equal(t, core.RelationSubagent, tr.Relation)
+	assert.Equal(t, "/work/chitragupt", tr.Dir)
+	assert.Equal(t, "feature", tr.GitBranch)
 }
 
 func TestInjectedContextUsesVisibleUserMessage(t *testing.T) {
@@ -78,6 +88,16 @@ func TestToolMapping(t *testing.T) {
 	assert.Equal(t, "apply_patch", assistant.Content[2].Name)
 	assert.Equal(t, core.BlockToolResult, assistant.Content[3].Type)
 	assert.Equal(t, "Success", assistant.Content[3].Content)
+}
+
+func TestApplyPatchDiffStats(t *testing.T) {
+	tr := readTestdata(t, "apply_patch.jsonl")
+
+	stats := core.ComputeDiffStats(tr)
+	require.NotNil(t, stats)
+	assert.Equal(t, 4, stats.Added)
+	assert.Equal(t, 1, stats.Removed)
+	assert.Equal(t, 2, stats.Changed)
 }
 
 func TestReasoningSummary(t *testing.T) {

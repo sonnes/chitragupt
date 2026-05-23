@@ -12,51 +12,127 @@
             --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
         }
     </style>
+    <style>
+        .index-title {
+            display: -webkit-box;
+            overflow: hidden;
+            overflow-wrap: anywhere;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
+            line-height: 1.25;
+            max-height: 2.5em;
+        }
+        .index-row { transition: border-color 140ms ease, background-color 140ms ease, transform 140ms ease, box-shadow 140ms ease; }
+        .index-row { border-left-width: 4px; }
+        .index-row.relation-root { border-left-color: #94a3b8; }
+        .index-row.relation-fork { border-left-color: #f59e0b; background: linear-gradient(90deg, rgba(245, 158, 11, 0.08), #fff 18%); }
+        .index-row.relation-continuation { border-left-color: #6366f1; background: linear-gradient(90deg, rgba(99, 102, 241, 0.07), #fff 18%); }
+        .index-row.relation-subagent { border-left-color: #0891b2; background: linear-gradient(90deg, rgba(8, 145, 178, 0.07), #fff 18%); }
+        .index-row.relation-unknown { border-left-color: #71717a; border-style: dashed; }
+        .relation-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            border-radius: 999px;
+            padding: 2px 8px;
+            font: 700 11px/1.4 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            text-transform: uppercase;
+            letter-spacing: 0;
+        }
+        .relation-pill.relation-root { background: #f1f5f9; color: #475569; }
+        .relation-pill.relation-fork { background: #fffbeb; color: #b45309; }
+        .relation-pill.relation-continuation { background: #eef2ff; color: #4f46e5; }
+        .relation-pill.relation-subagent { background: #ecfeff; color: #0e7490; }
+        .relation-pill.relation-unknown { background: #f4f4f5; color: #52525b; }
+        .index-row:hover,
+        .index-row:focus-visible {
+            transform: translateY(-1px);
+            box-shadow: 0 10px 30px rgba(15, 23, 42, 0.07);
+            outline: none;
+        }
+        @media (prefers-color-scheme: dark) {
+            .index-row:hover,
+            .index-row:focus-visible { box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25); }
+            .index-row.relation-fork { background: linear-gradient(90deg, rgba(245, 158, 11, 0.12), #1e293b 18%); }
+            .index-row.relation-continuation { background: linear-gradient(90deg, rgba(99, 102, 241, 0.14), #1e293b 18%); }
+            .index-row.relation-subagent { background: linear-gradient(90deg, rgba(8, 145, 178, 0.14), #1e293b 18%); }
+            .relation-pill.relation-root { background: #0f172a; color: #cbd5e1; }
+            .relation-pill.relation-fork { background: rgba(120, 53, 15, 0.45); color: #fcd34d; }
+            .relation-pill.relation-continuation { background: rgba(49, 46, 129, 0.55); color: #c7d2fe; }
+            .relation-pill.relation-subagent { background: rgba(22, 78, 99, 0.55); color: #a5f3fc; }
+            .relation-pill.relation-unknown { background: #27272a; color: #d4d4d8; }
+        }
+    </style>
 </head>
-<body class="bg-slate-50 dark:bg-slate-900 text-slate-700 dark:text-slate-300 font-sans" style="line-height: 1.65; padding: 48px 24px;">
-    <div class="max-w-3xl mx-auto">
-        <h1 class="text-3xl font-bold text-slate-900 dark:text-white mb-8">Sessions</h1>
+<body class="bg-slate-50 px-4 py-8 text-slate-700 dark:bg-slate-900 dark:text-slate-300 font-sans sm:px-6 sm:py-10 lg:px-8 lg:py-12" style="line-height: 1.65;">
+    <div class="max-w-5xl mx-auto">
+        <header class="mb-8 border-y border-slate-200 py-6 dark:border-slate-700">
+            <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+                <div class="min-w-0">
+                    <div class="mb-2 font-mono text-xs font-semibold uppercase tracking-[0.18em] text-slate-400 dark:text-slate-500">Chitragupt</div>
+                    <h1 class="text-3xl font-bold leading-tight text-slate-950 dark:text-white sm:text-4xl">Session archive</h1>
+                </div>
+                <div class="flex flex-wrap gap-2">
+                    <span class="inline-flex items-center rounded-full border border-slate-300 px-3 py-1 font-mono text-xs font-semibold text-slate-600 dark:border-slate-600 dark:text-slate-300">
+                        {{len .Entries}} sessions
+                    </span>
+                    <span class="inline-flex items-center rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-500 dark:bg-slate-800 dark:text-slate-400">
+                        Live transcript index
+                    </span>
+                </div>
+            </div>
+        </header>
         {{if not .Entries}}
-        <p class="text-slate-500 dark:text-slate-400">No sessions found.</p>
+        <div class="rounded-lg border border-dashed border-slate-300 bg-white/50 p-8 text-center dark:border-slate-700 dark:bg-slate-800/30">
+            <p class="text-sm font-medium text-slate-600 dark:text-slate-300">No sessions found.</p>
+            <p class="mt-1 text-xs text-slate-400 dark:text-slate-500">Try another project or run with <span class="font-mono">--all</span>.</p>
+        </div>
         {{else}}
-        <div class="flex flex-col gap-3">
+        <div class="flex flex-col gap-2">
             {{range .Entries}}
-            <a href="{{.Href}}" class="block no-underline group">
-                <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-5 hover:border-slate-400 dark:hover:border-slate-500 transition-colors">
-                    <div class="flex items-baseline gap-3 mb-2">
-                        <h2 class="text-base font-semibold text-slate-900 dark:text-white truncate">
-                            {{if .Title}}{{.Title}}{{else}}Session {{.SessionID}}{{end}}
-                        </h2>
-                        {{if .DiffStats}}
-                        <div class="flex items-center gap-2 text-xs font-mono font-semibold whitespace-nowrap shrink-0">
-                            {{if .DiffStats.Added}}<span class="text-emerald-600 dark:text-emerald-400">+{{formatNumber .DiffStats.Added}}</span>{{end}}
-                            {{if .DiffStats.Changed}}<span class="text-amber-600 dark:text-amber-400">~{{formatNumber .DiffStats.Changed}}</span>{{end}}
-                            {{if .DiffStats.Removed}}<span class="text-red-600 dark:text-red-400">-{{formatNumber .DiffStats.Removed}}</span>{{end}}
-                        </div>
-                        {{end}}
-                    </div>
-                    <div class="flex flex-wrap items-center gap-3 text-xs text-slate-500 dark:text-slate-400">
-                        {{if or .Author .Agent}}
-                        <span class="flex items-center gap-1">
-                            {{metaIcon "user"}}
-                            <span class="font-medium">@{{if .Author}}{{.Author}}{{else}}{{.Agent}}{{end}}</span>
+            <a href="{{.Href}}" class="index-row {{relationKey .Relation}} grid gap-4 rounded-lg border border-slate-200 bg-white p-4 no-underline dark:border-slate-700 dark:bg-slate-800 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-center">
+                <div class="min-w-0">
+                    <div class="mb-2 flex flex-wrap items-center gap-2">
+                        <span class="relation-pill {{relationKey .Relation}}" title="{{relationHelp .Relation}}">
+                            {{relationIcon .Relation}}
+                            {{relationLabel .Relation}}
+                        </span>
+                        {{if .Agent}}
+                        <span class="inline-flex items-center gap-1.5 rounded-full border border-slate-300 px-2 py-0.5 font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-600 dark:border-slate-600 dark:text-slate-300">
+                            {{metaIcon "model"}}
+                            {{.Agent}}
                         </span>
                         {{end}}
                         {{if not .CreatedAt.IsZero}}
-                        <span class="flex items-center gap-1">
+                        <span class="inline-flex items-center gap-1.5 rounded-full bg-slate-100 px-2 py-0.5 text-xs text-slate-500 dark:bg-slate-900 dark:text-slate-400">
                             {{metaIcon "clock"}}
                             <time datetime="{{isoTime .CreatedAt}}">{{formatTime .CreatedAt}}</time>
                         </span>
                         {{end}}
+                        {{if .DiffStats}}
+                        <span class="inline-flex items-center gap-2 rounded-full bg-slate-100 px-2 py-0.5 font-mono text-[11px] font-semibold dark:bg-slate-900">
+                            {{if .DiffStats.Added}}<span class="text-emerald-600 dark:text-emerald-400">+{{formatNumber .DiffStats.Added}}</span>{{end}}
+                            {{if .DiffStats.Changed}}<span class="text-amber-600 dark:text-amber-400">~{{formatNumber .DiffStats.Changed}}</span>{{end}}
+                            {{if .DiffStats.Removed}}<span class="text-red-600 dark:text-red-400">-{{formatNumber .DiffStats.Removed}}</span>{{end}}
+                        </span>
+                        {{end}}
+                    </div>
+                    <h2 class="index-title text-lg font-semibold text-slate-950 dark:text-white">
+                        {{if .Title}}{{.Title}}{{else}}Session {{.SessionID}}{{end}}
+                    </h2>
+                    <div class="mt-2 flex min-w-0 flex-wrap items-center gap-x-3 gap-y-1 text-xs text-slate-500 dark:text-slate-400">
                         {{if .Model}}
-                        <span class="flex items-center gap-1">
-                            {{metaIcon "model"}}
+                        <span class="min-w-0 max-w-full truncate font-mono sm:max-w-[18rem]">
                             {{.Model}}
                         </span>
                         {{end}}
-                        {{if .Usage}}
-                        <span class="font-mono">
-                            {{formatNumber .Usage.InputTokens}}in / {{formatNumber .Usage.OutputTokens}}out
+                        {{if .ForkedFrom}}
+                        <span class="font-mono text-amber-700 dark:text-amber-300">
+                            forked from {{shortID .ForkedFrom.SessionID}}
+                        </span>
+                        {{else if .ParentSessionID}}
+                        <span class="font-mono text-indigo-700 dark:text-indigo-300">
+                            parent {{shortID .ParentSessionID}}
                         </span>
                         {{end}}
                         <span class="text-slate-400 dark:text-slate-500">
@@ -70,11 +146,27 @@
                         {{end}}
                         {{if .Stats.SubAgentCount}}
                         <span class="text-slate-400 dark:text-slate-500">
-                            {{.Stats.SubAgentCount}} sub-agents
+                            {{if eq .Stats.SubAgentCount 1}}1 sub-agent{{else}}{{.Stats.SubAgentCount}} sub-agents{{end}}
                         </span>
                         {{end}}
                         {{end}}
                     </div>
+                </div>
+                <div class="grid grid-cols-2 gap-2 sm:w-44">
+                    {{if .Usage}}
+                    <div class="rounded-md bg-slate-50 px-3 py-2 dark:bg-slate-900">
+                        <div class="font-mono text-sm font-bold leading-none text-slate-900 dark:text-white">{{formatNumber .Usage.InputTokens}}</div>
+                        <div class="mt-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-slate-400">In</div>
+                    </div>
+                    <div class="rounded-md bg-slate-50 px-3 py-2 dark:bg-slate-900">
+                        <div class="font-mono text-sm font-bold leading-none text-slate-900 dark:text-white">{{formatNumber .Usage.OutputTokens}}</div>
+                        <div class="mt-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-slate-400">Out</div>
+                    </div>
+                    {{else}}
+                    <div class="col-span-2 rounded-md bg-slate-50 px-3 py-2 text-xs text-slate-400 dark:bg-slate-900">
+                        No token data
+                    </div>
+                    {{end}}
                 </div>
             </a>
             {{end}}

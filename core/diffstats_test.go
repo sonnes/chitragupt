@@ -96,6 +96,45 @@ func TestComputeDiffStats(t *testing.T) {
 			}},
 			want: &DiffStats{Added: 2, Removed: 0, Changed: 1},
 		},
+		{
+			name: "codex apply patch adds and removes",
+			msgs: []Message{{
+				Role: RoleAssistant,
+				Content: []ContentBlock{{
+					Type: BlockToolUse,
+					Name: "apply_patch",
+					Input: "*** Begin Patch\n" +
+						"*** Update File: /tmp/foo.go\n" +
+						"@@\n" +
+						"-old one\n" +
+						"-old two\n" +
+						"+new one\n" +
+						"+new two\n" +
+						"+new three\n" +
+						"*** Add File: /tmp/bar.go\n" +
+						"+first\n" +
+						"+second\n" +
+						"*** End Patch\n",
+				}},
+			}},
+			want: &DiffStats{Added: 5, Removed: 2, Changed: 2},
+		},
+		{
+			name: "codex apply patch map input",
+			msgs: []Message{{
+				Role: RoleAssistant,
+				Content: []ContentBlock{{
+					Type: BlockToolUse,
+					Name: "apply_patch",
+					Input: map[string]any{
+						"patch": "*** Begin Patch\n" +
+							"*** Delete File: /tmp/gone.go\n" +
+							"*** End Patch\n",
+					},
+				}},
+			}},
+			want: &DiffStats{Added: 0, Removed: 0, Changed: 1},
+		},
 	}
 
 	for _, tt := range tests {

@@ -16,6 +16,7 @@ func buildTestTranscript() *core.Transcript {
 	return &core.Transcript{
 		SessionID: "test-session-123",
 		Agent:     "claude",
+		Relation:  core.RelationRoot,
 		Model:     "claude-opus-4-6",
 		Dir:       "/home/user/project",
 		GitBranch: "main",
@@ -81,7 +82,10 @@ func TestRenderFullPage(t *testing.T) {
 
 	t.Run("header metadata", func(t *testing.T) {
 		assert.Contains(t, html, "Fix the authentication bug")
-		assert.Contains(t, html, "@claude")
+		assert.Contains(t, html, "project\n        </h1>")
+		assert.Contains(t, html, "claude")
+		assert.Contains(t, html, "Root")
+		assert.NotContains(t, html, "@claude")
 		assert.Contains(t, html, "claude-opus-4-6")
 		assert.Contains(t, html, "ago")
 	})
@@ -122,6 +126,146 @@ func TestRenderMessages(t *testing.T) {
 		assert.Contains(t, html, `class="prose`)
 		assert.Contains(t, html, "<code>auth.go</code>")
 	})
+}
+
+func TestRenderTimelineRail(t *testing.T) {
+	tr := buildTestTranscript()
+	r := New()
+	var buf bytes.Buffer
+	require.NoError(t, r.Render(&buf, tr))
+
+	html := buf.String()
+
+	assert.Contains(t, html, `aria-label="Session timeline"`)
+	assert.Contains(t, html, `class="timeline-list"`)
+	assert.Contains(t, html, `class="timeline-item"`)
+	assert.Contains(t, html, `class="timeline-link-text"`)
+	assert.Contains(t, html, `.timeline-duration`)
+	assert.Contains(t, html, `href="#turn-0"`)
+	assert.Contains(t, html, `1 turns`)
+}
+
+func TestRenderIndexPage(t *testing.T) {
+	tr := buildTestTranscript()
+	tr.Author = "ravi"
+	tr.DiffStats = &core.DiffStats{
+		Added:   120,
+		Removed: 12,
+		Changed: 4,
+	}
+	tr.Stats = &core.SessionStats{
+		ToolUsage: map[string]int{
+			"Bash": 2,
+			"Read": 1,
+		},
+		SubAgentCount: 1,
+	}
+
+	entry := core.NewSessionEntry(
+		tr,
+		"/session/claude/test-session-123",
+	)
+
+	r := New()
+	var buf bytes.Buffer
+	require.NoError(t, r.RenderIndex(&buf, []core.SessionEntry{entry}))
+
+	html := buf.String()
+
+	assert.Contains(t, html, "<title>Sessions")
+	assert.Contains(t, html, "Session archive")
+	assert.Contains(t, html, "Live transcript index")
+	assert.Contains(t, html, `class="index-row`)
+	assert.Contains(t, html, "relation-root")
+	assert.Contains(t, html, "Root")
+	assert.Contains(t, html, `class="index-title`)
+	assert.Contains(t, html, `href="/session/claude/test-session-123"`)
+	assert.Contains(t, html, "Fix the authentication bug")
+	assert.Contains(t, html, "claude-opus-4-6")
+	assert.Contains(t, html, "3 messages")
+	assert.Contains(t, html, "2 tools")
+	assert.Contains(t, html, "1 sub-agent")
+	assert.Contains(t, html, "+120")
+	assert.Contains(t, html, "~4")
+	assert.Contains(t, html, "-12")
+	assert.Contains(t, html, "5,000")
+	assert.Contains(t, html, "2,000")
+	assert.NotContains(t, html, "@ravi")
+	assert.NotContains(t, html, "@claude")
+}
+
+func TestRenderRelationDistinction(t *testing.T) {
+	now := time.Date(2026, 1, 22, 9, 8, 6, 0, time.UTC)
+	entries := []core.SessionEntry{
+		core.NewSessionEntry(
+			&core.Transcript{
+				SessionID: "fork-session",
+				Agent:     "claude",
+				Relation:  core.RelationFork,
+				ForkedFrom: &core.ForkInfo{
+					SessionID:   "source-session",
+					MessageUUID: "source-message",
+				},
+				Title:     "Forked work",
+				CreatedAt: now,
+			},
+			"/session/claude/fork-session",
+		),
+		core.NewSessionEntry(
+			&core.Transcript{
+				SessionID:       "child-session",
+				ParentSessionID: "parent-session",
+				Agent:           "codex",
+				Relation:        core.RelationSubagent,
+				Title:           "Review patch",
+				CreatedAt:       now,
+			},
+			"/session/codex/child-session",
+		),
+	}
+
+	r := New()
+	var buf bytes.Buffer
+	require.NoError(t, r.RenderIndex(&buf, entries))
+
+	html := buf.String()
+	assert.Contains(t, html, "relation-fork")
+	assert.Contains(t, html, "Fork")
+	assert.Contains(t, html, "forked from source-s")
+	assert.Contains(t, html, "relation-subagent")
+	assert.Contains(t, html, "Subagent")
+	assert.Contains(t, html, "parent parent-s")
+}
+
+func TestRenderHeaderRelationDetails(t *testing.T) {
+	tr := buildTestTranscript()
+	tr.Relation = core.RelationFork
+	tr.ForkedFrom = &core.ForkInfo{
+		SessionID:   "source-session",
+		MessageUUID: "source-message",
+	}
+
+	r := New()
+	var buf bytes.Buffer
+	require.NoError(t, r.Render(&buf, tr))
+
+	html := buf.String()
+	assert.Contains(t, html, "session-header relation-fork")
+	assert.Contains(t, html, "Fork")
+	assert.Contains(t, html, "forked from source-session")
+	assert.Contains(t, html, "at source-m")
+}
+
+func TestRenderIndexEmptyState(t *testing.T) {
+	r := New()
+	var buf bytes.Buffer
+	require.NoError(t, r.RenderIndex(&buf, nil))
+
+	html := buf.String()
+
+	assert.Contains(t, html, "0 sessions")
+	assert.Contains(t, html, "No sessions found.")
+	assert.Contains(t, html, "--all")
 }
 
 func TestRenderToolPairing(t *testing.T) {
@@ -291,6 +435,23 @@ func TestFormatNumber(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.expect, func(t *testing.T) {
 			assert.Equal(t, tt.expect, formatNumber(tt.input))
+		})
+	}
+}
+
+func TestProjectName(t *testing.T) {
+	tests := []struct {
+		path string
+		want string
+	}{
+		{"/home/user/project", "project"},
+		{"/home/user/project/", "project"},
+		{"relative/path/app", "app"},
+		{"", ""},
+	}
+	for _, tt := range tests {
+		t.Run(tt.path, func(t *testing.T) {
+			assert.Equal(t, tt.want, projectName(tt.path))
 		})
 	}
 }

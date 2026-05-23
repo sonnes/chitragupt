@@ -13,7 +13,7 @@
     </style>
     <style>
         /* Prose styles for goldmark markdown output */
-        .prose { font-size: 14px; line-height: 1.7; }
+        .prose { font-size: 14px; line-height: 1.7; overflow-wrap: anywhere; word-break: break-word; }
         .prose p { margin-bottom: 12px; }
         .prose p:last-child { margin-bottom: 0; }
         .prose h1 { font-size: 24px; font-weight: 700; margin: 20px 0 12px; }
@@ -22,7 +22,7 @@
         .prose strong { font-weight: 600; }
         .prose em { font-style: italic; }
         .prose code { font-family: ui-monospace, monospace; font-size: 12px; padding: 2px 6px; border-radius: 4px; background: #f1f5f9; }
-        .prose pre { margin: 12px 0; border-radius: 8px; overflow-x: auto; }
+        .prose pre { margin: 12px 0; border-radius: 8px; max-width: 100%; overflow-x: auto; }
         .prose pre code { padding: 0; background: transparent; }
         .prose ul { list-style: disc; margin: 8px 0; padding-left: 24px; }
         .prose ol { list-style: decimal; margin: 8px 0; padding-left: 24px; }
@@ -33,6 +33,79 @@
         .prose th { text-align: left; padding: 8px 12px; border-bottom: 2px solid #e2e8f0; font-weight: 600; }
         .prose td { padding: 8px 12px; border-bottom: 1px solid #e2e8f0; }
         .prose hr { border: none; border-top: 1px solid #e2e8f0; margin: 16px 0; }
+        .plain-text { overflow-wrap: anywhere; word-break: break-word; }
+
+        .timeline-shell { scrollbar-width: thin; scrollbar-color: #cbd5e1 transparent; }
+        .timeline-list { counter-reset: timeline; position: relative; display: flex; flex-direction: column; gap: 6px; }
+        .timeline-list::before { content: ""; position: absolute; left: 13px; top: 14px; bottom: 14px; width: 1px; background: linear-gradient(180deg, #cbd5e1, #e2e8f0); }
+        .timeline-item { counter-increment: timeline; position: relative; min-width: 0; padding-left: 38px; }
+        .timeline-item::before {
+            content: counter(timeline);
+            position: absolute;
+            left: 0;
+            top: 8px;
+            z-index: 1;
+            width: 28px;
+            height: 28px;
+            border-radius: 999px;
+            border: 1px solid #cbd5e1;
+            background: #f8fafc;
+            color: #64748b;
+            display: grid;
+            place-items: center;
+            font: 600 11px/1 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        }
+        .timeline-link {
+            display: block;
+            min-width: 0;
+            border-radius: 8px;
+            padding: 8px 10px;
+            color: #475569;
+            text-decoration: none;
+            transition: background-color 120ms ease, color 120ms ease, box-shadow 120ms ease;
+        }
+        .timeline-link:hover,
+        .timeline-link:focus-visible {
+            background: #ffffff;
+            color: #0f172a;
+            box-shadow: 0 1px 0 rgba(15, 23, 42, 0.04), 0 0 0 1px #e2e8f0;
+            outline: none;
+        }
+        .timeline-link-text {
+            display: -webkit-box;
+            overflow: hidden;
+            overflow-wrap: anywhere;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
+            font-size: 13px;
+            font-weight: 500;
+            line-height: 1.35;
+            max-height: 2.7em;
+        }
+        .timeline-duration { display: block; margin-top: 3px; color: #94a3b8; font-size: 11px; line-height: 1.2; }
+        .relation-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            border-radius: 999px;
+            padding: 4px 10px;
+            font: 700 11px/1.4 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            text-transform: uppercase;
+            letter-spacing: 0;
+        }
+        .relation-pill.relation-root { background: #f1f5f9; color: #475569; }
+        .relation-pill.relation-fork { background: #fffbeb; color: #b45309; }
+        .relation-pill.relation-continuation { background: #eef2ff; color: #4f46e5; }
+        .relation-pill.relation-subagent { background: #ecfeff; color: #0e7490; }
+        .relation-pill.relation-unknown { background: #f4f4f5; color: #52525b; }
+        .session-header {
+            border-left: 4px solid #94a3b8;
+            padding-left: 18px;
+        }
+        .session-header.relation-fork { border-left-color: #f59e0b; }
+        .session-header.relation-continuation { border-left-color: #6366f1; }
+        .session-header.relation-subagent { border-left-color: #0891b2; }
+        .session-header.relation-unknown { border-left-color: #71717a; border-left-style: dashed; }
 
         /* Dark mode prose overrides */
         @media (prefers-color-scheme: dark) {
@@ -42,6 +115,18 @@
             .prose td { border-color: #334155; }
             .prose hr { border-color: #334155; }
             .prose a { color: #60a5fa; }
+            .timeline-shell { scrollbar-color: #475569 transparent; }
+            .timeline-list::before { background: linear-gradient(180deg, #334155, #1e293b); }
+            .timeline-item::before { border-color: #475569; background: #0f172a; color: #94a3b8; }
+            .timeline-link { color: #94a3b8; }
+            .timeline-link:hover,
+            .timeline-link:focus-visible { background: #1e293b; color: #f8fafc; box-shadow: 0 0 0 1px #334155; }
+            .timeline-duration { color: #64748b; }
+            .relation-pill.relation-root { background: #0f172a; color: #cbd5e1; }
+            .relation-pill.relation-fork { background: rgba(120, 53, 15, 0.45); color: #fcd34d; }
+            .relation-pill.relation-continuation { background: rgba(49, 46, 129, 0.55); color: #c7d2fe; }
+            .relation-pill.relation-subagent { background: rgba(22, 78, 99, 0.55); color: #a5f3fc; }
+            .relation-pill.relation-unknown { background: #27272a; color: #d4d4d8; }
         }
     </style>
 </head>
@@ -58,14 +143,18 @@
             </footer>
         </div>
         <!-- Timeline sidebar -->
-        <nav class="hidden lg:block w-56 shrink-0">
-            <div class="sticky top-8 max-h-[calc(100vh-4rem)] overflow-y-auto">
-                <div class="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-3">Timeline</div>
-                <ol class="list-decimal list-inside flex flex-col gap-1 text-xs marker:text-slate-400 dark:marker:text-slate-500 marker:font-mono">
+        <nav class="hidden xl:block w-72 shrink-0" aria-label="Session timeline">
+            <div class="timeline-shell sticky top-8 max-h-[calc(100vh-4rem)] overflow-y-auto overflow-x-hidden pr-1">
+                <div class="mb-4 flex items-end justify-between gap-3 border-b border-slate-200 dark:border-slate-700 pb-3">
+                    <div class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-[0.18em]">Timeline</div>
+                    <div class="font-mono text-[11px] text-slate-400 dark:text-slate-500">{{len .Turns}} turns</div>
+                </div>
+                <ol class="timeline-list">
                     {{range .Turns}}{{if .UserText}}
-                    <li class="py-1">
-                        <a href="#{{.ID}}" class="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors no-underline">
-                            <span class="truncate">{{.UserText}}</span>
+                    <li class="timeline-item">
+                        <a href="#{{.ID}}" class="timeline-link">
+                            <span class="timeline-link-text">{{.UserText}}</span>
+                            {{if .Duration}}<span class="timeline-duration">{{.Duration}}</span>{{end}}
                         </a>
                     </li>
                     {{end}}{{end}}
